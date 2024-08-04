@@ -1,0 +1,33 @@
+.user-remark {
+    color: #1DA1F2;
+    font-style: italic;
+    margin-left: 5px;
+    font-weight: normal;
+    font-size: 0.9em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.add-remark-btn {
+    background-color: #1DA1F2;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 2px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.add-remark-btn:hover {
+    background-color: #0c85d0;
+}
+
+/* Ensure our button and remark don't get hidden */
+[data-testid="User-Name"],
+[data-testid="User-Name"]>div {
+    overflow: visible !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}

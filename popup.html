@@ -10,8 +10,13 @@
             font-family: Arial, sans-serif;
         }
 
-        button {
+        label {
+            display: block;
             margin-top: 10px;
+        }
+
+        button {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -21,6 +26,9 @@
     <p>Customize your Twitter experience:</p>
     <label>
         <input type="checkbox" id="featureToggle"> Enable custom feature
+    </label>
+    <label>
+        <input type="checkbox" id="remarkFeatureToggle"> Enable user remarks
     </label>
     <button id="saveSettings">Save Settings</button>
     <script src="dist/popup.js"></script>
