@@ -1,11 +1,6 @@
-.user-remark {
-    color: #1DA1F2;
+.username-replaced {
     font-style: italic;
-    margin-left: 5px;
-    font-weight: normal;
-    font-size: 0.9em;
-    display: inline-block;
-    vertical-align: middle;
+    color: #1DA1F2;
 }
 
 .add-remark-btn {
@@ -24,7 +19,7 @@
     background-color: #0c85d0;
 }
 
-/* Ensure our button and remark don't get hidden */
+/* Ensure our button doesn't get hidden */
 [data-testid="User-Name"],
 [data-testid="User-Name"]>div {
     overflow: visible !important;

@@ -8,9 +8,11 @@ interface UserRemark {
 class TwitterEnhancer {
     private static instance: TwitterEnhancer;
     private userRemarks: UserRemark[] = [];
+    private observer: MutationObserver;
 
     private constructor() {
         this.loadUserRemarks().then(() => this.init());
+        this.observer = new MutationObserver(this.handleMutations.bind(this));
     }
 
     public static getInstance(): TwitterEnhancer {
@@ -29,82 +31,144 @@ class TwitterEnhancer {
         });
     }
 
-    private addOrUpdateRemarkSpan(element: Element, remark: string): void {
-        let remarkSpan = element.querySelector('.user-remark') as HTMLSpanElement;
-        if (!remarkSpan) {
-            remarkSpan = document.createElement('span');
-            remarkSpan.className = 'user-remark';
-            element.appendChild(remarkSpan);
-        }
-        remarkSpan.textContent = ` (${remark})`;
+    private updateButtonText(username: string, hasRemark: boolean): void {
+        const buttons = document.querySelectorAll('.add-remark-btn');
+        buttons.forEach((button) => {
+            const header = button.closest('[data-testid="User-Name"]');
+            if (header) {
+                const usernameElementAll = header.querySelectorAll('a[href^="/"] span');
+                const usernameElement = Array.from(usernameElementAll).find((el) => el.textContent?.trim().startsWith('@'));
+                if (usernameElement && usernameElement.textContent?.trim().slice(1) === username) {
+                    button.textContent = hasRemark ? 'Edit Remark' : 'Add Remark';
+                }
+            }
+        });
     }
 
-    private updateAllUserRemarks(): void {
+    private removeRemark(username: string): void {
+        this.userRemarks = this.userRemarks.filter(r => r.username !== username);
+        this.saveRemarks(() => {
+            console.log('Remark removed');
+            this.updateUsernames();
+            this.updateButtonText(username, false);
+        });
+    }
+
+    private saveRemarks(callback: () => void): void {
+        chrome.storage.sync.set({ userRemarks: this.userRemarks }, callback);
+    }
+
+
+    private replaceUsername(element: Element, username: string, remark: string | null): void {
+        const displayNameElement = element.querySelector('span');
+        if (displayNameElement) {
+            if (remark) {
+                displayNameElement.textContent = remark;
+                element.setAttribute('title', `@${username}`);
+                element.classList.add('username-replaced');
+            } else {
+                displayNameElement.textContent = username;
+                element.removeAttribute('title');
+                element.classList.remove('username-replaced');
+            }
+        }
+    }
+
+    private updateUsernames(container: Element = document.body): void {
         this.userRemarks.forEach(({ username, remark }) => {
-            const userElements = document.querySelectorAll(`a[href="/${username}"]`);
+            const userElements = container.querySelectorAll(`a[href="/${username}"]:not([data-testid="UserName-container"])`);
             userElements.forEach((element) => {
-                this.addOrUpdateRemarkSpan(element, remark);
+                if (!(element.textContent?.trim().startsWith('@'))) {
+                    this.replaceUsername(element, username, remark);
+                }
             });
         });
     }
 
     private addRemarkButton(): void {
-        const tweetHeaders = document.querySelectorAll('[data-testid="User-Name"]');
+        const tweetHeaders = document.querySelectorAll('[data-testid="User-Name"]:not(.remark-button-added)');
         tweetHeaders.forEach((header) => {
-            if (!header.querySelector('.add-remark-btn')) {
-                const usernameElement = header.querySelector('a[href^="/"] span');
-                if (usernameElement) {
-                    const username = usernameElement.textContent?.trim().slice(1); // Remove '@' symbol
-                    if (username) {
-                        const button = document.createElement('button');
-                        button.className = 'add-remark-btn';
-                        button.textContent = 'Add Remark';
-                        button.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            this.handleAddRemark(username);
-                        });
-                        header.appendChild(button);
-                    }
+            const usernameElementAll = header.querySelectorAll('a[href^="/"] span');
+            const usernameElement = Array.from(usernameElementAll).find((el) => el.textContent?.trim().startsWith('@'));
+            if (usernameElement) {
+                const username = usernameElement.textContent?.trim().slice(1); // Remove '@' symbol
+                if (username) {
+                    const button = document.createElement('button');
+                    button.className = 'add-remark-btn';
+                    // if user already has a remark, change the button text to 'Edit Remark'
+                    const existingRemark = this.userRemarks.find(r => r.username === username);
+                    button.textContent = existingRemark ? 'Edit Remark' : 'Add Remark';
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.handleAddOrEditRemark(username);
+                    });
+                    header.appendChild(button);
+                    header.classList.add('remark-button-added');
                 }
             }
         });
     }
 
-    private handleAddRemark(username: string): void {
+    private handleAddOrEditRemark(username: string): void {
         const existingRemark = this.userRemarks.find(r => r.username === username)?.remark;
-        const remark = prompt(`Enter a remark for @${username}:`, existingRemark || '');
+        const remark = prompt(`Enter a remark name for @${username}:`, existingRemark || '');
         if (remark !== null) {
-            const existingRemarkIndex = this.userRemarks.findIndex(r => r.username === username);
-            if (existingRemarkIndex !== -1) {
-                this.userRemarks[existingRemarkIndex].remark = remark;
+            if (remark.trim() !== '') {
+                const existingRemarkIndex = this.userRemarks.findIndex(r => r.username === username);
+                if (existingRemarkIndex !== -1) {
+                    this.userRemarks[existingRemarkIndex].remark = remark;
+                } else {
+                    this.userRemarks.push({ username, remark });
+                }
+                this.saveRemarks(() => {
+                    console.log('Remark saved');
+                    this.updateUsernames();
+                    this.updateButtonText(username, true);
+                });
             } else {
-                this.userRemarks.push({ username, remark });
+                this.removeRemark(username);
             }
-            chrome.storage.sync.set({ userRemarks: this.userRemarks }, () => {
-                console.log('Remark saved');
-                this.updateAllUserRemarks();
-            });
         }
     }
 
+    private handleMutations(mutations: MutationRecord[]): void {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                mutation.addedNodes.forEach((node) => {
+                    if (node instanceof Element) {
+                        this.updateUsernames(node);
+                        this.addRemarkButton();
+                    }
+                });
+            }
+        });
+    }
+
     private init(): void {
-        this.updateAllUserRemarks();
+        // Initial update
+        this.updateUsernames();
         this.addRemarkButton();
 
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                    this.updateAllUserRemarks();
-                    this.addRemarkButton();
-                }
-            });
-        });
-
-        observer.observe(document.body, {
+        // Set up the observer
+        this.observer.observe(document.body, {
             childList: true,
             subtree: true
         });
+
+        // Listen for Twitter's custom navigation event
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('pushstate-changed', this.handlePageChange.bind(this));
+            window.addEventListener('popstate', this.handlePageChange.bind(this));
+        });
+    }
+
+    private handlePageChange(): void {
+        // Wait for the page content to update
+        setTimeout(() => {
+            this.updateUsernames();
+            this.addRemarkButton();
+        }, 1000); // Adjust this delay if needed
     }
 }
 
