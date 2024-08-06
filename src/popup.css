@@ -93,6 +93,10 @@ h2 {
     margin-left: 5px;
 }
 
+.secondary-button {
+    margin-top: 10px;
+}
+
 #exportRemarks,
 #importRemarksBtn {
     background-color: #17bf63;
