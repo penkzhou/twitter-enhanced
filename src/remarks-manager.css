@@ -1,5 +1,5 @@
 body {
-    width: 300px;
+    width: 500px;
     padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f7f9fa;
@@ -21,53 +21,8 @@ h1 {
     text-align: center;
 }
 
-p {
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.feature-toggle {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.feature-toggle input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-.feature-toggle label {
-    font-size: 14px;
-    cursor: pointer;
-}
-
-button {
-    background-color: #1da1f2;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-}
-
-button:hover {
-    background-color: #0c85d0;
-}
-
-/* Add these styles to your existing popup.css file */
-
-h2 {
-    font-size: 18px;
-    color: #1da1f2;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
 #remarksList {
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
     margin-bottom: 15px;
 }
@@ -77,7 +32,7 @@ h2 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    padding: 5px;
+    padding: 10px;
     background-color: #f5f8fa;
     border-radius: 5px;
 }
@@ -88,14 +43,31 @@ h2 {
 }
 
 .remark-item button {
-    padding: 2px 5px;
+    padding: 5px 10px;
     font-size: 12px;
     margin-left: 5px;
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remark-item button:hover {
+    background-color: #0c85d0;
 }
 
 #exportRemarks,
 #importRemarksBtn {
     background-color: #17bf63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
     margin-top: 10px;
 }
 

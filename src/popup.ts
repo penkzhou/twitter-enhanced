@@ -4,17 +4,20 @@ class PopupManager {
     private featureToggle: HTMLInputElement;
     private remarkFeatureToggle: HTMLInputElement;
     private saveButton: HTMLButtonElement;
+    private manageRemarksButton: HTMLButtonElement;
 
     constructor() {
         this.featureToggle = document.getElementById('featureToggle') as HTMLInputElement;
         this.remarkFeatureToggle = document.getElementById('remarkFeatureToggle') as HTMLInputElement;
         this.saveButton = document.getElementById('saveSettings') as HTMLButtonElement;
+        this.manageRemarksButton = document.getElementById('manageRemarks') as HTMLButtonElement;
         this.init();
     }
 
     private init(): void {
         this.loadSettings();
         this.saveButton.addEventListener('click', () => this.saveSettings());
+        this.manageRemarksButton.addEventListener('click', () => this.openRemarksManager());
     }
 
     private loadSettings(): void {
@@ -43,6 +46,10 @@ class PopupManager {
                 });
             }
         });
+    }
+
+    private openRemarksManager(): void {
+        chrome.tabs.create({ url: 'remarks-manager.html' });
     }
 }
 
