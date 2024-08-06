@@ -10,13 +10,21 @@ class RemarksManager {
     private exportRemarksButton: HTMLButtonElement;
     private importRemarksButton: HTMLButtonElement;
     private importRemarksInput: HTMLInputElement;
+    private prevPageButton: HTMLButtonElement;
+    private nextPageButton: HTMLButtonElement;
+    private pageInfoSpan: HTMLSpanElement;
     private userRemarks: UserRemark[] = [];
+    private currentPage: number = 1;
+    private readonly remarksPerPage: number = 10;
 
     constructor() {
         this.remarksList = document.getElementById('remarksList') as HTMLDivElement;
         this.exportRemarksButton = document.getElementById('exportRemarks') as HTMLButtonElement;
         this.importRemarksButton = document.getElementById('importRemarksBtn') as HTMLButtonElement;
         this.importRemarksInput = document.getElementById('importRemarks') as HTMLInputElement;
+        this.prevPageButton = document.getElementById('prevPage') as HTMLButtonElement;
+        this.nextPageButton = document.getElementById('nextPage') as HTMLButtonElement;
+        this.pageInfoSpan = document.getElementById('pageInfo') as HTMLSpanElement;
         this.init();
     }
 
@@ -25,6 +33,8 @@ class RemarksManager {
         this.exportRemarksButton.addEventListener('click', () => this.exportRemarks());
         this.importRemarksButton.addEventListener('click', () => this.importRemarksInput.click());
         this.importRemarksInput.addEventListener('change', (event) => this.importRemarks(event));
+        this.prevPageButton.addEventListener('click', () => this.changePage(-1));
+        this.nextPageButton.addEventListener('click', () => this.changePage(1));
     }
 
     private loadRemarks(): void {
@@ -35,17 +45,23 @@ class RemarksManager {
     }
 
     private displayRemarks(): void {
+        const startIndex = (this.currentPage - 1) * this.remarksPerPage;
+        const endIndex = startIndex + this.remarksPerPage;
+        const remarksToShow = this.userRemarks.slice(startIndex, endIndex);
+
         this.remarksList.innerHTML = '';
-        this.userRemarks.forEach((remark, index) => {
+        remarksToShow.forEach((remark, index) => {
             const remarkElement = document.createElement('div');
             remarkElement.className = 'remark-item';
             remarkElement.innerHTML = `
                 <span>@${remark.username}: ${remark.remark}</span>
-                <button class="edit-remark" data-index="${index}">Edit</button>
-                <button class="delete-remark" data-index="${index}">Delete</button>
+                <button class="edit-remark" data-index="${startIndex + index}">Edit</button>
+                <button class="delete-remark" data-index="${startIndex + index}">Delete</button>
             `;
             this.remarksList.appendChild(remarkElement);
         });
+
+        this.updatePaginationControls();
 
         this.remarksList.addEventListener('click', (event) => {
             const target = event.target as HTMLElement;
@@ -55,6 +71,18 @@ class RemarksManager {
                 this.deleteRemark(parseInt(target.getAttribute('data-index') || '0'));
             }
         });
+    }
+
+    private updatePaginationControls(): void {
+        const totalPages = Math.ceil(this.userRemarks.length / this.remarksPerPage);
+        this.pageInfoSpan.textContent = `Page ${this.currentPage} of ${totalPages}`;
+        this.prevPageButton.disabled = this.currentPage === 1;
+        this.nextPageButton.disabled = this.currentPage === totalPages;
+    }
+
+    private changePage(delta: number): void {
+        this.currentPage += delta;
+        this.displayRemarks();
     }
 
     private editRemark(index: number): void {
@@ -71,6 +99,9 @@ class RemarksManager {
         if (confirm('Are you sure you want to delete this remark?')) {
             this.userRemarks.splice(index, 1);
             this.saveRemarks();
+            if (this.userRemarks.length <= (this.currentPage - 1) * this.remarksPerPage && this.currentPage > 1) {
+                this.currentPage--;
+            }
             this.displayRemarks();
         }
     }
@@ -102,6 +133,7 @@ class RemarksManager {
                     if (Array.isArray(importedRemarks) && importedRemarks.every(this.isValidRemark)) {
                         this.userRemarks = importedRemarks;
                         this.saveRemarks();
+                        this.currentPage = 1;
                         this.displayRemarks();
                         alert('Remarks imported successfully!');
                     } else {

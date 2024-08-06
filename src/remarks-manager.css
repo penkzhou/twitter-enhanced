@@ -57,6 +57,32 @@ h1 {
     background-color: #0c85d0;
 }
 
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.pagination button {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background-color: #ccd6dd;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    font-size: 14px;
+}
+
 #exportRemarks,
 #importRemarksBtn {
     background-color: #17bf63;
