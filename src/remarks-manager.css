@@ -22,27 +22,52 @@ h1 {
 }
 
 #remarksList {
-    max-height: 300px;
-    overflow-y: auto;
     margin-bottom: 15px;
 }
 
 .remark-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 10px;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 15px;
     background-color: #f5f8fa;
-    border-radius: 5px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
-.remark-item span {
+.remark-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.remark-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.remark-text {
     flex-grow: 1;
     margin-right: 10px;
 }
 
-.remark-item button {
+.username {
+    font-weight: bold;
+    color: #1da1f2;
+}
+
+.remark {
+    color: #14171a;
+    word-break: break-word;
+}
+
+.remark-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.remark-actions button {
     padding: 5px 10px;
     font-size: 12px;
     margin-left: 5px;
@@ -51,10 +76,19 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.remark-item button:hover {
+.remark-actions button:hover {
     background-color: #0c85d0;
+}
+
+.remark-actions button.delete-remark {
+    background-color: #e0245e;
+}
+
+.remark-actions button.delete-remark:hover {
+    background-color: #c51f5d;
 }
 
 .pagination {

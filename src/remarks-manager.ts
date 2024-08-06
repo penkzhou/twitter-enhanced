@@ -54,9 +54,16 @@ class RemarksManager {
             const remarkElement = document.createElement('div');
             remarkElement.className = 'remark-item';
             remarkElement.innerHTML = `
-                <span>@${remark.username}: ${remark.remark}</span>
-                <button class="edit-remark" data-index="${startIndex + index}">Edit</button>
-                <button class="delete-remark" data-index="${startIndex + index}">Delete</button>
+                <div class="remark-content">
+                    <div class="remark-text">
+                        <span class="username">@${remark.username}</span>
+                        <p class="remark">${remark.remark}</p>
+                    </div>
+                </div>
+                <div class="remark-actions">
+                    <button class="edit-remark" data-index="${startIndex + index}">Edit</button>
+                    <button class="delete-remark" data-index="${startIndex + index}">Delete</button>
+                </div>
             `;
             this.remarksList.appendChild(remarkElement);
         });
