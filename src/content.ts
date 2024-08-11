@@ -9,9 +9,11 @@ class TwitterEnhancer {
     private static instance: TwitterEnhancer;
     private userRemarks: UserRemark[] = [];
     private observer: MutationObserver;
+    private remarkFeatureEnabled: boolean = true; // Default to true
+
 
     private constructor() {
-        this.loadUserRemarks().then(() => this.init());
+        this.loadSettings().then(() => this.init());
         this.observer = new MutationObserver(this.handleMutations.bind(this));
     }
 
@@ -22,10 +24,11 @@ class TwitterEnhancer {
         return TwitterEnhancer.instance;
     }
 
-    private async loadUserRemarks(): Promise<void> {
+    private async loadSettings(): Promise<void> {
         return new Promise((resolve) => {
-            chrome.storage.sync.get(['userRemarks'], (result) => {
+            chrome.storage.sync.get(['userRemarks', 'remarkFeatureEnabled'], (result) => {
                 this.userRemarks = result.userRemarks || [];
+                this.remarkFeatureEnabled = result.remarkFeatureEnabled !== undefined ? result.remarkFeatureEnabled : true;
                 resolve();
             });
         });
@@ -75,6 +78,8 @@ class TwitterEnhancer {
     }
 
     private updateUsernames(container: Element = document.body): void {
+        if (!this.remarkFeatureEnabled) return;
+
         this.userRemarks.forEach(({ username, remark }) => {
             const userElements = container.querySelectorAll(`a[href="/${username}"]:not([data-testid="UserName-container"])`);
             userElements.forEach((element) => {
@@ -86,6 +91,8 @@ class TwitterEnhancer {
     }
 
     private addRemarkButton(): void {
+        if (!this.remarkFeatureEnabled) return;
+
         const tweetHeaders = document.querySelectorAll('[data-testid="User-Name"]:not(.remark-button-added)');
         tweetHeaders.forEach((header) => {
             const usernameElementAll = header.querySelectorAll('a[href^="/"] span');
@@ -161,6 +168,34 @@ class TwitterEnhancer {
             window.addEventListener('pushstate-changed', this.handlePageChange.bind(this));
             window.addEventListener('popstate', this.handlePageChange.bind(this));
         });
+
+
+        // Listen for settings updates
+        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+            if (request.action === "updateSettings") {
+                this.remarkFeatureEnabled = request.remarkFeatureEnabled;
+                if (this.remarkFeatureEnabled) {
+                    this.updateUsernames();
+                    this.addRemarkButton();
+                } else {
+                    this.removeAllRemarks();
+                }
+            }
+        });
+
+    }
+
+    private removeAllRemarks(): void {
+        document.querySelectorAll('.username-replaced').forEach((element) => {
+            const usernameElement = element.querySelector('span');
+            if (usernameElement && element.getAttribute('title')) {
+                usernameElement.textContent = element.getAttribute('title')?.slice(1) ?? ''; // Remove '@'
+                element.removeAttribute('title');
+                element.classList.remove('username-replaced');
+            }
+        });
+        document.querySelectorAll('.add-remark-btn').forEach((button) => button.remove());
+        document.querySelectorAll('.remark-button-added').forEach((element) => element.classList.remove('remark-button-added'));
     }
 
     private handlePageChange(): void {
