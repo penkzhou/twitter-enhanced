@@ -10,6 +10,12 @@ class TwitterEnhancer {
     private userRemarks: UserRemark[] = [];
     private observer: MutationObserver;
     private remarkFeatureEnabled: boolean = true; // Default to true
+    private dialog: HTMLElement | null = null;
+    private dialogTitle: HTMLElement | null = null;
+    private remarkInput: HTMLInputElement | null = null;
+    private saveRemarkBtn: HTMLElement | null = null;
+    private cancelRemarkBtn: HTMLElement | null = null;
+    private currentUsername: string = '';
 
 
     private constructor() {
@@ -117,26 +123,30 @@ class TwitterEnhancer {
         });
     }
 
-    private handleAddOrEditRemark(username: string): void {
-        const existingRemark = this.userRemarks.find(r => r.username === username)?.remark;
-        const remark = prompt(`Enter a remark name for @${username}:`, existingRemark || '');
-        if (remark !== null) {
-            if (remark.trim() !== '') {
-                const existingRemarkIndex = this.userRemarks.findIndex(r => r.username === username);
+    private handleSaveRemark(): void {
+        const remark = this.remarkInput?.value.trim();
+        if (remark !== undefined) {
+            if (remark !== '') {
+                const existingRemarkIndex = this.userRemarks.findIndex(r => r.username === this.currentUsername);
                 if (existingRemarkIndex !== -1) {
                     this.userRemarks[existingRemarkIndex].remark = remark;
                 } else {
-                    this.userRemarks.push({ username, remark });
+                    this.userRemarks.push({ username: this.currentUsername, remark });
                 }
                 this.saveRemarks(() => {
                     console.log('Remark saved');
                     this.updateUsernames();
-                    this.updateButtonText(username, true);
+                    this.updateButtonText(this.currentUsername, true);
                 });
             } else {
-                this.removeRemark(username);
+                this.removeRemark(this.currentUsername);
             }
         }
+        this.closeDialog();
+    }
+
+    private handleAddOrEditRemark(username: string): void {
+        this.openDialog(username);
     }
 
     private handleMutations(mutations: MutationRecord[]): void {
@@ -183,6 +193,78 @@ class TwitterEnhancer {
             }
         });
 
+        const style = document.createElement('style');
+        style.textContent = `
+            .remark-dialog {
+              display: none;
+              position: fixed;
+              z-index: 9999;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            .remark-dialog-content {
+              background-color: #ffffff;
+              margin: 15% auto;
+              padding: 20px;
+              border-radius: 10px;
+              width: 90%;
+              max-width: 400px;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .remark-dialog h2 {
+              color: #1da1f2;
+              margin-bottom: 15px;
+            }
+
+            .remark-dialog input {
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 15px;
+              border: 1px solid #ccd6dd;
+              border-radius: 5px;
+              font-size: 14px;
+              box-sizing: border-box;
+            }
+
+            .remark-dialog-buttons {
+              display: flex;
+              justify-content: flex-end;
+            }
+
+            .remark-dialog button {
+              padding: 8px 15px;
+              margin-left: 10px;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              font-size: 14px;
+            }
+
+            #cancelRemarkBtn {
+              background-color: #ccd6dd;
+              color: #14171a;
+            }
+
+            #saveRemarkBtn {
+              background-color: #1da1f2;
+              color: #ffffff;
+            }
+
+            #cancelRemarkBtn:hover {
+              background-color: #b1bbc3;
+            }
+
+            #saveRemarkBtn:hover {
+              background-color: #1a91da;
+            }
+        `;
+        document.head.appendChild(style);
+
     }
 
     private removeAllRemarks(): void {
@@ -205,6 +287,50 @@ class TwitterEnhancer {
             this.addRemarkButton();
         }, 1000); // Adjust this delay if needed
     }
+
+
+    private createDialog(): void {
+        const dialogHTML = `
+            <div id="remarkDialog" class="remark-dialog">
+              <div class="remark-dialog-content">
+                <h2 id="remarkDialogTitle">Add Remark</h2>
+                <input type="text" id="remarkInput" placeholder="Enter remark">
+                <div class="remark-dialog-buttons">
+                  <button id="cancelRemarkBtn">Cancel</button>
+                  <button id="saveRemarkBtn">Save</button>
+                </div>
+              </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', dialogHTML);
+
+        this.dialog = document.getElementById('remarkDialog');
+        this.dialogTitle = document.getElementById('remarkDialogTitle');
+        this.remarkInput = document.getElementById('remarkInput') as HTMLInputElement;
+        this.saveRemarkBtn = document.getElementById('saveRemarkBtn');
+        this.cancelRemarkBtn = document.getElementById('cancelRemarkBtn');
+
+        this.saveRemarkBtn?.addEventListener('click', this.handleSaveRemark.bind(this));
+        this.cancelRemarkBtn?.addEventListener('click', this.closeDialog.bind(this));
+    }
+
+    private openDialog(username: string): void {
+        if (!this.dialog) this.createDialog();
+
+        const existingRemark = this.userRemarks.find(r => r.username === username)?.remark;
+        this.currentUsername = username;
+
+        if (this.dialogTitle) this.dialogTitle.textContent = existingRemark ? 'Edit Remark' : 'Add Remark';
+        if (this.remarkInput) this.remarkInput.value = existingRemark || '';
+        if (this.dialog) this.dialog.style.display = 'block';
+    }
+
+    private closeDialog(): void {
+        if (this.dialog) this.dialog.style.display = 'none';
+        this.currentUsername = '';
+    }
+
 }
 
 // Initialize the enhancer
