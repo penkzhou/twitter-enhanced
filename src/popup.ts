@@ -1,6 +1,6 @@
 // src/popup.ts
 
-class PopupManager {
+export class PopupManager {
     private featureToggle: HTMLInputElement;
     private remarkFeatureToggle: HTMLInputElement;
     private saveButton: HTMLButtonElement;
@@ -55,3 +55,6 @@ class PopupManager {
 
 // Initialize the popup
 document.addEventListener('DOMContentLoaded', () => new PopupManager());
+
+// Export an instance of PopupManager for use in other files if needed
+export const popupManager = new PopupManager();

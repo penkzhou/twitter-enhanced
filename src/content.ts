@@ -5,11 +5,16 @@ interface UserRemark {
     remark: string;
 }
 
-class TwitterEnhancer {
+interface TwitterEnhancerSettings {
+    userRemarks: UserRemark[];
+    remarkFeatureEnabled: boolean;
+}
+
+export class TwitterEnhancer {
     private static instance: TwitterEnhancer;
     private userRemarks: UserRemark[] = [];
     private observer: MutationObserver;
-    private remarkFeatureEnabled: boolean = true; // Default to true
+    private remarkFeatureEnabled: boolean = true;
     private dialog: HTMLElement | null = null;
     private dialogTitle: HTMLElement | null = null;
     private remarkInput: HTMLInputElement | null = null;
@@ -17,10 +22,9 @@ class TwitterEnhancer {
     private cancelRemarkBtn: HTMLElement | null = null;
     private currentUsername: string = '';
 
-
     private constructor() {
-        this.loadSettings().then(() => this.init());
         this.observer = new MutationObserver(this.handleMutations.bind(this));
+        this.init();
     }
 
     public static getInstance(): TwitterEnhancer {
@@ -30,14 +34,130 @@ class TwitterEnhancer {
         return TwitterEnhancer.instance;
     }
 
+    private async init(): Promise<void> {
+        try {
+            await this.loadSettings();
+            this.updateUsernames();
+            this.addRemarkButton();
+            this.setupObserver();
+            this.setupEventListeners();
+            this.injectStyles();
+        } catch (error) {
+            console.error('Error initializing TwitterEnhancer:', error);
+        }
+    }
+
     private async loadSettings(): Promise<void> {
         return new Promise((resolve) => {
-            chrome.storage.sync.get(['userRemarks', 'remarkFeatureEnabled'], (result) => {
-                this.userRemarks = result.userRemarks || [];
-                this.remarkFeatureEnabled = result.remarkFeatureEnabled !== undefined ? result.remarkFeatureEnabled : true;
+            chrome.storage.sync.get(['userRemarks', 'remarkFeatureEnabled'], (result: { [key: string]: any }) => {
+                const settings = result as TwitterEnhancerSettings;
+                this.userRemarks = settings.userRemarks || [];
+                this.remarkFeatureEnabled = settings.remarkFeatureEnabled ?? false;
                 resolve();
             });
         });
+    }
+
+    private setupObserver(): void {
+        this.observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    private setupEventListeners(): void {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('pushstate-changed', this.handlePageChange.bind(this));
+            window.addEventListener('popstate', this.handlePageChange.bind(this));
+        });
+
+        chrome.runtime.onMessage.addListener(this.handleSettingsUpdate.bind(this));
+    }
+
+    private handleSettingsUpdate(request: any, sender: any, sendResponse: any): void {
+        if (request.action === "updateSettings") {
+            this.remarkFeatureEnabled = request.remarkFeatureEnabled;
+            if (this.remarkFeatureEnabled) {
+                this.updateUsernames();
+                this.addRemarkButton();
+            } else {
+                this.removeAllRemarks();
+            }
+        }
+    }
+
+    private injectStyles(): void {
+        const style = document.createElement('style');
+        style.textContent = `
+            .remark-dialog {
+                display: none;
+                position: fixed;
+                z-index: 9999;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            .remark-dialog-content {
+                background-color: #ffffff;
+                margin: 15% auto;
+                padding: 20px;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 400px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .remark-dialog h2 {
+                color: #1da1f2;
+                margin-bottom: 15px;
+            }
+
+            .remark-dialog input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccd6dd;
+                border-radius: 5px;
+                font-size: 14px;
+                box-sizing: border-box;
+            }
+
+            .remark-dialog-buttons {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .remark-dialog button {
+                padding: 8px 15px;
+                margin-left: 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            #cancelRemarkBtn {
+                background-color: #ccd6dd;
+                color: #14171a;
+            }
+
+            #saveRemarkBtn {
+                background-color: #1da1f2;
+                color: #ffffff;
+            }
+
+            #cancelRemarkBtn:hover {
+                background-color: #b1bbc3;
+            }
+
+            #saveRemarkBtn:hover {
+                background-color: #1a91da;
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     private updateButtonText(username: string, hasRemark: boolean): void {
@@ -54,19 +174,21 @@ class TwitterEnhancer {
         });
     }
 
-    private removeRemark(username: string): void {
+    private async removeRemark(username: string): Promise<void> {
         this.userRemarks = this.userRemarks.filter(r => r.username !== username);
-        this.saveRemarks(() => {
-            console.log('Remark removed');
-            this.updateUsernames();
-            this.updateButtonText(username, false);
+        await this.saveRemarks();
+        console.log('Remark removed');
+        this.updateUsernames();
+        this.updateButtonText(username, false);
+    }
+
+    private async saveRemarks(): Promise<void> {
+        return new Promise((resolve) => {
+            chrome.storage.sync.set({ userRemarks: this.userRemarks }, () => {
+                resolve();
+            });
         });
     }
-
-    private saveRemarks(callback: () => void): void {
-        chrome.storage.sync.set({ userRemarks: this.userRemarks }, callback);
-    }
-
 
     private replaceUsername(element: Element, username: string, remark: string | null): void {
         const displayNameElement = element.querySelector('span');
@@ -108,7 +230,6 @@ class TwitterEnhancer {
                 if (username) {
                     const button = document.createElement('button');
                     button.className = 'add-remark-btn';
-                    // if user already has a remark, change the button text to 'Edit Remark'
                     const existingRemark = this.userRemarks.find(r => r.username === username);
                     button.textContent = existingRemark ? 'Edit Remark' : 'Add Remark';
                     button.addEventListener('click', (e) => {
@@ -123,7 +244,7 @@ class TwitterEnhancer {
         });
     }
 
-    private handleSaveRemark(): void {
+    private async handleSaveRemark(): Promise<void> {
         const remark = this.remarkInput?.value.trim();
         if (remark !== undefined) {
             if (remark !== '') {
@@ -133,13 +254,12 @@ class TwitterEnhancer {
                 } else {
                     this.userRemarks.push({ username: this.currentUsername, remark });
                 }
-                this.saveRemarks(() => {
-                    console.log('Remark saved');
-                    this.updateUsernames();
-                    this.updateButtonText(this.currentUsername, true);
-                });
+                await this.saveRemarks();
+                console.log('Remark saved');
+                this.updateUsernames();
+                this.updateButtonText(this.currentUsername, true);
             } else {
-                this.removeRemark(this.currentUsername);
+                await this.removeRemark(this.currentUsername);
             }
         }
         this.closeDialog();
@@ -162,116 +282,18 @@ class TwitterEnhancer {
         });
     }
 
-    private init(): void {
-        // Initial update
-        this.updateUsernames();
-        this.addRemarkButton();
-
-        // Set up the observer
-        this.observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        // Listen for Twitter's custom navigation event
-        document.addEventListener('DOMContentLoaded', () => {
-            window.addEventListener('pushstate-changed', this.handlePageChange.bind(this));
-            window.addEventListener('popstate', this.handlePageChange.bind(this));
-        });
-
-
-        // Listen for settings updates
-        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-            if (request.action === "updateSettings") {
-                this.remarkFeatureEnabled = request.remarkFeatureEnabled;
-                if (this.remarkFeatureEnabled) {
-                    this.updateUsernames();
-                    this.addRemarkButton();
-                } else {
-                    this.removeAllRemarks();
-                }
-            }
-        });
-
-        const style = document.createElement('style');
-        style.textContent = `
-            .remark-dialog {
-              display: none;
-              position: fixed;
-              z-index: 9999;
-              left: 0;
-              top: 0;
-              width: 100%;
-              height: 100%;
-              background-color: rgba(0, 0, 0, 0.5);
-            }
-
-            .remark-dialog-content {
-              background-color: #ffffff;
-              margin: 15% auto;
-              padding: 20px;
-              border-radius: 10px;
-              width: 90%;
-              max-width: 400px;
-              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            .remark-dialog h2 {
-              color: #1da1f2;
-              margin-bottom: 15px;
-            }
-
-            .remark-dialog input {
-              width: 100%;
-              padding: 10px;
-              margin-bottom: 15px;
-              border: 1px solid #ccd6dd;
-              border-radius: 5px;
-              font-size: 14px;
-              box-sizing: border-box;
-            }
-
-            .remark-dialog-buttons {
-              display: flex;
-              justify-content: flex-end;
-            }
-
-            .remark-dialog button {
-              padding: 8px 15px;
-              margin-left: 10px;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-              font-size: 14px;
-            }
-
-            #cancelRemarkBtn {
-              background-color: #ccd6dd;
-              color: #14171a;
-            }
-
-            #saveRemarkBtn {
-              background-color: #1da1f2;
-              color: #ffffff;
-            }
-
-            #cancelRemarkBtn:hover {
-              background-color: #b1bbc3;
-            }
-
-            #saveRemarkBtn:hover {
-              background-color: #1a91da;
-            }
-        `;
-        document.head.appendChild(style);
-
+    private handlePageChange(): void {
+        setTimeout(() => {
+            this.updateUsernames();
+            this.addRemarkButton();
+        }, 1000);
     }
 
     private removeAllRemarks(): void {
         document.querySelectorAll('.username-replaced').forEach((element) => {
             const usernameElement = element.querySelector('span');
             if (usernameElement && element.getAttribute('title')) {
-                usernameElement.textContent = element.getAttribute('title')?.slice(1) ?? ''; // Remove '@'
+                usernameElement.textContent = element.getAttribute('title')?.slice(1) ?? '';
                 element.removeAttribute('title');
                 element.classList.remove('username-replaced');
             }
@@ -279,15 +301,6 @@ class TwitterEnhancer {
         document.querySelectorAll('.add-remark-btn').forEach((button) => button.remove());
         document.querySelectorAll('.remark-button-added').forEach((element) => element.classList.remove('remark-button-added'));
     }
-
-    private handlePageChange(): void {
-        // Wait for the page content to update
-        setTimeout(() => {
-            this.updateUsernames();
-            this.addRemarkButton();
-        }, 1000); // Adjust this delay if needed
-    }
-
 
     private createDialog(): void {
         const dialogHTML = `
@@ -330,7 +343,6 @@ class TwitterEnhancer {
         if (this.dialog) this.dialog.style.display = 'none';
         this.currentUsername = '';
     }
-
 }
 
 // Initialize the enhancer
