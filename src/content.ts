@@ -10,7 +10,7 @@ interface TwitterEnhancerSettings {
     remarkFeatureEnabled: boolean;
 }
 
-export class TwitterEnhancer {
+class TwitterEnhancer {
     private static instance: TwitterEnhancer;
     private userRemarks: UserRemark[] = [];
     private observer: MutationObserver;
@@ -52,7 +52,7 @@ export class TwitterEnhancer {
             chrome.storage.sync.get(['userRemarks', 'remarkFeatureEnabled'], (result: { [key: string]: any }) => {
                 const settings = result as TwitterEnhancerSettings;
                 this.userRemarks = settings.userRemarks || [];
-                this.remarkFeatureEnabled = settings.remarkFeatureEnabled ?? false;
+                this.remarkFeatureEnabled = settings.remarkFeatureEnabled ?? true;
                 resolve();
             });
         });

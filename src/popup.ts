@@ -1,6 +1,6 @@
 // src/popup.ts
 
-export class PopupManager {
+class PopupManager {
     private featureToggle: HTMLInputElement;
     private remarkFeatureToggle: HTMLInputElement;
     private saveButton: HTMLButtonElement;
@@ -23,7 +23,7 @@ export class PopupManager {
     private loadSettings(): void {
         chrome.storage.sync.get(['featureEnabled', 'remarkFeatureEnabled'], (result) => {
             this.featureToggle.checked = result.featureEnabled || false;
-            this.remarkFeatureToggle.checked = result.remarkFeatureEnabled || false;
+            this.remarkFeatureToggle.checked = result.remarkFeatureEnabled || true;
         });
     }
 
@@ -55,6 +55,3 @@ export class PopupManager {
 
 // Initialize the popup
 document.addEventListener('DOMContentLoaded', () => new PopupManager());
-
-// Export an instance of PopupManager for use in other files if needed
-export const popupManager = new PopupManager();
