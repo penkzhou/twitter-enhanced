@@ -36,10 +36,14 @@ export class TwitterAPI {
       }
       console.log('response', response);
 
-      const videoInfoList = await response.data.data[0].tweet.legacy?.entities?.media?.[0]?.videoInfo?.variants ?? [];
+      const videoInfoList = await (response.data.data[0].tweet.legacy?.entities?.media?.find((media: any) => media.type === 'video'))?.videoInfo?.variants ?? [];
+      /// find the highest quality video in the list
+      const highestQualityVideo = videoInfoList.filter((video: any) => (video.bitrate !== undefined) && (video.contentType === 'video/mp4')).reduce((highest: any, current: any) => {
+        return highest.bitrate > current.bitrate ? highest : current;
+      }, videoInfoList[0]);
       console.log('videoInfoList', videoInfoList);
-      if (videoInfoList.length > 0) {
-        const videoUrl = videoInfoList[videoInfoList.length - 1].url;
+      if (highestQualityVideo) {
+        const videoUrl = highestQualityVideo.url;
         console.log('videoUrl', videoUrl);
         return videoUrl;
       }
