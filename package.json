@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-boilerplate-react",
-  "version": "5.0.4",
-  "description": "A chrome extension boilerplate built with React 18, Webpack 5, and Webpack Dev Server 4",
+  "name": "twitter-enhanced-extension",
+  "version": "1.0.3",
+  "description": "A Chrome extension to enhance Twitter",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "twitter-openapi-typescript": "^0.0.34"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
