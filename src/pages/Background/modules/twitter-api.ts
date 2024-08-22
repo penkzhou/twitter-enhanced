@@ -13,10 +13,8 @@ export class TwitterAPI {
       const api = new TwitterOpenApi();
       /// get cto from cookies
       const ct0Cookies = await chrome.cookies.get({ name: 'ct0', url: 'https://twitter.com/' });
-      console.log('ct0', ct0Cookies?.value ?? '');
       /// get auth_token from cookies
       const authTokenCookies = await chrome.cookies.get({ name: 'auth_token', url: 'https://twitter.com/' });
-      console.log('auth_token', authTokenCookies?.value ?? '');
       TwitterAPI.instance.tweetApi = await api.getClientFromCookies({
         ct0: ct0Cookies?.value ?? '',
         auth_token: authTokenCookies?.value ?? '',

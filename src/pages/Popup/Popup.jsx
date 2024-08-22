@@ -2,27 +2,33 @@ import React, { useState, useEffect } from 'react';
 import './Popup.css';
 
 const Popup = () => {
-
   const [remarkFeatureEnabled, setRemarkFeatureEnabled] = useState(true);
   const [videoDownloadFeatureEnabled, setVideoDownloadFeatureEnabled] = useState(true);
+  const [downloadDirectory, setDownloadDirectory] = useState('TwitterVideos');
+  const [saveMessage, setSaveMessage] = useState('');
 
   useEffect(() => {
-    // Load settings when component mounts
     loadSettings();
   }, []);
 
   const loadSettings = () => {
-    chrome.storage.sync.get(['remarkFeatureEnabled', 'videoDownloadFeatureEnabled'], (result) => {
-
+    chrome.storage.sync.get(['remarkFeatureEnabled', 'videoDownloadFeatureEnabled', 'downloadDirectory'], (result) => {
       setRemarkFeatureEnabled(result.remarkFeatureEnabled || true);
       setVideoDownloadFeatureEnabled(result.videoDownloadFeatureEnabled || true);
+      setDownloadDirectory(result.downloadDirectory || 'TwitterVideos');
     });
   };
 
   const saveSettings = () => {
-    chrome.storage.sync.set({ remarkFeatureEnabled, videoDownloadFeatureEnabled }, () => {
+    chrome.storage.sync.set({
+      remarkFeatureEnabled,
+      videoDownloadFeatureEnabled,
+      downloadDirectory
+    }, () => {
       console.log('Settings saved');
       updateContentScript();
+      setSaveMessage('Settings saved successfully!');
+      setTimeout(() => setSaveMessage(''), 3000); // Clear message after 3 seconds
     });
   };
 
@@ -65,7 +71,17 @@ const Popup = () => {
         />
         <label htmlFor="videoDownloadFeatureToggle">Enable video download feature</label>
       </div>
+      <div className="feature-toggle">
+        <label htmlFor="downloadDirectory">Download Directory:</label>
+        <input
+          type="text"
+          id="downloadDirectory"
+          value={downloadDirectory}
+          onChange={(e) => setDownloadDirectory(e.target.value)}
+        />
+      </div>
       <button onClick={saveSettings}>Save Settings</button>
+      {saveMessage && <p className="save-message">{saveMessage}</p>}
       <button onClick={openRemarksManager} className="secondary-button">Manage Remarks</button>
     </div>
   );

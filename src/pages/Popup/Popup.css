@@ -98,3 +98,10 @@ h2 {
 #importRemarksBtn:hover {
   background-color: #0f9d58;
 }
+
+.save-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
