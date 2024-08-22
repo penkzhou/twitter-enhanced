@@ -1,8 +1,16 @@
-# Twitter Username Remark Extension
+# Twitter Enhanced: Elevate Your Twitter Experience
 
 ## Overview
 
-The Twitter Username Remark Extension is a Chrome browser extension that allows users to add custom remarks or nicknames to Twitter usernames. This extension enhances your Twitter browsing experience by letting you personalize how usernames are displayed across the site.
+Enhance your Twitter browsing with two powerful features:
+
+1. User Remarks:
+   Add personal notes to Twitter profiles. Never forget why you followed someone or what they're known for. Easily manage, edit, and organize your remarks for a more personalized Twitter experience.
+
+2. Video Downloads:
+   Seamlessly download Twitter videos with just a click. Save your favorite content directly to your chosen directory for offline viewing or sharing.
+
+This extension puts you in control, allowing you to customize your Twitter interface and interact with content in new ways. Streamline your social media experience with Twitter Enhanced - your personal Twitter assistant.
 
 ## Features
 
