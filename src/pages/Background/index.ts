@@ -16,18 +16,23 @@ async function handleVideoDownload(tweetId: string, sendResponse: (response: any
         console.log('videoUrl', videoUrl);
 
         if (videoUrl) {
-            chrome.downloads.download({
-                url: videoUrl,
-                filename: `twitter_video_${tweetId}.mp4`,
+            // Get the download directory from storage
+            chrome.storage.sync.get(['downloadDirectory'], (result) => {
+                const downloadDirectory = result.downloadDirectory || 'TwitterVideos';
 
-            }, (downloadId) => {
-                if (chrome.runtime.lastError) {
-                    console.error('Download failed:', chrome.runtime.lastError);
-                    sendResponse({ success: false, error: chrome.runtime.lastError.message });
-                } else {
-                    console.log('Download started with ID:', downloadId);
-                    sendResponse({ success: true, downloadId: downloadId });
-                }
+                chrome.downloads.download({
+                    url: videoUrl,
+                    filename: `${downloadDirectory}/twitter_video_${tweetId}.mp4`,
+                    saveAs: false // Set to true if you want the user to choose the location each time
+                }, (downloadId) => {
+                    if (chrome.runtime.lastError) {
+                        console.error('Download failed:', chrome.runtime.lastError);
+                        sendResponse({ success: false, error: chrome.runtime.lastError.message });
+                    } else {
+                        console.log('Download started with ID:', downloadId);
+                        sendResponse({ success: true, downloadId: downloadId });
+                    }
+                });
             });
         } else {
             console.error('Video URL not found');
