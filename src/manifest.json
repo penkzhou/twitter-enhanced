@@ -27,7 +27,10 @@
     "https://api.twitter.com/*"
   ],
   "icons": {
-    "128": "icon-128.png"
+    "128": "icon-128.png",
+    "34": "icon-34.png",
+    "48": "icon-48.png",
+    "16": "icon-16.png"
   },
   "content_scripts": [
     {
