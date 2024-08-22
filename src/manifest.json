@@ -14,9 +14,6 @@
       "128": "images/icon128.png"
     }
   },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
-  },
   "permissions": [
     "activeTab",
     "storage",
