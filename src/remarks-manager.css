@@ -1,0 +1,137 @@
+body {
+    width: 500px;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f9fa;
+    color: #14171a;
+    line-height: 1.6;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    color: #1da1f2;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#remarksList {
+    margin-bottom: 15px;
+}
+
+.remark-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #f5f8fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.remark-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.remark-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.remark-text {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.username {
+    font-weight: bold;
+    color: #1da1f2;
+}
+
+.remark {
+    color: #14171a;
+    word-break: break-word;
+}
+
+.remark-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.remark-actions button {
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-left: 5px;
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remark-actions button:hover {
+    background-color: #0c85d0;
+}
+
+.remark-actions button.delete-remark {
+    background-color: #e0245e;
+}
+
+.remark-actions button.delete-remark:hover {
+    background-color: #c51f5d;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.pagination button {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background-color: #ccd6dd;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    font-size: 14px;
+}
+
+#exportRemarks,
+#importRemarksBtn {
+    background-color: #17bf63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#exportRemarks:hover,
+#importRemarksBtn:hover {
+    background-color: #0f9d58;
+}
