@@ -435,20 +435,11 @@ class TwitterEnhancer {
                     downloadButton.innerHTML = `
                         <div role="button" tabindex="0">
                             <div class="download-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M4 14l8 7 8-7m-8-7v14" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
+                                ${this.generateDownloadIconSVG()}
                             </div>
                             <div class="loading-icon">
                                 <svg viewBox="0 0 24 24">
-                                    ${Array.from({ length: 8 }, (_, i) => `
-                                        <circle cx="12" cy="12" r="8" fill="none" stroke-width="2" stroke-dasharray="12.5 12.5"
-                                            transform="rotate(${i * 45} 12 12)">
-                                            <animateTransform attributeName="transform" type="rotate" 
-                                                values="${i * 45} 12 12;${i * 45 + 360} 12 12" dur="1.5s" 
-                                                repeatCount="indefinite" />
-                                        </circle>
-                                    `).join('')}
+                                    ${this.generateLoadingIconSVG()}
                                 </svg>
                             </div>
                         </div>
@@ -505,6 +496,25 @@ class TwitterEnhancer {
     private removeAllVideoDownloadButtons(): void {
         document.querySelectorAll('.video-download-btn').forEach((button) => button.remove());
         document.querySelectorAll('.video-download-added').forEach((element) => element.classList.remove('video-download-added'));
+    }
+
+    private generateDownloadIconSVG(): string {
+        return `
+            <svg viewBox="0 0 24 24">
+                <path d="M4 14l8 7 8-7m-8-7v14" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+        `;
+    }
+
+    private generateLoadingIconSVG(): string {
+        return Array.from({ length: 8 }, (_, i) => `
+            <circle cx="12" cy="12" r="8" fill="none" stroke-width="2" stroke-dasharray="12.5 12.5"
+                transform="rotate(${i * 45} 12 12)">
+                <animateTransform attributeName="transform" type="rotate" 
+                    values="${i * 45} 12 12;${i * 45 + 360} 12 12" dur="1.5s" 
+                    repeatCount="indefinite" />
+            </circle>
+        `).join('');
     }
 }
 
