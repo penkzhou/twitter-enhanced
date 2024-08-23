@@ -79,6 +79,66 @@
     },
     "manageRemarks": {
         "message": "Manage Remarks",
-        "description": "Text for manage remarks button"
+        "description": "Title for the options page"
+    },
+    "editRemark": {
+        "message": "Edit",
+        "description": "Edit button text"
+    },
+    "deleteRemark": {
+        "message": "Delete",
+        "description": "Delete button text"
+    },
+    "previousPage": {
+        "message": "Previous",
+        "description": "Previous page button text"
+    },
+    "nextPage": {
+        "message": "Next",
+        "description": "Next page button text"
+    },
+    "pageOf": {
+        "message": "Page $CURRENT$ of $TOTAL$",
+        "description": "Page number indicator",
+        "placeholders": {
+            "current": {
+                "content": "$1",
+                "example": "1"
+            },
+            "total": {
+                "content": "$2",
+                "example": "5"
+            }
+        }
+    },
+    "exportRemarks": {
+        "message": "Export Remarks",
+        "description": "Export remarks button text"
+    },
+    "importRemarks": {
+        "message": "Import Remarks",
+        "description": "Import remarks button text"
+    },
+    "editRemarkPrompt": {
+        "message": "Edit remark for @$USERNAME$:",
+        "description": "Prompt when editing a remark",
+        "placeholders": {
+            "username": {
+                "content": "$1",
+                "example": "johndoe"
+            }
+        }
+    },
+    "deleteRemarkConfirm": {
+        "message": "Are you sure you want to delete this remark?",
+        "description": "Confirmation message when deleting a remark"
+    },
+    "importSuccessful": {
+        "message": "Remarks imported successfully!",
+        "description": "Message shown when remarks are successfully imported"
+    },
+    "importError": {
+        "message": "Error importing remarks. Please make sure the file is in the correct format.",
+        "description": "Error message when importing remarks fails"
     }
 }

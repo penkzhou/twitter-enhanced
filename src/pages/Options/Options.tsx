@@ -39,8 +39,8 @@ const Options: React.FC = () => {
           </div>
         </div>
         <div className="remark-actions">
-          <button onClick={() => editRemark(startIndex + index)}>Edit</button>
-          <button onClick={() => deleteRemark(startIndex + index)}>Delete</button>
+          <button onClick={() => editRemark(startIndex + index)}>{chrome.i18n.getMessage('editRemark')}</button>
+          <button onClick={() => deleteRemark(startIndex + index)}>{chrome.i18n.getMessage('deleteRemark')}</button>
         </div>
       </div>
     ));
@@ -52,7 +52,7 @@ const Options: React.FC = () => {
 
   const editRemark = (index: number) => {
     const remark = userRemarks[index];
-    const newRemark = prompt(`Edit remark for @${remark.username}:`, remark.remark);
+    const newRemark = prompt(chrome.i18n.getMessage('editRemarkPrompt', remark.username), remark.remark);
     if (newRemark !== null) {
       const updatedRemarks = [...userRemarks];
       updatedRemarks[index].remark = newRemark;
@@ -62,7 +62,7 @@ const Options: React.FC = () => {
   };
 
   const deleteRemark = (index: number) => {
-    if (window.confirm('Are you sure you want to delete this remark?')) {
+    if (window.confirm(chrome.i18n.getMessage('deleteRemarkConfirm'))) {
       const updatedRemarks = userRemarks.filter((_, i) => i !== index);
       setUserRemarks(updatedRemarks);
       saveRemarks(updatedRemarks);
@@ -94,12 +94,12 @@ const Options: React.FC = () => {
             setUserRemarks(importedRemarks);
             saveRemarks(importedRemarks);
             setCurrentPage(1);
-            alert('Remarks imported successfully!');
+            alert(chrome.i18n.getMessage('importSuccessful'));
           } else {
             throw new Error('Invalid format');
           }
         } catch (error) {
-          alert('Error importing remarks. Please make sure the file is in the correct format.');
+          alert(chrome.i18n.getMessage('importError'));
         }
       };
       reader.readAsText(file);
@@ -116,14 +116,14 @@ const Options: React.FC = () => {
 
   return (
     <div className="container">
-      <h1>Manage Remarks</h1>
+      <h1>{chrome.i18n.getMessage('manageRemarks')}</h1>
       <div id="remarksList">{displayRemarks()}</div>
       <div className="pagination">
-        <button onClick={() => changePage(-1)} disabled={currentPage === 1}>Previous</button>
-        <span>Page {currentPage} of {totalPages}</span>
-        <button onClick={() => changePage(1)} disabled={currentPage === totalPages}>Next</button>
+        <button onClick={() => changePage(-1)} disabled={currentPage === 1}>{chrome.i18n.getMessage('previousPage')}</button>
+        <span>{chrome.i18n.getMessage('pageOf', [currentPage.toString(), totalPages.toString()])}</span>
+        <button onClick={() => changePage(1)} disabled={currentPage === totalPages}>{chrome.i18n.getMessage('nextPage')}</button>
       </div>
-      <button onClick={exportRemarks} id="exportRemarks">Export Remarks</button>
+      <button onClick={exportRemarks} id="exportRemarks">{chrome.i18n.getMessage('exportRemarks')}</button>
       <input
         type="file"
         id="importRemarks"
@@ -131,7 +131,9 @@ const Options: React.FC = () => {
         style={{ display: 'none' }}
         onChange={importRemarks}
       />
-      <button id="importRemarksBtn" onClick={() => document.getElementById('importRemarks')?.click()}>Import Remarks</button>
+      <button id="importRemarksBtn" onClick={() => document.getElementById('importRemarks')?.click()}>
+        {chrome.i18n.getMessage('importRemarks')}
+      </button>
     </div>
   );
 };
