@@ -1,0 +1,144 @@
+{
+    "extensionName": {
+        "message": "Twitter Улучшенный",
+        "description": "Название расширения"
+    },
+    "extensionDescription": {
+        "message": "Добавляет дополнительные функции в Twitter",
+        "description": "Описание расширения"
+    },
+    "addRemark": {
+        "message": "Добавить заметку",
+        "description": "Текст кнопки для добавления заметки"
+    },
+    "editRemark": {
+        "message": "Редактировать заметку",
+        "description": "Текст кнопки для редактирования заметки"
+    },
+    "enterRemark": {
+        "message": "Введите заметку",
+        "description": "Текст-подсказка для ввода заметки"
+    },
+    "cancel": {
+        "message": "Отмена",
+        "description": "Текст кнопки отмены"
+    },
+    "save": {
+        "message": "Сохранить",
+        "description": "Текст кнопки сохранения"
+    },
+    "downloadMedia": {
+        "message": "Скачать медиа",
+        "description": "Метка для кнопки скачивания"
+    },
+    "tweetIdError": {
+        "message": "Извините, не удалось найти ID твита для скачивания.",
+        "description": "Сообщение об ошибке, когда ID твита не найден"
+    },
+    "downloadError": {
+        "message": "Произошла ошибка при попытке скачать видео.",
+        "description": "Сообщение об ошибке при неудачной попытке скачивания"
+    },
+    "unableToDownload": {
+        "message": "Извините, не удалось скачать видео: $ERROR$",
+        "description": "Сообщение об ошибке с деталями при невозможности скачать",
+        "placeholders": {
+            "error": {
+                "content": "$1",
+                "example": "Ошибка сети"
+            }
+        }
+    },
+    "popupTitle": {
+        "message": "Twitter Улучшенный",
+        "description": "Заголовок всплывающего окна"
+    },
+    "customizeExperience": {
+        "message": "Настройте ваш опыт использования Twitter:",
+        "description": "Подзаголовок во всплывающем окне"
+    },
+    "enableUserRemarks": {
+        "message": "Включить пользовательские заметки",
+        "description": "Метка для переключателя пользовательских заметок"
+    },
+    "enableVideoDownload": {
+        "message": "Включить функцию скачивания видео",
+        "description": "Метка для переключателя скачивания видео"
+    },
+    "downloadDirectory": {
+        "message": "Директория для скачивания:",
+        "description": "Метка для ввода директории скачивания"
+    },
+    "saveSettings": {
+        "message": "Сохранить настройки",
+        "description": "Текст кнопки сохранения настроек"
+    },
+    "settingsSaved": {
+        "message": "Настройки успешно сохранены!",
+        "description": "Сообщение, отображаемое при сохранении настроек"
+    },
+    "manageRemarks": {
+        "message": "Управление заметками",
+        "description": "Заголовок страницы настроек"
+    },
+    "editRemarkInOptions": {
+        "message": "Редактировать",
+        "description": "Текст кнопки редактирования"
+    },
+    "deleteRemarkInOptions": {
+        "message": "Удалить",
+        "description": "Текст кнопки удаления"
+    },
+    "previousPage": {
+        "message": "Предыдущая",
+        "description": "Текст кнопки предыдущей страницы"
+    },
+    "nextPage": {
+        "message": "Следующая",
+        "description": "Текст кнопки следующей страницы"
+    },
+    "pageOf": {
+        "message": "Страница $CURRENT$ из $TOTAL$",
+        "description": "Индикатор номера страницы",
+        "placeholders": {
+            "current": {
+                "content": "$1",
+                "example": "1"
+            },
+            "total": {
+                "content": "$2",
+                "example": "5"
+            }
+        }
+    },
+    "exportRemarks": {
+        "message": "Экспорт заметок",
+        "description": "Текст кнопки экспорта заметок"
+    },
+    "importRemarks": {
+        "message": "Импорт заметок",
+        "description": "Текст кнопки импорта заметок"
+    },
+    "editRemarkPrompt": {
+        "message": "Редактировать заметку для @$USERNAME$:",
+        "description": "Подсказка при редактировании заметки",
+        "placeholders": {
+            "username": {
+                "content": "$1",
+                "example": "johndoe"
+            }
+        }
+    },
+    "deleteRemarkConfirm": {
+        "message": "Вы уверены, что хотите удалить эту заметку?",
+        "description": "Сообщение подтверждения при удалении заметки"
+    },
+    "importSuccessful": {
+        "message": "Заметки успешно импортированы!",
+        "description": "Сообщение, отображаемое при успешном импорте заметок"
+    },
+    "importError": {
+        "message": "Ошибка при импорте заметок. Пожалуйста, убедитесь, что файл имеет правильный формат.",
+        "description": "Сообщение об ошибке при неудачном импорте заметок"
+    }
+}
