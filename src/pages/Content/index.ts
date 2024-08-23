@@ -198,6 +198,32 @@ class TwitterEnhancer {
                 width: 1.25em;
                 height: 1.25em;
             }
+
+            .video-download-btn .loading-icon {
+                display: none;
+            }
+            .video-download-btn.loading .loading-icon {
+                display: block;
+            }
+            .video-download-btn.loading .download-icon {
+                display: none;
+            }
+            .video-download-btn .loading-icon svg {
+                width: 24px;
+                height: 24px;
+            }
+            .video-download-btn .loading-icon svg circle {
+                stroke: currentColor;
+                opacity: 0.125;
+            }
+            .video-download-btn .loading-icon svg circle:nth-child(1) { stroke: #ff0000; }
+            .video-download-btn .loading-icon svg circle:nth-child(2) { stroke: #ff8000; }
+            .video-download-btn .loading-icon svg circle:nth-child(3) { stroke: #ffff00; }
+            .video-download-btn .loading-icon svg circle:nth-child(4) { stroke: #00ff00; }
+            .video-download-btn .loading-icon svg circle:nth-child(5) { stroke: #0080ff; }
+            .video-download-btn .loading-icon svg circle:nth-child(6) { stroke: #8000ff; }
+            .video-download-btn .loading-icon svg circle:nth-child(7) { stroke: #ff00ff; }
+            .video-download-btn .loading-icon svg circle:nth-child(8) { stroke: #ff0080; }
         `;
         document.head.appendChild(style);
     }
@@ -408,11 +434,21 @@ class TwitterEnhancer {
                     downloadButton.setAttribute('aria-label', 'Download media');
                     downloadButton.innerHTML = `
                         <div role="button" tabindex="0">
-                            <div>
+                            <div class="download-icon">
                                 <svg viewBox="0 0 24 24">
-                                    <g>
-                                        <path d="M4 14l8 7 8-7m-8-7v14" stroke="currentColor" stroke-width="2" fill="none"/>
-                                    </g>
+                                    <path d="M4 14l8 7 8-7m-8-7v14" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <div class="loading-icon">
+                                <svg viewBox="0 0 24 24">
+                                    ${Array.from({ length: 8 }, (_, i) => `
+                                        <circle cx="12" cy="12" r="8" fill="none" stroke-width="2" stroke-dasharray="12.5 12.5"
+                                            transform="rotate(${i * 45} 12 12)">
+                                            <animateTransform attributeName="transform" type="rotate" 
+                                                values="${i * 45} 12 12;${i * 45 + 360} 12 12" dur="1.5s" 
+                                                repeatCount="indefinite" />
+                                        </circle>
+                                    `).join('')}
                                 </svg>
                             </div>
                         </div>
@@ -420,7 +456,7 @@ class TwitterEnhancer {
                     downloadButton.addEventListener('click', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        this.handleVideoDownload(tweet);
+                        this.handleVideoDownload(tweet, downloadButton);
                     });
                     actionBar.appendChild(downloadButton);
                     console.log('Download button added to tweet');
@@ -430,16 +466,17 @@ class TwitterEnhancer {
         });
     }
 
-    private async handleVideoDownload(tweetElement: Element): Promise<void> {
-        console.log('Attempting to download video from tweet:', tweetElement);
+    private async handleVideoDownload(tweetElement: Element, button: HTMLElement): Promise<void> {
+        // Show loading state
+        button.classList.add('loading');
 
         const tweetId = this.getTweetId(tweetElement);
         if (!tweetId) {
             console.error('Could not find tweet ID');
             alert('Sorry, unable to find the tweet ID for download.');
+            button.classList.remove('loading');
             return;
         }
-        console.log('tweetId', tweetId);
 
         chrome.runtime.sendMessage({ action: "downloadVideo", tweetId: tweetId }, (response) => {
             if (chrome.runtime.lastError) {
@@ -451,6 +488,7 @@ class TwitterEnhancer {
                 console.error('Download failed:', response.error);
                 alert(`Sorry, unable to download the video: ${response.error}`);
             }
+            button.classList.remove('loading');
         });
     }
 

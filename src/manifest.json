@@ -18,8 +18,7 @@
     "activeTab",
     "storage",
     "cookies",
-    "downloads",
-    "identity"
+    "downloads"
   ],
   "host_permissions": [
     "https://twitter.com/*",
