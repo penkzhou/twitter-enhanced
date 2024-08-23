@@ -1,0 +1,144 @@
+{
+    "extensionName": {
+        "message": "Twitter 增强",
+        "description": "扩展的名称"
+    },
+    "extensionDescription": {
+        "message": "为 Twitter 添加额外功能",
+        "description": "扩展的描述"
+    },
+    "addRemark": {
+        "message": "添加备注",
+        "description": "添加备注按钮文本"
+    },
+    "editRemark": {
+        "message": "编辑备注",
+        "description": "编辑备注按钮文本"
+    },
+    "enterRemark": {
+        "message": "输入备注",
+        "description": "备注输入框占位文本"
+    },
+    "cancel": {
+        "message": "取消",
+        "description": "取消按钮文本"
+    },
+    "save": {
+        "message": "保存",
+        "description": "保存按钮文本"
+    },
+    "downloadMedia": {
+        "message": "下载媒体",
+        "description": "下载按钮的 aria 标签"
+    },
+    "tweetIdError": {
+        "message": "抱歉，无法找到要下载的推文 ID。",
+        "description": "找不到推文 ID 时的错误消息"
+    },
+    "downloadError": {
+        "message": "尝试下载视频时发生错误。",
+        "description": "下载失败时的错误消息"
+    },
+    "unableToDownload": {
+        "message": "抱歉，无法下载视频：$ERROR$",
+        "description": "无法下载时的详细错误消息",
+        "placeholders": {
+            "error": {
+                "content": "$1",
+                "example": "网络错误"
+            }
+        }
+    },
+    "popupTitle": {
+        "message": "Twitter 增强",
+        "description": "弹出窗口的标题"
+    },
+    "customizeExperience": {
+        "message": "自定义您的 Twitter 体验：",
+        "description": "弹出窗口的副标题"
+    },
+    "enableUserRemarks": {
+        "message": "启用用户备注",
+        "description": "用户备注开关的标签"
+    },
+    "enableVideoDownload": {
+        "message": "启用视频下载功能",
+        "description": "视频下载开关的标签"
+    },
+    "downloadDirectory": {
+        "message": "下载目录：",
+        "description": "下载目录输入框的标签"
+    },
+    "saveSettings": {
+        "message": "保存设置",
+        "description": "保存设置按钮文本"
+    },
+    "settingsSaved": {
+        "message": "设置保存成功！",
+        "description": "设置保存成功时显示的消息"
+    },
+    "manageRemarks": {
+        "message": "管理备注",
+        "description": "选项页面的标题"
+    },
+    "editRemarkInOptions": {
+        "message": "编辑",
+        "description": "编辑按钮文本"
+    },
+    "deleteRemarkInOptions": {
+        "message": "删除",
+        "description": "删除按钮文本"
+    },
+    "previousPage": {
+        "message": "上一页",
+        "description": "上一页按钮文本"
+    },
+    "nextPage": {
+        "message": "下一页",
+        "description": "下一页按钮文本"
+    },
+    "pageOf": {
+        "message": "第 $CURRENT$ 页，共 $TOTAL$ 页",
+        "description": "页码指示器",
+        "placeholders": {
+            "current": {
+                "content": "$1",
+                "example": "1"
+            },
+            "total": {
+                "content": "$2",
+                "example": "5"
+            }
+        }
+    },
+    "exportRemarks": {
+        "message": "导出备注",
+        "description": "导出备注按钮文本"
+    },
+    "importRemarks": {
+        "message": "导入备注",
+        "description": "导入备注按钮文本"
+    },
+    "editRemarkPrompt": {
+        "message": "编辑 @$USERNAME$ 的备注：",
+        "description": "编辑备注时的提示",
+        "placeholders": {
+            "username": {
+                "content": "$1",
+                "example": "johndoe"
+            }
+        }
+    },
+    "deleteRemarkConfirm": {
+        "message": "您确定要删除这条备注吗？",
+        "description": "删除备注时的确认消息"
+    },
+    "importSuccessful": {
+        "message": "备注导入成功！",
+        "description": "备注成功导入时显示的消息"
+    },
+    "importError": {
+        "message": "导入备注时出错。请确保文件格式正确。",
+        "description": "导入备注失败时的错误消息"
+    }
+}
