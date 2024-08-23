@@ -27,7 +27,7 @@ const Popup = () => {
     }, () => {
       console.log('Settings saved');
       updateContentScript();
-      setSaveMessage('Settings saved successfully!');
+      setSaveMessage(chrome.i18n.getMessage('settingsSaved'));
       setTimeout(() => setSaveMessage(''), 3000); // Clear message after 3 seconds
     });
   };
@@ -50,8 +50,8 @@ const Popup = () => {
 
   return (
     <div className="container">
-      <h1>Twitter Enhanced</h1>
-      <p>Customize your Twitter experience:</p>
+      <h1>{chrome.i18n.getMessage('popupTitle')}</h1>
+      <p>{chrome.i18n.getMessage('customizeExperience')}</p>
 
       <div className="feature-toggle">
         <input
@@ -60,7 +60,7 @@ const Popup = () => {
           checked={remarkFeatureEnabled}
           onChange={(e) => setRemarkFeatureEnabled(e.target.checked)}
         />
-        <label htmlFor="remarkFeatureToggle">Enable user remarks</label>
+        <label htmlFor="remarkFeatureToggle">{chrome.i18n.getMessage('enableUserRemarks')}</label>
       </div>
       <div className="feature-toggle">
         <input
@@ -69,10 +69,10 @@ const Popup = () => {
           checked={videoDownloadFeatureEnabled}
           onChange={(e) => setVideoDownloadFeatureEnabled(e.target.checked)}
         />
-        <label htmlFor="videoDownloadFeatureToggle">Enable video download feature</label>
+        <label htmlFor="videoDownloadFeatureToggle">{chrome.i18n.getMessage('enableVideoDownload')}</label>
       </div>
       <div className="feature-toggle">
-        <label htmlFor="downloadDirectory">Download Directory:</label>
+        <label htmlFor="downloadDirectory">{chrome.i18n.getMessage('downloadDirectory')}</label>
         <input
           type="text"
           id="downloadDirectory"
@@ -80,9 +80,9 @@ const Popup = () => {
           onChange={(e) => setDownloadDirectory(e.target.value)}
         />
       </div>
-      <button onClick={saveSettings}>Save Settings</button>
+      <button onClick={saveSettings}>{chrome.i18n.getMessage('saveSettings')}</button>
       {saveMessage && <p className="save-message">{saveMessage}</p>}
-      <button onClick={openRemarksManager} className="secondary-button">Manage Remarks</button>
+      <button onClick={openRemarksManager} className="secondary-button">{chrome.i18n.getMessage('manageRemarks')}</button>
     </div>
   );
 };

@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Twitter Enhanced",
-  "description": "Add extra features to Twitter",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
   "options_page": "options.html",
   "background": {
     "service_worker": "background.bundle.js"

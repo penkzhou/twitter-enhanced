@@ -236,7 +236,7 @@ class TwitterEnhancer {
                 const usernameElementAll = header.querySelectorAll('a[href^="/"] span');
                 const usernameElement = Array.from(usernameElementAll).find((el) => el.textContent?.trim().startsWith('@'));
                 if (usernameElement && usernameElement.textContent?.trim().slice(1) === username) {
-                    button.textContent = hasRemark ? 'Edit Remark' : 'Add Remark';
+                    button.textContent = hasRemark ? this.getI18nMessage('editRemark') : this.getI18nMessage('addRemark');
                 }
             }
         });
@@ -299,7 +299,7 @@ class TwitterEnhancer {
                     const button = document.createElement('button');
                     button.className = 'add-remark-btn';
                     const existingRemark = this.userRemarks.find(r => r.username === username);
-                    button.textContent = existingRemark ? 'Edit Remark' : 'Add Remark';
+                    button.textContent = existingRemark ? this.getI18nMessage('editRemark') : this.getI18nMessage('addRemark');
                     button.addEventListener('click', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -381,11 +381,11 @@ class TwitterEnhancer {
         const dialogHTML = `
             <div id="remarkDialog" class="remark-dialog">
               <div class="remark-dialog-content">
-                <h2 id="remarkDialogTitle">Add Remark</h2>
-                <input type="text" id="remarkInput" placeholder="Enter remark">
+                <h2 id="remarkDialogTitle">${this.getI18nMessage('addRemark')}</h2>
+                <input type="text" id="remarkInput" placeholder="${this.getI18nMessage('enterRemark')}">
                 <div class="remark-dialog-buttons">
-                  <button id="cancelRemarkBtn">Cancel</button>
-                  <button id="saveRemarkBtn">Save</button>
+                  <button id="cancelRemarkBtn">${this.getI18nMessage('cancel')}</button>
+                  <button id="saveRemarkBtn">${this.getI18nMessage('save')}</button>
                 </div>
               </div>
             </div>
@@ -409,7 +409,7 @@ class TwitterEnhancer {
         const existingRemark = this.userRemarks.find(r => r.username === username)?.remark;
         this.currentUsername = username;
 
-        if (this.dialogTitle) this.dialogTitle.textContent = existingRemark ? 'Edit Remark' : 'Add Remark';
+        if (this.dialogTitle) this.dialogTitle.textContent = existingRemark ? this.getI18nMessage('editRemark') : this.getI18nMessage('addRemark');
         if (this.remarkInput) this.remarkInput.value = existingRemark || '';
         if (this.dialog) this.dialog.style.display = 'block';
     }
@@ -431,7 +431,7 @@ class TwitterEnhancer {
                 if (actionBar && !actionBar.querySelector('.video-download-btn')) {
                     const downloadButton = document.createElement('div');
                     downloadButton.className = 'video-download-btn';
-                    downloadButton.setAttribute('aria-label', 'Download media');
+                    downloadButton.setAttribute('aria-label', this.getI18nMessage('downloadMedia'));
                     downloadButton.innerHTML = `
                         <div role="button" tabindex="0">
                             <div class="download-icon">
@@ -464,7 +464,7 @@ class TwitterEnhancer {
         const tweetId = this.getTweetId(tweetElement);
         if (!tweetId) {
             console.error('Could not find tweet ID');
-            alert('Sorry, unable to find the tweet ID for download.');
+            alert(this.getI18nMessage('tweetIdError'));
             button.classList.remove('loading');
             return;
         }
@@ -472,12 +472,12 @@ class TwitterEnhancer {
         chrome.runtime.sendMessage({ action: "downloadVideo", tweetId: tweetId }, (response) => {
             if (chrome.runtime.lastError) {
                 console.error('Error sending message:', chrome.runtime.lastError);
-                alert('An error occurred while trying to download the video.');
+                alert(this.getI18nMessage('downloadError'));
             } else if (response.success) {
                 console.log('Download initiated:', response);
             } else {
                 console.error('Download failed:', response.error);
-                alert(`Sorry, unable to download the video: ${response.error}`);
+                alert(this.getI18nMessage('unableToDownload', [response.error]));
             }
             button.classList.remove('loading');
         });
@@ -515,6 +515,10 @@ class TwitterEnhancer {
                     repeatCount="indefinite" />
             </circle>
         `).join('');
+    }
+
+    private getI18nMessage(messageName: string, substitutions?: string | string[]): string {
+        return chrome.i18n.getMessage(messageName, substitutions);
     }
 }
 

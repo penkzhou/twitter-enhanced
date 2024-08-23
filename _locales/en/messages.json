@@ -1,0 +1,84 @@
+{
+    "extensionName": {
+        "message": "Twitter Enhanced",
+        "description": "The name of the extension"
+    },
+    "extensionDescription": {
+        "message": "Add extra features to Twitter",
+        "description": "The description of the extension"
+    },
+    "addRemark": {
+        "message": "Add Remark",
+        "description": "Button text to add a remark"
+    },
+    "editRemark": {
+        "message": "Edit Remark",
+        "description": "Button text to edit a remark"
+    },
+    "enterRemark": {
+        "message": "Enter remark",
+        "description": "Placeholder text for remark input"
+    },
+    "cancel": {
+        "message": "Cancel",
+        "description": "Cancel button text"
+    },
+    "save": {
+        "message": "Save",
+        "description": "Save button text"
+    },
+    "downloadMedia": {
+        "message": "Download media",
+        "description": "Aria label for download button"
+    },
+    "tweetIdError": {
+        "message": "Sorry, unable to find the tweet ID for download.",
+        "description": "Error message when tweet ID is not found"
+    },
+    "downloadError": {
+        "message": "An error occurred while trying to download the video.",
+        "description": "Error message when download fails"
+    },
+    "unableToDownload": {
+        "message": "Sorry, unable to download the video: $ERROR$",
+        "description": "Error message with details when unable to download",
+        "placeholders": {
+            "error": {
+                "content": "$1",
+                "example": "Network error"
+            }
+        }
+    },
+    "popupTitle": {
+        "message": "Twitter Enhanced",
+        "description": "Title of the popup"
+    },
+    "customizeExperience": {
+        "message": "Customize your Twitter experience:",
+        "description": "Subtitle in the popup"
+    },
+    "enableUserRemarks": {
+        "message": "Enable user remarks",
+        "description": "Label for user remarks toggle"
+    },
+    "enableVideoDownload": {
+        "message": "Enable video download feature",
+        "description": "Label for video download toggle"
+    },
+    "downloadDirectory": {
+        "message": "Download Directory:",
+        "description": "Label for download directory input"
+    },
+    "saveSettings": {
+        "message": "Save Settings",
+        "description": "Text for save settings button"
+    },
+    "settingsSaved": {
+        "message": "Settings saved successfully!",
+        "description": "Message shown when settings are saved"
+    },
+    "manageRemarks": {
+        "message": "Manage Remarks",
+        "description": "Text for manage remarks button"
+    }
+}
