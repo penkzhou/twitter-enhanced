@@ -81,11 +81,11 @@
         "message": "Manage Remarks",
         "description": "Title for the options page"
     },
-    "editRemark": {
+    "editRemarkInOptions": {
         "message": "Edit",
         "description": "Edit button text"
     },
-    "deleteRemark": {
+    "deleteRemarkInOptions": {
         "message": "Delete",
         "description": "Delete button text"
     },

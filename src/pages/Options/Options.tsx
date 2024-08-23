@@ -39,8 +39,8 @@ const Options: React.FC = () => {
           </div>
         </div>
         <div className="remark-actions">
-          <button onClick={() => editRemark(startIndex + index)}>{chrome.i18n.getMessage('editRemark')}</button>
-          <button onClick={() => deleteRemark(startIndex + index)}>{chrome.i18n.getMessage('deleteRemark')}</button>
+          <button onClick={() => editRemark(startIndex + index)}>{chrome.i18n.getMessage('editRemarkInOptions')}</button>
+          <button onClick={() => deleteRemark(startIndex + index)}>{chrome.i18n.getMessage('deleteRemarkInOptions')}</button>
         </div>
       </div>
     ));
