@@ -1,0 +1,144 @@
+{
+    "extensionName": {
+        "message": "Twitter Mejorado",
+        "description": "El nombre de la extensión"
+    },
+    "extensionDescription": {
+        "message": "Añade funciones extra a Twitter",
+        "description": "La descripción de la extensión"
+    },
+    "addRemark": {
+        "message": "Añadir Comentario",
+        "description": "Texto del botón para añadir un comentario"
+    },
+    "editRemark": {
+        "message": "Editar Comentario",
+        "description": "Texto del botón para editar un comentario"
+    },
+    "enterRemark": {
+        "message": "Introduce el comentario",
+        "description": "Texto de marcador de posición para la entrada de comentarios"
+    },
+    "cancel": {
+        "message": "Cancelar",
+        "description": "Texto del botón de cancelar"
+    },
+    "save": {
+        "message": "Guardar",
+        "description": "Texto del botón de guardar"
+    },
+    "downloadMedia": {
+        "message": "Descargar medio",
+        "description": "Etiqueta aria para el botón de descarga"
+    },
+    "tweetIdError": {
+        "message": "Lo siento, no se pudo encontrar el ID del tweet para la descarga.",
+        "description": "Mensaje de error cuando no se encuentra el ID del tweet"
+    },
+    "downloadError": {
+        "message": "Ocurrió un error al intentar descargar el video.",
+        "description": "Mensaje de error cuando falla la descarga"
+    },
+    "unableToDownload": {
+        "message": "Lo siento, no se pudo descargar el video: $ERROR$",
+        "description": "Mensaje de error con detalles cuando no se puede descargar",
+        "placeholders": {
+            "error": {
+                "content": "$1",
+                "example": "Error de red"
+            }
+        }
+    },
+    "popupTitle": {
+        "message": "Twitter Mejorado",
+        "description": "Título de la ventana emergente"
+    },
+    "customizeExperience": {
+        "message": "Personaliza tu experiencia de Twitter:",
+        "description": "Subtítulo en la ventana emergente"
+    },
+    "enableUserRemarks": {
+        "message": "Habilitar comentarios de usuario",
+        "description": "Etiqueta para el interruptor de comentarios de usuario"
+    },
+    "enableVideoDownload": {
+        "message": "Habilitar función de descarga de video",
+        "description": "Etiqueta para el interruptor de descarga de video"
+    },
+    "downloadDirectory": {
+        "message": "Directorio de Descarga:",
+        "description": "Etiqueta para la entrada del directorio de descarga"
+    },
+    "saveSettings": {
+        "message": "Guardar Configuración",
+        "description": "Texto para el botón de guardar configuración"
+    },
+    "settingsSaved": {
+        "message": "¡Configuración guardada con éxito!",
+        "description": "Mensaje mostrado cuando se guardan las configuraciones"
+    },
+    "manageRemarks": {
+        "message": "Gestionar Comentarios",
+        "description": "Título para la página de opciones"
+    },
+    "editRemarkInOptions": {
+        "message": "Editar",
+        "description": "Texto del botón de editar"
+    },
+    "deleteRemarkInOptions": {
+        "message": "Eliminar",
+        "description": "Texto del botón de eliminar"
+    },
+    "previousPage": {
+        "message": "Anterior",
+        "description": "Texto del botón de página anterior"
+    },
+    "nextPage": {
+        "message": "Siguiente",
+        "description": "Texto del botón de página siguiente"
+    },
+    "pageOf": {
+        "message": "Página $CURRENT$ de $TOTAL$",
+        "description": "Indicador de número de página",
+        "placeholders": {
+            "current": {
+                "content": "$1",
+                "example": "1"
+            },
+            "total": {
+                "content": "$2",
+                "example": "5"
+            }
+        }
+    },
+    "exportRemarks": {
+        "message": "Exportar Comentarios",
+        "description": "Texto del botón para exportar comentarios"
+    },
+    "importRemarks": {
+        "message": "Importar Comentarios",
+        "description": "Texto del botón para importar comentarios"
+    },
+    "editRemarkPrompt": {
+        "message": "Editar comentario para @$USERNAME$:",
+        "description": "Mensaje cuando se edita un comentario",
+        "placeholders": {
+            "username": {
+                "content": "$1",
+                "example": "johndoe"
+            }
+        }
+    },
+    "deleteRemarkConfirm": {
+        "message": "¿Estás seguro de que quieres eliminar este comentario?",
+        "description": "Mensaje de confirmación al eliminar un comentario"
+    },
+    "importSuccessful": {
+        "message": "¡Comentarios importados con éxito!",
+        "description": "Mensaje mostrado cuando los comentarios se importan correctamente"
+    },
+    "importError": {
+        "message": "Error al importar comentarios. Por favor, asegúrate de que el archivo tiene el formato correcto.",
+        "description": "Mensaje de error cuando falla la importación de comentarios"
+    }
+}

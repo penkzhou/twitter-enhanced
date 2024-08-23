@@ -1,0 +1,144 @@
+{
+    "extensionName": {
+        "message": "Twitter エンハンサー",
+        "description": "拡張機能の名前"
+    },
+    "extensionDescription": {
+        "message": "Twitter に追加機能を提供します",
+        "description": "拡張機能の説明"
+    },
+    "addRemark": {
+        "message": "備考を追加",
+        "description": "備考追加ボタンのテキスト"
+    },
+    "editRemark": {
+        "message": "備考を編集",
+        "description": "備考編集ボタンのテキスト"
+    },
+    "enterRemark": {
+        "message": "備考を入力",
+        "description": "備考入力欄のプレースホルダーテキスト"
+    },
+    "cancel": {
+        "message": "キャンセル",
+        "description": "キャンセルボタンのテキスト"
+    },
+    "save": {
+        "message": "保存",
+        "description": "保存ボタンのテキスト"
+    },
+    "downloadMedia": {
+        "message": "メディアをダウンロード",
+        "description": "ダウンロードボタンのaria label"
+    },
+    "tweetIdError": {
+        "message": "申し訳ありませんが、ダウンロード用のツイートIDが見つかりません。",
+        "description": "ツイートIDが見つからない場合のエラーメッセージ"
+    },
+    "downloadError": {
+        "message": "動画のダウンロード中にエラーが発生しました。",
+        "description": "ダウンロード失敗時のエラーメッセージ"
+    },
+    "unableToDownload": {
+        "message": "申し訳ありませんが、動画をダウンロードできません：$ERROR$",
+        "description": "ダウンロードできない場合の詳細エラーメッセージ",
+        "placeholders": {
+            "error": {
+                "content": "$1",
+                "example": "ネットワークエラー"
+            }
+        }
+    },
+    "popupTitle": {
+        "message": "Twitter エンハンサー",
+        "description": "ポップアップのタイトル"
+    },
+    "customizeExperience": {
+        "message": "Twitter体験をカスタマイズ：",
+        "description": "ポップアップのサブタイトル"
+    },
+    "enableUserRemarks": {
+        "message": "ユーザー備考を有効にする",
+        "description": "ユーザー備考トグルのラベル"
+    },
+    "enableVideoDownload": {
+        "message": "動画ダウンロード機能を有効にする",
+        "description": "動画ダウンロードトグルのラベル"
+    },
+    "downloadDirectory": {
+        "message": "ダウンロードディレクトリ：",
+        "description": "ダウンロードディレクトリ入力欄のラベル"
+    },
+    "saveSettings": {
+        "message": "設定を保存",
+        "description": "設定保存ボタンのテキスト"
+    },
+    "settingsSaved": {
+        "message": "設定が正常に保存されました！",
+        "description": "設定保存成功時のメッセージ"
+    },
+    "manageRemarks": {
+        "message": "備考を管理",
+        "description": "オプションページのタイトル"
+    },
+    "editRemarkInOptions": {
+        "message": "編集",
+        "description": "編集ボタンのテキスト"
+    },
+    "deleteRemarkInOptions": {
+        "message": "削除",
+        "description": "削除ボタンのテキスト"
+    },
+    "previousPage": {
+        "message": "前へ",
+        "description": "前のページボタンのテキスト"
+    },
+    "nextPage": {
+        "message": "次へ",
+        "description": "次のページ��タンのテキスト"
+    },
+    "pageOf": {
+        "message": "$TOTAL$ページ中$CURRENT$ページ目",
+        "description": "ページ番号表示",
+        "placeholders": {
+            "current": {
+                "content": "$1",
+                "example": "1"
+            },
+            "total": {
+                "content": "$2",
+                "example": "5"
+            }
+        }
+    },
+    "exportRemarks": {
+        "message": "備考をエクスポート",
+        "description": "備考エクスポートボタンのテキスト"
+    },
+    "importRemarks": {
+        "message": "備考をインポート",
+        "description": "備考インポートボタンのテキスト"
+    },
+    "editRemarkPrompt": {
+        "message": "@$USERNAME$の備考を編集：",
+        "description": "備考編集時のプロンプト",
+        "placeholders": {
+            "username": {
+                "content": "$1",
+                "example": "johndoe"
+            }
+        }
+    },
+    "deleteRemarkConfirm": {
+        "message": "この備考を削除してもよろしいですか？",
+        "description": "備考削除時の確認メッセージ"
+    },
+    "importSuccessful": {
+        "message": "備考のインポー��に成功しました！",
+        "description": "備考のインポート成功時のメッセージ"
+    },
+    "importError": {
+        "message": "備考のインポート中にエラーが発生しました。ファイル形式が正しいことを確認してください。",
+        "description": "備考のインポート失敗時のエラーメッセージ"
+    }
+}
