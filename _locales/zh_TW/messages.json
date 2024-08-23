@@ -1,0 +1,144 @@
+{
+    "extensionName": {
+        "message": "Twitter 增強",
+        "description": "擴充功能的名稱"
+    },
+    "extensionDescription": {
+        "message": "為 Twitter 添加額外功能",
+        "description": "擴充功能的描述"
+    },
+    "addRemark": {
+        "message": "新增備註",
+        "description": "新增備註按鈕文字"
+    },
+    "editRemark": {
+        "message": "編輯備註",
+        "description": "編輯備註按鈕文字"
+    },
+    "enterRemark": {
+        "message": "輸入備註",
+        "description": "備註輸入框的佔位文字"
+    },
+    "cancel": {
+        "message": "取消",
+        "description": "取消按鈕文字"
+    },
+    "save": {
+        "message": "儲存",
+        "description": "儲存按鈕文字"
+    },
+    "downloadMedia": {
+        "message": "下載媒體",
+        "description": "下載按鈕的無障礙標籤"
+    },
+    "tweetIdError": {
+        "message": "抱歉，無法找到要下載的推文 ID。",
+        "description": "找不到推文 ID 時的錯誤訊息"
+    },
+    "downloadError": {
+        "message": "嘗試下載影片時發生錯誤。",
+        "description": "下載失敗時的錯誤訊息"
+    },
+    "unableToDownload": {
+        "message": "抱歉，無法下載影片：$ERROR$",
+        "description": "無法下載時的詳細錯誤訊息",
+        "placeholders": {
+            "error": {
+                "content": "$1",
+                "example": "網路錯誤"
+            }
+        }
+    },
+    "popupTitle": {
+        "message": "Twitter 增強",
+        "description": "彈出視窗的標題"
+    },
+    "customizeExperience": {
+        "message": "自訂您的 Twitter 體驗：",
+        "description": "彈出視窗的副標題"
+    },
+    "enableUserRemarks": {
+        "message": "啟用用戶備註",
+        "description": "用戶備註開關的標籤"
+    },
+    "enableVideoDownload": {
+        "message": "啟用影片下載功能",
+        "description": "影片下載開關的標籤"
+    },
+    "downloadDirectory": {
+        "message": "下載目錄：",
+        "description": "下載目錄輸入框的標籤"
+    },
+    "saveSettings": {
+        "message": "儲存設定",
+        "description": "儲存設定按鈕的文字"
+    },
+    "settingsSaved": {
+        "message": "設定已成功儲存！",
+        "description": "設定儲存成功時顯示的訊息"
+    },
+    "manageRemarks": {
+        "message": "管理備註",
+        "description": "選項頁面的標題"
+    },
+    "editRemarkInOptions": {
+        "message": "編輯",
+        "description": "編輯按鈕文字"
+    },
+    "deleteRemarkInOptions": {
+        "message": "刪除",
+        "description": "刪除按鈕文字"
+    },
+    "previousPage": {
+        "message": "上一頁",
+        "description": "上一頁按鈕文字"
+    },
+    "nextPage": {
+        "message": "下一頁",
+        "description": "下一頁按鈕文字"
+    },
+    "pageOf": {
+        "message": "第 $CURRENT$ 頁，共 $TOTAL$ 頁",
+        "description": "頁碼指示器",
+        "placeholders": {
+            "current": {
+                "content": "$1",
+                "example": "1"
+            },
+            "total": {
+                "content": "$2",
+                "example": "5"
+            }
+        }
+    },
+    "exportRemarks": {
+        "message": "匯出備註",
+        "description": "匯出備註按鈕文字"
+    },
+    "importRemarks": {
+        "message": "匯入備註",
+        "description": "匯入備註按鈕文字"
+    },
+    "editRemarkPrompt": {
+        "message": "編輯 @$USERNAME$ 的備註：",
+        "description": "編輯備註時的提示",
+        "placeholders": {
+            "username": {
+                "content": "$1",
+                "example": "johndoe"
+            }
+        }
+    },
+    "deleteRemarkConfirm": {
+        "message": "您確定要刪除這條備註嗎？",
+        "description": "刪除備註時的確認訊息"
+    },
+    "importSuccessful": {
+        "message": "備註已成功匯入！",
+        "description": "備註成功匯入時顯示的訊息"
+    },
+    "importError": {
+        "message": "匯入備註時發生錯誤。請確保檔案格式正確。",
+        "description": "匯入備註失敗時的錯誤訊息"
+    }
+}
