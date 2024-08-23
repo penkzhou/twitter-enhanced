@@ -6,7 +6,11 @@ interface UserRemark {
   remark: string;
 }
 
-const Options: React.FC = () => {
+interface OptionsProps {
+  title: string;
+}
+
+const Options: React.FC<OptionsProps> = ({ title }) => {
   const [userRemarks, setUserRemarks] = useState<UserRemark[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const remarksPerPage = 10;
