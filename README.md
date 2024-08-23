@@ -33,7 +33,7 @@ This extension puts you in control, allowing you to customize your Twitter inter
 
 (Note: Include this section once the extension is published on the Chrome Web Store)
 
-1. Visit the [Twitter Username Remark Extension](chrome-web-store-link-here) page on the Chrome Web Store.
+1. Visit the [Twitter Username Remark Extension](https://chrome.google.com/webstore/detail/cdcjmkiabmominbckhhcbjleidhddjfc) page on the Chrome Web Store.
 2. Click "Add to Chrome" to install the extension.
 
 ## Usage
