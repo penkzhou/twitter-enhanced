@@ -45,7 +45,8 @@ const DownloadRecords: React.FC = () => {
     };
 
     const locateFile = (filename: string) => {
-        chrome.downloads.search({ filename: filename }, (downloads) => {
+        /// a Regex to match the filename
+        chrome.downloads.search({ filenameRegex: `^${filename}$` }, (downloads) => {
             if (downloads && downloads.length > 0) {
                 chrome.downloads.show(downloads[0].id);
             } else {

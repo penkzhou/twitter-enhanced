@@ -49,7 +49,7 @@ const Popup = () => {
     };
 
     const openDownloadRecords = () => {
-        chrome.tabs.create({ url: 'download_records.html' });
+        chrome.tabs.create({ url: 'downloadRecords.html' });
     };
 
     return (

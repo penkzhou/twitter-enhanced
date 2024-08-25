@@ -228,6 +228,12 @@ var options = {
       cache: false,
     }),
     new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src', 'pages', 'DownloadRecords', 'index.html'),
+      filename: 'downloadRecords.html',
+      chunks: ['downloadRecords'],
+      cache: false,
+    }),
+    new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Panel', 'index.html'),
       filename: 'panel.html',
       chunks: ['panel'],

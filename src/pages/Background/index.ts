@@ -30,7 +30,7 @@ async function handleVideoDownload(tweetId: string, sendResponse: (response: any
                         sendResponse({ success: false, error: chrome.runtime.lastError.message });
                     } else {
                         console.log('Download started with ID:', downloadId);
-                        saveDownloadRecord(tweetId, `${downloadDirectory}/twitter_video_${tweetId}.mp4`);
+                        saveDownloadRecord(tweetId, `twitter_video_${tweetId}.mp4`);
                         sendResponse({ success: true, downloadId: downloadId });
                     }
                 });
