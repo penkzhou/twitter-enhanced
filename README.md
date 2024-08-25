@@ -2,13 +2,16 @@
 
 ## Overview
 
-Enhance your Twitter browsing with two powerful features:
+Enhance your Twitter browsing with three powerful features:
 
 1. User Remarks:
    Add personal notes to Twitter profiles. Never forget why you followed someone or what they're known for. Easily manage, edit, and organize your remarks for a more personalized Twitter experience.
 
 2. Video Downloads:
    Seamlessly download Twitter videos with just a click. Save your favorite content directly to your chosen directory for offline viewing or sharing.
+
+3. Download Records Management:
+   Keep track of all your downloaded videos with an easy-to-use management interface. View download history, search records, and manage your downloads efficiently.
 
 This extension puts you in control, allowing you to customize your Twitter interface and interact with content in new ways. Streamline your social media experience with Twitter Enhanced - your personal Twitter assistant.
 
@@ -17,8 +20,14 @@ This extension puts you in control, allowing you to customize your Twitter inter
 - Add custom remarks to Twitter usernames
 - Edit existing remarks
 - Remove remarks to restore original usernames
-- Remarks persist across sessions and page reloads
+- Download Twitter videos directly from tweets
+- Manage download records with a user-friendly interface
+- Search and filter your download history
+- Locate downloaded files on your computer
+- Clear individual or all download records
+- Remarks and download records persist across sessions and page reloads
 - Seamless integration with Twitter's interface
+- Multi-language support (English, Spanish, French, German, Japanese, Russian,Portuguese and Chinese)
 
 ## Installation
 
@@ -38,6 +47,8 @@ This extension puts you in control, allowing you to customize your Twitter inter
 
 ## Usage
 
+### User Remarks
+
 1. Navigate to Twitter.com.
 2. Next to each username, you'll see an "Add Remark" button.
 3. Click this button to add a custom remark for the user.
@@ -45,6 +56,38 @@ This extension puts you in control, allowing you to customize your Twitter inter
 5. The username will now display your custom remark.
 6. To edit a remark, click the "Edit Remark" button and enter a new remark.
 7. To remove a remark, click "Edit Remark" and leave the input empty.
+
+### Video Downloads
+
+1. When viewing a tweet with a video, you'll see a "Download Video" button.
+2. Click the button to download the video to your default downloads folder.
+3. The extension will notify you when the download is complete.
+
+### Download Records Management
+
+1. Click on the extension icon in your browser toolbar.
+2. Select "Manage Download Records" from the popup menu.
+3. You'll see a list of all your downloaded videos, including tweet text and download date.
+4. Use the search bar to filter records by tweet ID or filename.
+5. Click "Locate File" to open the folder containing the downloaded video.
+6. Use the "Delete" button to remove individual records.
+7. The "Clear All Records" button at the bottom allows you to delete all download history.
+
+### Language Settings
+
+1. Click on the extension icon in your browser toolbar.
+2. Select "Settings" from the popup menu.
+3. Choose your preferred language from the dropdown menu.
+4. The extension interface will update to reflect your chosen language.
+
+## Supported Languages
+
+- English (default)
+- Spanish (Español)
+- French (Français)
+- German (Deutsch)
+- Japanese (日本語)
+- Chinese (中文)
 
 ## Development
 
@@ -54,6 +97,15 @@ This extension is built using TypeScript. To set up the development environment:
 2. Run `npm install` to install dependencies.
 3. Use `npm run build` to compile TypeScript files.
 4. For continuous compilation during development, use `npm run watch`.
+
+### Adding a New Language
+
+To add support for a new language:
+
+1. Create a new JSON file in the `_locales` directory, named after the language's locale code (e.g., `fr` for French).
+2. Copy the contents of `_locales/en/messages.json` to your new file.
+3. Translate all the message values to the new language.
+4. Update the supported languages list in this README and in the extension's settings.
 
 ## Contributing
 
@@ -65,7 +117,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Privacy
 
-This extension stores remarks locally in your browser. No data is sent to external servers.
+This extension stores remarks and download records locally in your browser. No data is sent to external servers.
 
 ## Support
 
@@ -73,4 +125,4 @@ If you encounter any issues or have questions, please file an issue on the GitHu
 
 ---
 
-We hope you enjoy using the Twitter Username Remark Extension!
+We hope you enjoy using Twitter Enhanced!
