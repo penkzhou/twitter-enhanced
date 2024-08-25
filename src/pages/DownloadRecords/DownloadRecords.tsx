@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, FileSearch, Trash2, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, FileSearch, Trash2, ExternalLink, AlertTriangle } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -33,6 +33,7 @@ const DownloadRecords: React.FC = () => {
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [recordToDelete, setRecordToDelete] = useState<number | null>(null);
     const [highlightedRecordId, setHighlightedRecordId] = useState<number | null>(null);
+    const [clearAllDialogOpen, setClearAllDialogOpen] = useState(false);
     const recordsPerPage = 10;
     const highlightedRowRef = useRef<HTMLTableRowElement>(null);
 
@@ -66,7 +67,9 @@ const DownloadRecords: React.FC = () => {
     );
 
     const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
+        /// transfer dateString to date
+        const dateMilliseconds = new Date(Number(dateString)).getTime();
+        const date = new Date(dateMilliseconds);
         const formattedDate = format(date, 'PPP');
         const timeAgo = formatDistanceToNow(date, { addSuffix: true });
         const timeDiff = Math.floor((new Date().getTime() - date.getTime()) / 1000);
@@ -148,6 +151,20 @@ const DownloadRecords: React.FC = () => {
         }
     };
 
+    const openClearAllDialog = () => {
+        setClearAllDialogOpen(true);
+    };
+
+    const closeClearAllDialog = () => {
+        setClearAllDialogOpen(false);
+    };
+
+    const confirmClearAll = async () => {
+        await db.clear();
+        await loadRecords();
+        closeClearAllDialog();
+    };
+
     const totalPages = Math.max(1, Math.ceil(filteredRecords.length / recordsPerPage));
 
     return (
@@ -202,6 +219,16 @@ const DownloadRecords: React.FC = () => {
                             <ChevronRight className="w-4 h-4 ml-2" />
                         </Button>
                     </div>
+                    <div className="mt-6 w-full flex justify-center">
+                        <Button
+                            variant="destructive"
+                            onClick={openClearAllDialog}
+                            className="w-full max-w-md"
+                        >
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            {chrome.i18n.getMessage('clearAllRecords')}
+                        </Button>
+                    </div>
                 </CardContent>
             </Card>
             <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
@@ -218,6 +245,30 @@ const DownloadRecords: React.FC = () => {
                         </Button>
                         <Button variant="destructive" onClick={confirmDelete}>
                             {chrome.i18n.getMessage('delete')}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+            <Dialog open={clearAllDialogOpen} onOpenChange={setClearAllDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{chrome.i18n.getMessage('confirmClearAll')}</DialogTitle>
+                        <DialogDescription>
+                            {chrome.i18n.getMessage('clearAllRecordsConfirmation')}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300">
+                        <AlertTriangle className="flex-shrink-0 w-5 h-5 mr-2" />
+                        <span className="text-sm font-medium">
+                            {chrome.i18n.getMessage('clearAllWarning')}
+                        </span>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={closeClearAllDialog}>
+                            {chrome.i18n.getMessage('cancel')}
+                        </Button>
+                        <Button variant="destructive" onClick={confirmClearAll}>
+                            {chrome.i18n.getMessage('clearAll')}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

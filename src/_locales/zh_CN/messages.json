@@ -196,5 +196,25 @@
     "tweetAlreadyDownloaded": {
         "message": "这条推文已经下载过了。是否打开下载记录页面？",
         "description": "当推文已经下载过时显示的消息"
+    },
+    "clearAllRecords": {
+        "message": "清除所有记录",
+        "description": "清除所有记录按钮文本"
+    },
+    "confirmClearAll": {
+        "message": "确认清除",
+        "description": "确认清除对话框的标题"
+    },
+    "clearAllRecordsConfirmation": {
+        "message": "您确定要删除所有记录吗？",
+        "description": "删除所有记录时的确认消息"
+    },
+    "clearAllWarning": {
+        "message": "警告：这将永久删除所有下载记录！",
+        "description": "删除所有记录时的警告消息"
+    },
+    "clearAll": {
+        "message": "清除所有",
+        "description": "清除所有记录按钮文本"
     }
 }

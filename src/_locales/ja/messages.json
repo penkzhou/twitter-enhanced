@@ -196,5 +196,25 @@
     "tweetAlreadyDownloaded": {
         "message": "このツイートは既にダウンロードされています。ダウンロード記録ページを開きますか？",
         "description": "ツイートが既にダウンロードされている場合のメッセージ"
+    },
+    "clearAllRecords": {
+        "message": "全ての記録を削除",
+        "description": "全ての記録を削除ボタンのテキスト"
+    },
+    "confirmClearAll": {
+        "message": "全ての記録を削除",
+        "description": "全ての記録を削除ボタンのテキスト"
+    },
+    "clearAllRecordsConfirmation": {
+        "message": "全ての記録を削除してもよろしいですか？",
+        "description": "全ての記録を削除時の確認メッセージ"
+    },
+    "clearAllWarning": {
+        "message": "警告：これにより全てのダウンロード記録が削除されます。",
+        "description": "全ての記録を削除時の警告メッセージ"
+    },
+    "clearAll": {
+        "message": "全ての記録を削除",
+        "description": "全ての記録を削除ボタンのテキスト"
     }
 }

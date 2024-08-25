@@ -196,5 +196,25 @@
     "tweetAlreadyDownloaded": {
         "message": "Este tweet já foi baixado. Deseja abrir a página de registros de download?",
         "description": "Mensagem mostrada quando um tweet já foi baixado"
+    },
+    "clearAllRecords": {
+        "message": "Eliminar todos os registros",
+        "description": "Texto do botão para eliminar todos os registros"
+    },
+    "confirmClearAll": {
+        "message": "Confirmar Exclusão",
+        "description": "Título para o diálogo de confirmação de exclusão"
+    },
+    "clearAllRecordsConfirmation": {
+        "message": "Tem certeza de que deseja excluir todos os registros?",
+        "description": "Confirmación de eliminación de todos los registros"
+    },
+    "clearAllWarning": {
+        "message": "Aviso: Isso eliminará permanentemente todos os seus registros de download!",
+        "description": "Aviso de eliminación de todos los registros"
+    },
+    "clearAll": {
+        "message": "Eliminar Todos",
+        "description": "Texto do botão para eliminar todos os registros"
     }
 }

@@ -194,7 +194,27 @@
         "description": "操作列標題"
     },
     "tweetAlreadyDownloaded": {
-        "message": "这条推文已经下载过了。是否打开下载记录页面？",
-        "description": "当推文已经下载过时显示的消息"
+        "message": "這條推文已經下載過了。是否打開下載記錄頁面？",
+        "description": "當推文已經下載過時顯示的消息"
+    },
+    "clearAllRecords": {
+        "message": "清除所有記錄",
+        "description": "清除所有記錄按鈕文字"
+    },
+    "confirmClearAll": {
+        "message": "確認清除",
+        "description": "確認清除對話框的標題"
+    },
+    "clearAllRecordsConfirmation": {
+        "message": "您確定要刪除所有記錄嗎？",
+        "description": "刪除所有記錄時的確認訊息"
+    },
+    "clearAllWarning": {
+        "message": "警告：這將永久刪除所有下載記錄！",
+        "description": "刪除所有記錄時的警告訊息"
+    },
+    "clearAll": {
+        "message": "清除所有",
+        "description": "清除所有記錄按鈕文字"
     }
 }

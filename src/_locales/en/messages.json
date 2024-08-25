@@ -196,5 +196,25 @@
     "tweetAlreadyDownloaded": {
         "message": "This tweet has already been downloaded. Do you want to open the download records page?",
         "description": "Message shown when a tweet has already been downloaded"
+    },
+    "clearAllRecords": {
+        "message": "Clear All Records",
+        "description": "Button text to clear all records"
+    },
+    "confirmClearAll": {
+        "message": "Confirm Clear All Records",
+        "description": "Title for the clear all records confirmation dialog"
+    },
+    "clearAllRecordsConfirmation": {
+        "message": "Are you sure you want to delete all download records? This action cannot be undone.",
+        "description": "Confirmation message when deleting all records"
+    },
+    "clearAllWarning": {
+        "message": "Warning: This will permanently delete all your download records.",
+        "description": "Warning message when deleting all records"
+    },
+    "clearAll": {
+        "message": "Clear All",
+        "description": "Button text to clear all records"
     }
 }

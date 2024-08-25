@@ -65,10 +65,11 @@ async function handleVideoDownload(tweetId: string, sendResponse: (response: any
 }
 
 function saveDownloadRecord(tweetId: string, filename: string, downloadId: number, tweetUrl: string, tweetText: string) {
+    /// make sure the downloadDate is a string representation of the date from 1970-01-01 
     db.add({
         tweetId,
         filename,
-        downloadDate: new Date().toISOString(),
+        downloadDate: new Date().getTime().toString(),
         downloadId,
         tweetUrl,
         tweetText
