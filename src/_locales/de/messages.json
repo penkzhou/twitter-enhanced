@@ -216,5 +216,17 @@
     "clearAll": {
         "message": "Alles löschen",
         "description": "Text der Schaltfläche zum Löschen aller Einträge"
+    },
+    "ok": {
+        "message": "OK",
+        "description": "Text für OK-Schaltfläche"
+    },
+    "yes": {
+        "message": "Ja",
+        "description": "Text für Ja-Schaltfläche"
+    },
+    "no": {
+        "message": "Nein",
+        "description": "Text für Nein-Schaltfläche"
     }
 }

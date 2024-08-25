@@ -216,5 +216,17 @@
     "clearAll": {
         "message": "全ての記録を削除",
         "description": "全ての記録を削除ボタンのテキスト"
+    },
+    "ok": {
+        "message": "OK",
+        "description": "OKボタンのテキスト"
+    },
+    "yes": {
+        "message": "はい",
+        "description": "はいボタンのテキスト"
+    },
+    "no": {
+        "message": "いいえ",
+        "description": "いいえボタンのテキスト"
     }
 }

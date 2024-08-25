@@ -216,5 +216,17 @@
     "clearAll": {
         "message": "Clear All",
         "description": "Button text to clear all records"
+    },
+    "ok": {
+        "message": "OK",
+        "description": "Text for OK button"
+    },
+    "yes": {
+        "message": "Yes",
+        "description": "Text for Yes button"
+    },
+    "no": {
+        "message": "No",
+        "description": "Text for No button"
     }
 }

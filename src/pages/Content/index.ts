@@ -1,10 +1,6 @@
-import { printLine } from './modules/print';
 
-console.log('Content script works!');
-console.log('Must reload extension for modifications to take effect.');
 
-printLine("Using the 'printLine' function from the Print Module");
-
+import './../../globals.css';
 
 
 interface UserRemark {
@@ -464,7 +460,7 @@ class TwitterEnhancer {
         const tweetId = this.getTweetId(tweetElement);
         if (!tweetId) {
             console.error('Could not find tweet ID');
-            alert(this.getI18nMessage('tweetIdError'));
+            this.showAlert(this.getI18nMessage('tweetIdError'));
             button.classList.remove('loading');
             return;
         }
@@ -472,22 +468,77 @@ class TwitterEnhancer {
         chrome.runtime.sendMessage({ action: "downloadVideo", tweetId: tweetId }, (response) => {
             if (chrome.runtime.lastError) {
                 console.error('Error sending message:', chrome.runtime.lastError);
-                alert(this.getI18nMessage('downloadError'));
+                this.showAlert(this.getI18nMessage('downloadError'));
             } else if (response.success) {
                 if (response.alreadyDownloaded) {
                     console.log('Tweet already downloaded:', response);
-                    if (confirm(response.message)) {
-                        // Navigate to the download records page
-                        chrome.runtime.sendMessage({ action: "openDownloadRecords", recordId: response.recordId });
-                    }
+                    this.showConfirmDialog(
+                        this.getI18nMessage('tweetAlreadyDownloaded'),
+                        () => {
+                            // Navigate to the download records page
+                            chrome.runtime.sendMessage({ action: "openDownloadRecords", recordId: response.recordId });
+                        }
+                    );
                 } else {
                     console.log('Download initiated:', response);
                 }
             } else {
                 console.error('Download failed:', response.error);
-                alert(this.getI18nMessage('unableToDownload', [response.error]));
+                this.showAlert(this.getI18nMessage('unableToDownload', [response.error]));
             }
             button.classList.remove('loading');
+        });
+    }
+
+    private showAlert(message: string): void {
+        // Create and show a custom alert dialog using Tailwind CSS classes
+        const alertDialog = document.createElement('div');
+        alertDialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        alertDialog.innerHTML = `
+            <div class="bg-white rounded-lg p-6 max-w-sm mx-auto">
+                <p class="text-gray-800 mb-4">${message}</p>
+                <button class="custom-alert-ok w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    ${this.getI18nMessage('ok')}
+                </button>
+            </div>
+        `;
+        document.body.appendChild(alertDialog);
+
+        const okButton = alertDialog.querySelector('.custom-alert-ok');
+        okButton?.addEventListener('click', () => {
+            document.body.removeChild(alertDialog);
+        });
+    }
+
+    private showConfirmDialog(message: string, onConfirm: () => void): void {
+        // Create and show a custom confirmation dialog using Tailwind CSS classes
+        const confirmDialog = document.createElement('div');
+        confirmDialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        confirmDialog.innerHTML = `
+            <div class="bg-white rounded-lg p-6 max-w-sm mx-auto">
+                <p class="text-gray-800 mb-4">${message}</p>
+                <div class="flex justify-end space-x-2">
+                    <button class="custom-confirm-no bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+                        ${this.getI18nMessage('no')}
+                    </button>
+                    <button class="custom-confirm-yes bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                        ${this.getI18nMessage('yes')}
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(confirmDialog);
+
+        const yesButton = confirmDialog.querySelector('.custom-confirm-yes');
+        const noButton = confirmDialog.querySelector('.custom-confirm-no');
+
+        yesButton?.addEventListener('click', () => {
+            onConfirm();
+            document.body.removeChild(confirmDialog);
+        });
+
+        noButton?.addEventListener('click', () => {
+            document.body.removeChild(confirmDialog);
         });
     }
 

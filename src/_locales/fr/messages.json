@@ -216,5 +216,17 @@
     "clearAll": {
         "message": "Tout effacer",
         "description": "Texte du bouton pour effacer tous les enregistrements"
+    },
+    "ok": {
+        "message": "OK",
+        "description": "Texte pour le bouton OK"
+    },
+    "yes": {
+        "message": "Oui",
+        "description": "Texte pour le bouton Oui"
+    },
+    "no": {
+        "message": "Non",
+        "description": "Texte pour le bouton Non"
     }
 }

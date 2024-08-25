@@ -216,5 +216,17 @@
     "clearAll": {
         "message": "Eliminar Todos",
         "description": "Texto do botão para eliminar todos os registros"
+    },
+    "ok": {
+        "message": "OK",
+        "description": "Texto para o botão OK"
+    },
+    "yes": {
+        "message": "Sim",
+        "description": "Texto para o botão Sim"
+    },
+    "no": {
+        "message": "Não",
+        "description": "Texto para o botão Não"
     }
 }

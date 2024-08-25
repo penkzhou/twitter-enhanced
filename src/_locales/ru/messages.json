@@ -216,5 +216,17 @@
     "clearAll": {
         "message": "Удалить все",
         "description": "Текст кнопки для удаления всех записей"
+    },
+    "ok": {
+        "message": "OK",
+        "description": "Текст для кнопки OK"
+    },
+    "yes": {
+        "message": "Да",
+        "description": "Текст для кнопки Да"
+    },
+    "no": {
+        "message": "Нет",
+        "description": "Текст для кнопки Нет"
     }
 }

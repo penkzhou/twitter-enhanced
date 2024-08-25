@@ -216,5 +216,17 @@
     "clearAll": {
         "message": "清除所有",
         "description": "清除所有記錄按鈕文字"
+    },
+    "ok": {
+        "message": "確定",
+        "description": "確定按鈕文字"
+    },
+    "yes": {
+        "message": "是",
+        "description": "是按鈕文字"
+    },
+    "no": {
+        "message": "否",
+        "description": "否按鈕文字"
     }
 }
