@@ -14,6 +14,7 @@ import {
     DialogTitle,
 } from "../../components/ui/dialog";
 import * as db from '../../utils/db';
+import { format, formatDistanceToNow } from 'date-fns';
 
 interface DownloadRecord {
     id: number;
@@ -49,6 +50,25 @@ const DownloadRecords: React.FC = () => {
         record.filename.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const formatDate = (dateString: string) => {
+        /// this should output the date with difference from now in one of the following formats:
+        /// 0. "2 min ago" or "3 hours ago"
+        ///1. "Today"
+        /// 2. "Yesterday"
+        /// 3. "2 days ago"
+        /// 4. "2023-03-29 12:00"
+        const date = new Date(dateString);
+        const formattedDate = format(date, 'PPP'); // e.g., "Apr 29, 2023"
+        const timeAgo = formatDistanceToNow(date, { addSuffix: true }); // e.g., "2 days ago"
+        /// get time diff in seconds
+        const timeDiff = Math.floor((new Date().getTime() - date.getTime()) / 1000);
+        /// if timeDiff less than one day return timeAgo
+        if (timeDiff < 86400) {
+            return timeAgo;
+        }
+        return formattedDate;
+    };
+
     const displayRecords = () => {
         const startIndex = (currentPage - 1) * recordsPerPage;
         const endIndex = startIndex + recordsPerPage;
@@ -58,7 +78,7 @@ const DownloadRecords: React.FC = () => {
                     <Badge variant="secondary">{record.tweetId}</Badge>
                 </TableCell>
                 <TableCell className="max-w-xs truncate py-4">{record.filename}</TableCell>
-                <TableCell className="py-4">{new Date(record.downloadDate).toLocaleString()}</TableCell>
+                <TableCell className="py-4">{formatDate(record.downloadDate)}</TableCell>
                 <TableCell className="py-4">
                     <div className="flex space-x-2">
                         <Button variant="outline" size="sm" onClick={() => locateFile(record.downloadId)}>
