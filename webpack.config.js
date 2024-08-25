@@ -196,7 +196,7 @@ var options = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: '_locales',
+          from: 'src/_locales',
           to: '_locales'
         },
       ],
