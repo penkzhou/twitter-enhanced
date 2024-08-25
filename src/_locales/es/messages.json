@@ -140,5 +140,21 @@
     "importError": {
         "message": "Error al importar comentarios. Por favor, asegúrate de que el archivo tiene el formato correcto.",
         "description": "Mensaje de error cuando falla la importación de comentarios"
+    },
+    "manageDownloads": {
+        "message": "Gestionar Descargas",
+        "description": "Texto del botón para abrir la página de registros de descarga"
+    },
+    "downloadRecords": {
+        "message": "Registros de Descarga",
+        "description": "Título para la página de registros de descarga"
+    },
+    "locateFile": {
+        "message": "Localizar Archivo",
+        "description": "Texto del botón para localizar el archivo descargado"
+    },
+    "fileNotFound": {
+        "message": "Archivo no encontrado en las descargas.",
+        "description": "Mensaje mostrado cuando no se puede localizar un archivo"
     }
 }

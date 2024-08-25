@@ -140,5 +140,21 @@
     "importError": {
         "message": "Erro ao importar observações. Certifique-se de que o arquivo está no formato correto.",
         "description": "Mensagem de erro quando a importação de observações falha"
+    },
+    "manageDownloads": {
+        "message": "Gerenciar Downloads",
+        "description": "Texto do botão para abrir a página de registros de download"
+    },
+    "downloadRecords": {
+        "message": "Registros de Download",
+        "description": "Título da página de registros de download"
+    },
+    "locateFile": {
+        "message": "Localizar Arquivo",
+        "description": "Texto do botão para localizar o arquivo baixado"
+    },
+    "fileNotFound": {
+        "message": "Arquivo não encontrado nos downloads.",
+        "description": "Mensagem exibida quando não é possível localizar um arquivo"
     }
 }

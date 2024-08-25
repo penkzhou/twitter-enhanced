@@ -140,5 +140,21 @@
     "importError": {
         "message": "備考のインポート中にエラーが発生しました。ファイル形式が正しいことを確認してください。",
         "description": "備考のインポート失敗時のエラーメッセージ"
+    },
+    "manageDownloads": {
+        "message": "ダウンロードを管理",
+        "description": "ダウンロード記録ページを開くボタンのテキスト"
+    },
+    "downloadRecords": {
+        "message": "ダウンロード記録",
+        "description": "ダウンロード記録ページのタイトル"
+    },
+    "locateFile": {
+        "message": "ファイルを探す",
+        "description": "ダウンロードしたファイルを探すボタンのテキスト"
+    },
+    "fileNotFound": {
+        "message": "ダウンロードにファイルが見つかりません。",
+        "description": "ファイルが見つからない場合に表示されるメッセージ"
     }
 }

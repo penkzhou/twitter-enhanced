@@ -55,11 +55,11 @@
     },
     "customizeExperience": {
         "message": "自訂您的 Twitter 體驗：",
-        "description": "彈出視窗的副標題"
+        "description": "彈出視窗中的副標題"
     },
     "enableUserRemarks": {
-        "message": "啟用用戶備註",
-        "description": "用戶備註開關的標籤"
+        "message": "啟用使用者備註",
+        "description": "使用者備註開關的標籤"
     },
     "enableVideoDownload": {
         "message": "啟用影片下載功能",
@@ -130,15 +130,31 @@
         }
     },
     "deleteRemarkConfirm": {
-        "message": "您確定要刪除這條備註嗎？",
+        "message": "您確定要刪除這個備註嗎？",
         "description": "刪除備註時的確認訊息"
     },
     "importSuccessful": {
-        "message": "備註已成功匯入！",
+        "message": "備註匯入成功！",
         "description": "備註成功匯入時顯示的訊息"
     },
     "importError": {
         "message": "匯入備註時發生錯誤。請確保檔案格式正確。",
         "description": "匯入備註失敗時的錯誤訊息"
+    },
+    "manageDownloads": {
+        "message": "管理下載",
+        "description": "開啟下載記錄頁面的按鈕文字"
+    },
+    "downloadRecords": {
+        "message": "下載記錄",
+        "description": "下載記錄頁面的標題"
+    },
+    "locateFile": {
+        "message": "定位檔案",
+        "description": "定位已下載檔案的按鈕文字"
+    },
+    "fileNotFound": {
+        "message": "在下載中找不到檔案。",
+        "description": "無法定位檔案時顯示的訊息"
     }
 }

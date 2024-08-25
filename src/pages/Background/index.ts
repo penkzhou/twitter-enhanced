@@ -23,13 +23,14 @@ async function handleVideoDownload(tweetId: string, sendResponse: (response: any
                 chrome.downloads.download({
                     url: videoUrl,
                     filename: `${downloadDirectory}/twitter_video_${tweetId}.mp4`,
-                    saveAs: false // Set to true if you want the user to choose the location each time
+                    saveAs: false
                 }, (downloadId) => {
                     if (chrome.runtime.lastError) {
                         console.error('Download failed:', chrome.runtime.lastError);
                         sendResponse({ success: false, error: chrome.runtime.lastError.message });
                     } else {
                         console.log('Download started with ID:', downloadId);
+                        saveDownloadRecord(tweetId, `${downloadDirectory}/twitter_video_${tweetId}.mp4`);
                         sendResponse({ success: true, downloadId: downloadId });
                     }
                 });
@@ -42,4 +43,18 @@ async function handleVideoDownload(tweetId: string, sendResponse: (response: any
         console.error('Error fetching video URL:', error);
         sendResponse({ success: false, error: error instanceof Error ? error.message : String(error) });
     }
+}
+
+function saveDownloadRecord(tweetId: string, filename: string) {
+    chrome.storage.local.get(['downloadRecords'], (result) => {
+        const records = result.downloadRecords || [];
+        const newRecord = {
+            id: Date.now(),
+            tweetId,
+            filename,
+            downloadDate: new Date().toLocaleString(),
+        };
+        records.unshift(newRecord);
+        chrome.storage.local.set({ downloadRecords: records });
+    });
 }

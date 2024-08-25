@@ -140,5 +140,21 @@
     "importError": {
         "message": "导入备注时出错。请确保文件格式正确。",
         "description": "导入备注失败时的错误消息"
+    },
+    "manageDownloads": {
+        "message": "管理下载",
+        "description": "打开下载记录页面的按钮文本"
+    },
+    "downloadRecords": {
+        "message": "下载记录",
+        "description": "下载记录页面的标题"
+    },
+    "locateFile": {
+        "message": "定位文件",
+        "description": "定位已下载文件的按钮文本"
+    },
+    "fileNotFound": {
+        "message": "在下载中找不到文件。",
+        "description": "无法定位文件时显示的消息"
     }
 }

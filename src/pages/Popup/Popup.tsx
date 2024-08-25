@@ -48,6 +48,10 @@ const Popup = () => {
         chrome.tabs.create({ url: 'options.html' });
     };
 
+    const openDownloadRecords = () => {
+        chrome.tabs.create({ url: 'download_records.html' });
+    };
+
     return (
         <div className="container">
             <h1>{chrome.i18n.getMessage('popupTitle')}</h1>
@@ -83,6 +87,7 @@ const Popup = () => {
             <button onClick={saveSettings}>{chrome.i18n.getMessage('saveSettings')}</button>
             {saveMessage && <p className="save-message">{saveMessage}</p>}
             <button onClick={openRemarksManager} className="secondary-button">{chrome.i18n.getMessage('manageRemarks')}</button>
+            <button onClick={openDownloadRecords} className="secondary-button">{chrome.i18n.getMessage('manageDownloads')}</button>
         </div>
     );
 };

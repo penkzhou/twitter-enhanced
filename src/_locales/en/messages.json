@@ -140,5 +140,21 @@
     "importError": {
         "message": "Error importing remarks. Please make sure the file is in the correct format.",
         "description": "Error message when importing remarks fails"
+    },
+    "manageDownloads": {
+        "message": "Manage Downloads",
+        "description": "Button text to open download records page"
+    },
+    "downloadRecords": {
+        "message": "Download Records",
+        "description": "Title for the download records page"
+    },
+    "locateFile": {
+        "message": "Locate File",
+        "description": "Button text to locate downloaded file"
+    },
+    "fileNotFound": {
+        "message": "File not found in downloads.",
+        "description": "Message shown when a file cannot be located"
     }
 }
