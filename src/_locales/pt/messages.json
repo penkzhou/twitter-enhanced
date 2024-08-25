@@ -192,5 +192,9 @@
     "actions": {
         "message": "Ações",
         "description": "Título da coluna Ações"
+    },
+    "tweetAlreadyDownloaded": {
+        "message": "Este tweet já foi baixado. Deseja abrir a página de registros de download?",
+        "description": "Mensagem mostrada quando um tweet já foi baixado"
     }
 }

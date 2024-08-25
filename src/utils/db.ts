@@ -48,3 +48,10 @@ export async function remove(id: number): Promise<void> {
 export async function clear(): Promise<void> {
     return (await dbPromise).clear('downloadRecords');
 }
+
+export async function getByTweetId(tweetId: string): Promise<DownloadRecord | undefined> {
+    const db = await dbPromise;
+    const tx = db.transaction('downloadRecords', 'readonly');
+    const index = tx.store.index('by-tweet-id');
+    return index.get(tweetId);
+}

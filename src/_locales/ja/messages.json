@@ -192,5 +192,9 @@
     "actions": {
         "message": "アクション",
         "description": "アクション列のタイトル"
+    },
+    "tweetAlreadyDownloaded": {
+        "message": "このツイートは既にダウンロードされています。ダウンロード記録ページを開きますか？",
+        "description": "ツイートが既にダウンロードされている場合のメッセージ"
     }
 }

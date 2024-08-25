@@ -474,7 +474,15 @@ class TwitterEnhancer {
                 console.error('Error sending message:', chrome.runtime.lastError);
                 alert(this.getI18nMessage('downloadError'));
             } else if (response.success) {
-                console.log('Download initiated:', response);
+                if (response.alreadyDownloaded) {
+                    console.log('Tweet already downloaded:', response);
+                    if (confirm(response.message)) {
+                        // Navigate to the download records page
+                        chrome.runtime.sendMessage({ action: "openDownloadRecords", recordId: response.recordId });
+                    }
+                } else {
+                    console.log('Download initiated:', response);
+                }
             } else {
                 console.error('Download failed:', response.error);
                 alert(this.getI18nMessage('unableToDownload', [response.error]));

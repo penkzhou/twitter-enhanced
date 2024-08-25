@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, FileSearch, Trash2, ExternalLink } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
 import { Button } from '../../components/ui/button';
@@ -32,11 +32,24 @@ const DownloadRecords: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [recordToDelete, setRecordToDelete] = useState<number | null>(null);
+    const [highlightedRecordId, setHighlightedRecordId] = useState<number | null>(null);
     const recordsPerPage = 10;
+    const highlightedRowRef = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
         loadRecords();
+        const urlParams = new URLSearchParams(window.location.search);
+        const recordId = urlParams.get('recordId');
+        if (recordId) {
+            setHighlightedRecordId(parseInt(recordId, 10));
+        }
     }, []);
+
+    useEffect(() => {
+        if (highlightedRecordId && highlightedRowRef.current) {
+            highlightedRowRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, [highlightedRecordId, currentPage]);
 
     useEffect(() => {
         setCurrentPage(1);
@@ -67,7 +80,11 @@ const DownloadRecords: React.FC = () => {
         const startIndex = (currentPage - 1) * recordsPerPage;
         const endIndex = startIndex + recordsPerPage;
         return filteredRecords.slice(startIndex, endIndex).map((record) => (
-            <TableRow key={record.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <TableRow
+                key={record.id}
+                className={`hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors ${record.id === highlightedRecordId ? 'bg-blue-100 dark:bg-blue-900' : ''}`}
+                ref={record.id === highlightedRecordId ? highlightedRowRef : null}
+            >
                 <TableCell className="py-4">
                     <Button
                         variant="outline"

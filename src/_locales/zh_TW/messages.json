@@ -192,5 +192,9 @@
     "actions": {
         "message": "操作",
         "description": "操作列標題"
+    },
+    "tweetAlreadyDownloaded": {
+        "message": "这条推文已经下载过了。是否打开下载记录页面？",
+        "description": "当推文已经下载过时显示的消息"
     }
 }

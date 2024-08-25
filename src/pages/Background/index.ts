@@ -7,11 +7,30 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         handleVideoDownload(request.tweetId, sendResponse);
         return true; // Indicates that the response is sent asynchronously
     }
+    if (request.action === "openDownloadRecords") {
+        chrome.tabs.create({
+            url: chrome.runtime.getURL('downloadRecords.html') + `?recordId=${request.recordId}`
+        });
+    }
 });
 
 async function handleVideoDownload(tweetId: string, sendResponse: (response: any) => void) {
     try {
         console.log('tweetId', tweetId);
+
+        // Check if the tweet has already been downloaded
+        const existingRecord = await db.getByTweetId(tweetId);
+        if (existingRecord) {
+            console.log('Tweet already downloaded:', existingRecord);
+            sendResponse({
+                success: true,
+                alreadyDownloaded: true,
+                message: chrome.i18n.getMessage('tweetAlreadyDownloaded'),
+                recordId: existingRecord.id
+            });
+            return;
+        }
+
         const api = await TwitterAPI.getInstance();
         const videoInfo = await api.getVideoInfo(tweetId);
         console.log('videoInfo', videoInfo);

@@ -192,5 +192,9 @@
     "actions": {
         "message": "Actions",
         "description": "Actions column title"
+    },
+    "tweetAlreadyDownloaded": {
+        "message": "This tweet has already been downloaded. Do you want to open the download records page?",
+        "description": "Message shown when a tweet has already been downloaded"
     }
 }
