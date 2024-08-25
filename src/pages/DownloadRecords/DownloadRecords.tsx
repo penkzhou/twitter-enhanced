@@ -77,64 +77,58 @@ const DownloadRecords: React.FC = () => {
     const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
 
     return (
-        <div className="flex justify-center items-start min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
-            <Card className="shadow-lg w-full max-w-4xl">
-                <CardHeader className="bg-gray-50 dark:bg-gray-800">
-                    <CardTitle className="text-2xl font-bold text-center">{chrome.i18n.getMessage('downloadRecords')}</CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                    <div className="mb-6 flex justify-center">
-                        <Input
-                            type="text"
-                            placeholder={chrome.i18n.getMessage('searchRecords')}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="max-w-sm"
-                        />
-                    </div>
-                    <div className="overflow-x-auto">
-                        <div className="inline-block min-w-full align-middle">
-                            <div className="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead className="w-1/4">{chrome.i18n.getMessage('tweetId')}</TableHead>
-                                            <TableHead className="w-1/4">{chrome.i18n.getMessage('filename')}</TableHead>
-                                            <TableHead className="w-1/4">{chrome.i18n.getMessage('downloadDate')}</TableHead>
-                                            <TableHead className="w-1/4">{chrome.i18n.getMessage('actions')}</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {displayRecords()}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center justify-between mt-6">
-                        <Button
-                            variant="outline"
-                            onClick={() => changePage(-1)}
-                            disabled={currentPage === 1}
-                        >
-                            <ChevronLeft className="w-4 h-4 mr-2" />
-                            {chrome.i18n.getMessage('previousPage')}
-                        </Button>
-                        <span className="text-sm text-gray-600">
-                            {chrome.i18n.getMessage('pageOf', [currentPage.toString(), totalPages.toString()])}
-                        </span>
-                        <Button
-                            variant="outline"
-                            onClick={() => changePage(1)}
-                            disabled={currentPage === totalPages}
-                        >
-                            {chrome.i18n.getMessage('nextPage')}
-                            <ChevronRight className="w-4 h-4 ml-2" />
-                        </Button>
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
+        <Card className="shadow-lg w-full max-w-4xl">
+            <CardHeader className="bg-gray-50 dark:bg-gray-800">
+                <CardTitle className="text-2xl font-bold text-center">{chrome.i18n.getMessage('downloadRecords')}</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6 flex flex-col items-center">
+                <div className="w-full max-w-md mb-6">
+                    <Input
+                        type="text"
+                        placeholder={chrome.i18n.getMessage('searchRecords')}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full"
+                    />
+                </div>
+                <div className="w-full overflow-x-auto">
+                    <Table className="w-full">
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="w-1/4">{chrome.i18n.getMessage('tweetId')}</TableHead>
+                                <TableHead className="w-1/4">{chrome.i18n.getMessage('filename')}</TableHead>
+                                <TableHead className="w-1/4">{chrome.i18n.getMessage('downloadDate')}</TableHead>
+                                <TableHead className="w-1/4">{chrome.i18n.getMessage('actions')}</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {displayRecords()}
+                        </TableBody>
+                    </Table>
+                </div>
+                <div className="flex items-center justify-between mt-6 w-full max-w-md">
+                    <Button
+                        variant="outline"
+                        onClick={() => changePage(-1)}
+                        disabled={currentPage === 1}
+                    >
+                        <ChevronLeft className="w-4 h-4 mr-2" />
+                        {chrome.i18n.getMessage('previousPage')}
+                    </Button>
+                    <span className="text-sm text-gray-600">
+                        {chrome.i18n.getMessage('pageOf', [currentPage.toString(), totalPages.toString()])}
+                    </span>
+                    <Button
+                        variant="outline"
+                        onClick={() => changePage(1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        {chrome.i18n.getMessage('nextPage')}
+                        <ChevronRight className="w-4 h-4 ml-2" />
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
     );
 };
 
