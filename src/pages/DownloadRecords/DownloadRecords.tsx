@@ -53,18 +53,10 @@ const DownloadRecords: React.FC = () => {
     );
 
     const formatDate = (dateString: string) => {
-        /// this should output the date with difference from now in one of the following formats:
-        /// 0. "2 min ago" or "3 hours ago"
-        ///1. "Today"
-        /// 2. "Yesterday"
-        /// 3. "2 days ago"
-        /// 4. "2023-03-29 12:00"
         const date = new Date(dateString);
-        const formattedDate = format(date, 'PPP'); // e.g., "Apr 29, 2023"
-        const timeAgo = formatDistanceToNow(date, { addSuffix: true }); // e.g., "2 days ago"
-        /// get time diff in seconds
+        const formattedDate = format(date, 'PPP');
+        const timeAgo = formatDistanceToNow(date, { addSuffix: true });
         const timeDiff = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-        /// if timeDiff less than one day return timeAgo
         if (timeDiff < 86400) {
             return timeAgo;
         }
@@ -76,10 +68,7 @@ const DownloadRecords: React.FC = () => {
         const endIndex = startIndex + recordsPerPage;
         return filteredRecords.slice(startIndex, endIndex).map((record) => (
             <TableRow key={record.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                <TableCell className="font-medium py-4">
-                    <Badge variant="secondary">{record.tweetId}</Badge>
-                </TableCell>
-                <TableCell className="max-w-xs truncate py-4">
+                <TableCell className="py-4">
                     <Button
                         variant="outline"
                         size="sm"
@@ -93,7 +82,11 @@ const DownloadRecords: React.FC = () => {
                     </Button>
                 </TableCell>
                 <TableCell className="py-4">{formatDate(record.downloadDate)}</TableCell>
-                <TableCell className="max-w-xs truncate py-4">{record.tweetText}</TableCell>
+                <TableCell className="py-4">
+                    <div className="whitespace-pre-wrap break-words max-w-xs max-h-32 overflow-y-auto">
+                        {record.tweetText}
+                    </div>
+                </TableCell>
                 <TableCell className="py-4">
                     <div className="flex space-x-2">
                         <Button variant="outline" size="sm" onClick={() => locateFile(record.downloadId)}>
@@ -160,11 +153,10 @@ const DownloadRecords: React.FC = () => {
                         <Table className="w-full">
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead className="w-1/4">{chrome.i18n.getMessage('tweetId')}</TableHead>
-                                    <TableHead className="w-1/4">{chrome.i18n.getMessage('filename')}</TableHead>
-                                    <TableHead className="w-1/4">{chrome.i18n.getMessage('downloadDate')}</TableHead>
-                                    <TableHead className="w-1/4">{chrome.i18n.getMessage('tweetText')}</TableHead>
-                                    <TableHead className="w-1/4">{chrome.i18n.getMessage('actions')}</TableHead>
+                                    <TableHead className="w-1/5">{chrome.i18n.getMessage('originTweet')}</TableHead>
+                                    <TableHead className="w-1/5">{chrome.i18n.getMessage('downloadDate')}</TableHead>
+                                    <TableHead className="w-2/5">{chrome.i18n.getMessage('tweetText')}</TableHead>
+                                    <TableHead className="w-1/5">{chrome.i18n.getMessage('actions')}</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>

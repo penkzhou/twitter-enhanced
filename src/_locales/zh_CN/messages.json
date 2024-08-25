@@ -177,9 +177,9 @@
         "message": "推文 ID",
         "description": "推文 ID 列标题"
     },
-    "filename": {
-        "message": "文件名",
-        "description": "文件名列标题"
+    "originTweet": {
+        "message": "原始推文",
+        "description": "原始推文列标题"
     },
     "downloadDate": {
         "message": "下载日期",

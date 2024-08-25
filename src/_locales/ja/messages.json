@@ -177,9 +177,9 @@
         "message": "ツイートID",
         "description": "ツイートID列のタイトル"
     },
-    "filename": {
-        "message": "ファイル名",
-        "description": "ファイル名列のタイトル"
+    "originTweet": {
+        "message": "元のツイート",
+        "description": "元のツイート列のタイトル"
     },
     "downloadDate": {
         "message": "ダウンロード日",

@@ -177,9 +177,9 @@
         "message": "ID твита",
         "description": "Текст заголовка столбца ID твита"
     },
-    "filename": {
-        "message": "Имя файла",
-        "description": "Текст заголовка столбца Имя файла"
+    "originTweet": {
+        "message": "Оригинальный твит",
+        "description": "Текст заголовка столбца Оригинальный твит"
     },
     "downloadDate": {
         "message": "Дата загрузки",

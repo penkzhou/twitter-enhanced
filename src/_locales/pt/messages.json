@@ -177,9 +177,9 @@
         "message": "ID do Tweet",
         "description": "Título da coluna ID do Tweet"
     },
-    "filename": {
-        "message": "Nome do Arquivo",
-        "description": "Título da coluna Nome do Arquivo"
+    "originTweet": {
+        "message": "Tweet Original",
+        "description": "Título da coluna Tweet Original"
     },
     "downloadDate": {
         "message": "Data de Download",
