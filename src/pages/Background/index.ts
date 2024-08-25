@@ -1,5 +1,7 @@
 import { TwitterAPI } from './modules/twitter-api';
 
+import * as db from '../../utils/db';
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log('request', request);
     if (request.action === "downloadVideo") {
@@ -45,16 +47,10 @@ async function handleVideoDownload(tweetId: string, sendResponse: (response: any
 }
 
 function saveDownloadRecord(tweetId: string, filename: string, downloadId: number) {
-    chrome.storage.local.get(['downloadRecords'], (result) => {
-        const records = result.downloadRecords || [];
-        const newRecord = {
-            id: Date.now(),
-            tweetId,
-            filename,
-            downloadDate: new Date().toLocaleString(),
-            downloadId,
-        };
-        records.unshift(newRecord);
-        chrome.storage.local.set({ downloadRecords: records });
+    db.add({
+        tweetId,
+        filename,
+        downloadDate: new Date().toLocaleString(),
+        downloadId,
     });
 }

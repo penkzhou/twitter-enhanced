@@ -156,5 +156,17 @@
     "fileNotFound": {
         "message": "Arquivo não encontrado nos downloads.",
         "description": "Mensagem exibida quando não é possível localizar um arquivo"
+    },
+    "confirmDelete": {
+        "message": "Confirmar Exclusão",
+        "description": "Título para o diálogo de confirmação de exclusão"
+    },
+    "deleteRecordConfirmation": {
+        "message": "Tem certeza de que deseja excluir este registro?",
+        "description": "Mensagem de confirmação ao excluir um registro"
+    },
+    "delete": {
+        "message": "Excluir",
+        "description": "Texto do botão de exclusão"
     }
 }

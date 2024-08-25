@@ -156,5 +156,17 @@
     "fileNotFound": {
         "message": "ダウンロードにファイルが見つかりません。",
         "description": "ファイルが見つからない場合に表示されるメッセージ"
+    },
+    "confirmDelete": {
+        "message": "削除を確認",
+        "description": "削除確認ダイアログのタイトル"
+    },
+    "deleteRecordConfirmation": {
+        "message": "この記録を削除してもよろしいですか？",
+        "description": "記録削除時の確認メッセージ"
+    },
+    "delete": {
+        "message": "削除",
+        "description": "削除ボタンのテキスト"
     }
 }

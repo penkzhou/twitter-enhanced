@@ -156,5 +156,17 @@
     "fileNotFound": {
         "message": "File not found in downloads.",
         "description": "Message shown when a file cannot be located"
+    },
+    "confirmDelete": {
+        "message": "Confirm Delete",
+        "description": "Title for the delete confirmation dialog"
+    },
+    "deleteRecordConfirmation": {
+        "message": "Are you sure you want to delete this record?",
+        "description": "Confirmation message when deleting a record"
+    },
+    "delete": {
+        "message": "Delete",
+        "description": "Delete button text"
     }
 }

@@ -14,9 +14,11 @@
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "idb": "^8.0.0",
     "lucide-react": "^0.435.0",
     "postcss-loader": "^8.1.1",
     "react": "^18.2.0",

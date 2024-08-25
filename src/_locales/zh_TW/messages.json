@@ -156,5 +156,17 @@
     "fileNotFound": {
         "message": "在下載中找不到檔案。",
         "description": "無法定位檔案時顯示的訊息"
+    },
+    "confirmDelete": {
+        "message": "確認刪除",
+        "description": "刪除確認對話框的標題"
+    },
+    "deleteRecordConfirmation": {
+        "message": "您確定要刪除這條記錄嗎？",
+        "description": "刪除記錄時的確認訊息"
+    },
+    "delete": {
+        "message": "刪除",
+        "description": "刪除按鈕文字"
     }
 }
