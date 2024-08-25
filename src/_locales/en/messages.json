@@ -168,5 +168,29 @@
     "delete": {
         "message": "Delete",
         "description": "Delete button text"
+    },
+    "openOriginTweet": {
+        "message": "Open Origin Tweet",
+        "description": "Open origin tweet button text"
+    },
+    "tweetId": {
+        "message": "Tweet ID",
+        "description": "Tweet ID column title"
+    },
+    "filename": {
+        "message": "Filename",
+        "description": "Filename column title"
+    },
+    "downloadDate": {
+        "message": "Download Date",
+        "description": "Download date column title"
+    },
+    "tweetText": {
+        "message": "Tweet Text",
+        "description": "Tweet text column title"
+    },
+    "actions": {
+        "message": "Actions",
+        "description": "Actions column title"
     }
 }

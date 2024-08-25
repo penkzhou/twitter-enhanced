@@ -168,5 +168,29 @@
     "delete": {
         "message": "Удалить",
         "description": "Текст кнопки удаления"
+    },
+    "openOriginTweet": {
+        "message": "Открыть оригинальный твит",
+        "description": "Текст кнопки для открытия оригинального твита"
+    },
+    "tweetId": {
+        "message": "ID твита",
+        "description": "Текст заголовка столбца ID твита"
+    },
+    "filename": {
+        "message": "Имя файла",
+        "description": "Текст заголовка столбца Имя файла"
+    },
+    "downloadDate": {
+        "message": "Дата загрузки",
+        "description": "Текст заголовка столбца Дата загрузки"
+    },
+    "tweetText": {
+        "message": "Текст твита",
+        "description": "Текст заголовка столбца Текст твита"
+    },
+    "actions": {
+        "message": "Действия",
+        "description": "Текст заголовка столбца Действия"
     }
 }

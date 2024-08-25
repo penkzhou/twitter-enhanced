@@ -168,5 +168,29 @@
     "delete": {
         "message": "Excluir",
         "description": "Texto do botão de exclusão"
+    },
+    "openOriginTweet": {
+        "message": "Abrir Tweet Original",
+        "description": "Texto do botão para abrir o tweet original"
+    },
+    "tweetId": {
+        "message": "ID do Tweet",
+        "description": "Título da coluna ID do Tweet"
+    },
+    "filename": {
+        "message": "Nome do Arquivo",
+        "description": "Título da coluna Nome do Arquivo"
+    },
+    "downloadDate": {
+        "message": "Data de Download",
+        "description": "Título da coluna Data de Download"
+    },
+    "tweetText": {
+        "message": "Texto do Tweet",
+        "description": "Título da coluna Texto do Tweet"
+    },
+    "actions": {
+        "message": "Ações",
+        "description": "Título da coluna Ações"
     }
 }

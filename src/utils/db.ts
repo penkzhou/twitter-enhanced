@@ -6,13 +6,15 @@ interface DownloadRecord {
     filename: string;
     downloadDate: string;
     downloadId: number;
+    tweetUrl: string;
+    tweetText: string;
 }
 
 interface TwitterVideoDownloadRecordDB extends DBSchema {
     downloadRecords: {
         key: number;
         value: DownloadRecord;
-        indexes: { 'by-tweet-id': string };
+        indexes: { 'by-tweet-id': string, 'by-download-date': string };
     };
 }
 
@@ -23,6 +25,7 @@ const dbPromise = openDB<TwitterVideoDownloadRecordDB>('DownloadRecordsDB', 1, {
             autoIncrement: true,
         });
         store.createIndex('by-tweet-id', 'tweetId');
+        store.createIndex('by-download-date', 'downloadDate');
     },
 });
 

@@ -168,5 +168,29 @@
     "delete": {
         "message": "削除",
         "description": "削除ボタンのテキスト"
+    },
+    "openOriginTweet": {
+        "message": "元のツイートを開く",
+        "description": "元のツイートを開くボタンのテキスト"
+    },
+    "tweetId": {
+        "message": "ツイートID",
+        "description": "ツイートID列のタイトル"
+    },
+    "filename": {
+        "message": "ファイル名",
+        "description": "ファイル名列のタイトル"
+    },
+    "downloadDate": {
+        "message": "ダウンロード日",
+        "description": "ダウンロード日列のタイトル"
+    },
+    "tweetText": {
+        "message": "ツイートテキスト",
+        "description": "ツイートテキスト列のタイトル"
+    },
+    "actions": {
+        "message": "アクション",
+        "description": "アクション列のタイトル"
     }
 }

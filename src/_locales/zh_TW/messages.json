@@ -168,5 +168,29 @@
     "delete": {
         "message": "刪除",
         "description": "刪除按鈕文字"
+    },
+    "openOriginTweet": {
+        "message": "開啟原始推文",
+        "description": "開啟原始推文按鈕文字"
+    },
+    "tweetId": {
+        "message": "推文 ID",
+        "description": "推文 ID 列標題"
+    },
+    "filename": {
+        "message": "檔案名稱",
+        "description": "檔案名稱列標題"
+    },
+    "downloadDate": {
+        "message": "下載日期",
+        "description": "下載日期列標題"
+    },
+    "tweetText": {
+        "message": "推文文本",
+        "description": "推文文本列標題"
+    },
+    "actions": {
+        "message": "操作",
+        "description": "操作列標題"
     }
 }

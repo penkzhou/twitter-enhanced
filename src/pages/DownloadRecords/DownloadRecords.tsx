@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, FileSearch, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, FileSearch, Trash2, ExternalLink } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -22,6 +22,8 @@ interface DownloadRecord {
     filename: string;
     downloadDate: string;
     downloadId: number;
+    tweetUrl: string;
+    tweetText: string;
 }
 
 const DownloadRecords: React.FC = () => {
@@ -77,8 +79,21 @@ const DownloadRecords: React.FC = () => {
                 <TableCell className="font-medium py-4">
                     <Badge variant="secondary">{record.tweetId}</Badge>
                 </TableCell>
-                <TableCell className="max-w-xs truncate py-4">{record.filename}</TableCell>
+                <TableCell className="max-w-xs truncate py-4">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        asChild
+                        className="text-blue-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900"
+                    >
+                        <a href={record.tweetUrl} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="w-4 h-4 mr-2" />
+                            {chrome.i18n.getMessage('openOriginTweet')}
+                        </a>
+                    </Button>
+                </TableCell>
                 <TableCell className="py-4">{formatDate(record.downloadDate)}</TableCell>
+                <TableCell className="max-w-xs truncate py-4">{record.tweetText}</TableCell>
                 <TableCell className="py-4">
                     <div className="flex space-x-2">
                         <Button variant="outline" size="sm" onClick={() => locateFile(record.downloadId)}>
@@ -148,6 +163,7 @@ const DownloadRecords: React.FC = () => {
                                     <TableHead className="w-1/4">{chrome.i18n.getMessage('tweetId')}</TableHead>
                                     <TableHead className="w-1/4">{chrome.i18n.getMessage('filename')}</TableHead>
                                     <TableHead className="w-1/4">{chrome.i18n.getMessage('downloadDate')}</TableHead>
+                                    <TableHead className="w-1/4">{chrome.i18n.getMessage('tweetText')}</TableHead>
                                     <TableHead className="w-1/4">{chrome.i18n.getMessage('actions')}</TableHead>
                                 </TableRow>
                             </TableHeader>
