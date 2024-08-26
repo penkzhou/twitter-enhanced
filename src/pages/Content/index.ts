@@ -464,8 +464,9 @@ class TwitterEnhancer {
             button.classList.remove('loading');
             return;
         }
-
-        chrome.runtime.sendMessage({ action: "downloadVideo", tweetId: tweetId }, (response) => {
+        /// send message to background include current domain
+        const currentDomain = window.location.hostname;
+        chrome.runtime.sendMessage({ action: "downloadVideo", tweetId: tweetId, currentDomain: currentDomain }, (response) => {
             if (chrome.runtime.lastError) {
                 console.error('Error sending message:', chrome.runtime.lastError);
                 this.showAlert(this.getI18nMessage('downloadError'));

@@ -4,7 +4,10 @@ import * as db from '../../utils/db';
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log('request', request);
     if (request.action === "downloadVideo") {
-        handleVideoDownload(request.tweetId, sendResponse);
+        const currentDomain = request.currentDomain;
+        console.log('currentDomain', currentDomain);
+        const isTwitter = currentDomain === 'twitter.com';
+        handleVideoDownload(request.tweetId, isTwitter, sendResponse);
         return true; // Indicates that the response is sent asynchronously
     }
     if (request.action === "openDownloadRecords") {
@@ -14,7 +17,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-async function handleVideoDownload(tweetId: string, sendResponse: (response: any) => void) {
+async function handleVideoDownload(tweetId: string, isTwitter: boolean, sendResponse: (response: any) => void) {
     try {
         console.log('tweetId', tweetId);
 
@@ -32,7 +35,7 @@ async function handleVideoDownload(tweetId: string, sendResponse: (response: any
         }
 
         const api = await TwitterAPI.getInstance();
-        const videoInfo = await api.getVideoInfo(tweetId);
+        const videoInfo = await api.getVideoInfo(tweetId, isTwitter);
         console.log('videoInfo', videoInfo);
 
         if (videoInfo) {
