@@ -1,5 +1,15 @@
 import { TwitterAPI } from './modules/twitter-api';
 import * as db from '../../utils/db';
+import { Analytics } from '../../lib/ga';
+
+addEventListener('unhandledrejection', async (event) => {
+    Analytics.fireErrorEvent(event.reason);
+});
+
+chrome.runtime.onInstalled.addListener(() => {
+    Analytics.fireEvent('install');
+});
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log('request', request);
