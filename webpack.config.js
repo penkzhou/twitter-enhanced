@@ -161,7 +161,7 @@ var options = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'src/pages/Content/content.styles.css',
+          from: 'src/pages/Content/content.css',
           to: path.join(__dirname, 'build'),
           force: true,
         },
