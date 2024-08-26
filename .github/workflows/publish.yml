@@ -19,11 +19,16 @@ jobs:
       run: |
         npm ci
         npm run build
+        
+    - name: Read package.json
+      uses: zvonimirsun/read-package-version-actions@v2
+      id: package-version
+
     - name: Upload & release
       uses: mnao305/chrome-extension-upload@v5.0.0
       with:
-        file-path: dist/file.zip
-        extension-id: hogefuga(extension id)
+        file-path: zip/twitter-enhanced-extension-${{ steps.package-version.outputs.version }}.zip
+        extension-id: 'cdcjmkiabmominbckhhcbjleidhddjfc'
         client-id: ${{ secrets.CLIENT_ID }}
         client-secret: ${{ secrets.CLIENT_SECRET }}
         refresh-token: ${{ secrets.REFRESH_TOKEN }}
