@@ -22,9 +22,12 @@
     "downloads"
   ],
   "host_permissions": [
-    "https://twitter.com/*",
-    "https://x.com/*",
-    "https://api.twitter.com/*"
+    "*://twitter.com/*",
+    "*://mobile.twitter.com/*",
+    "*://api.twitter.com/*",
+    "*://tweetdeck.twitter.com/*",
+    "*://x.com/*",
+    "*://*.x.com/*"
   ],
   "icons": {
     "128": "icon-128.png",
@@ -34,8 +37,12 @@
   "content_scripts": [
     {
       "matches": [
-        "https://twitter.com/*",
-        "https://x.com/*"
+        "*://twitter.com/*",
+        "*://mobile.twitter.com/*",
+        "*://api.twitter.com/*",
+        "*://tweetdeck.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*"
       ],
       "js": [
         "contentScript.bundle.js"
