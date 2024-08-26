@@ -4,7 +4,7 @@
         "description": "The name of the extension"
     },
     "extensionDescription": {
-        "message": "Add extra features to Twitter",
+        "message": "A Chrome extension to enhance Twitter and X, featuring video information retrieval and support for both domains",
         "description": "The description of the extension"
     },
     "addRemark": {

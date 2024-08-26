@@ -4,7 +4,7 @@
         "description": "Der Name der Erweiterung"
     },
     "extensionDescription": {
-        "message": "Fügt zusätzliche Funktionen zu Twitter hinzu",
+        "message": "Fügt zusätzliche Funktionen zu Twitter und X hinzu, einschließlich Videoinformationen und Unterstützung für beide Domänen",
         "description": "Die Beschreibung der Erweiterung"
     },
     "addRemark": {

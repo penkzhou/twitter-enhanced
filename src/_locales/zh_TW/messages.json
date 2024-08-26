@@ -4,7 +4,7 @@
         "description": "擴充功能的名稱"
     },
     "extensionDescription": {
-        "message": "為 Twitter 添加額外功能",
+        "message": "為 Twitter 和 X 添加額外功能，包括影片資訊檢索和雙域名支援",
         "description": "擴充功能的描述"
     },
     "addRemark": {

@@ -4,7 +4,7 @@
         "description": "El nombre de la extensión"
     },
     "extensionDescription": {
-        "message": "Añade funciones extra a Twitter",
+        "message": "Añade funciones extra a Twitter y X, incluyendo la recuperación de información de videos y soporte para ambas dominios",
         "description": "La descripción de la extensión"
     },
     "addRemark": {
