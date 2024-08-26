@@ -375,17 +375,19 @@ class TwitterEnhancer {
 
     private createDialog(): void {
         const dialogHTML = `
-            <div id="remarkDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-                    <h2 id="remarkDialogTitle" class="text-xl font-semibold text-gray-800 mb-4"></h2>
-                    <input type="text" id="remarkInput" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="${this.getI18nMessage('enterRemark')}">
-                    <div class="flex justify-end space-x-2">
-                        <button id="cancelRemarkBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                            ${this.getI18nMessage('cancel')}
-                        </button>
-                        <button id="saveRemarkBtn" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                            ${this.getI18nMessage('save')}
-                        </button>
+            <div id="remarkDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-auto transform transition-all">
+                    <div class="p-6">
+                        <h2 id="remarkDialogTitle" class="text-2xl font-bold text-gray-900 dark:text-white mb-4"></h2>
+                        <input type="text" id="remarkInput" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-6" placeholder="${this.getI18nMessage('enterRemark')}">
+                        <div class="flex justify-end space-x-3">
+                            <button id="cancelRemarkBtn" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded-md hover:bg-gray-300 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 transition-colors">
+                                ${this.getI18nMessage('cancel')}
+                            </button>
+                            <button id="saveRemarkBtn" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors">
+                                ${this.getI18nMessage('save')}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -401,6 +403,22 @@ class TwitterEnhancer {
 
         this.saveRemarkBtn?.addEventListener('click', this.handleSaveRemark.bind(this));
         this.cancelRemarkBtn?.addEventListener('click', this.closeDialog.bind(this));
+
+        // Close dialog when clicking outside
+        this.dialog?.addEventListener('click', (e) => {
+            if (e.target === this.dialog) {
+                this.closeDialog();
+            }
+        });
+
+        // Add keydown event listener for Enter and Escape keys
+        this.dialog?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                this.handleSaveRemark();
+            } else if (e.key === 'Escape') {
+                this.closeDialog();
+            }
+        });
     }
 
     private openDialog(username: string): void {
@@ -410,12 +428,17 @@ class TwitterEnhancer {
         this.currentUsername = username;
 
         if (this.dialogTitle) this.dialogTitle.textContent = existingRemark ? this.getI18nMessage('editRemark') : this.getI18nMessage('addRemark');
-        if (this.remarkInput) this.remarkInput.value = existingRemark || '';
+        if (this.remarkInput) {
+            this.remarkInput.value = existingRemark || '';
+            this.remarkInput.focus();
+        }
         if (this.dialog) this.dialog.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden'); // Prevent scrolling when dialog is open
     }
 
     private closeDialog(): void {
         if (this.dialog) this.dialog.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
         this.currentUsername = '';
     }
 
