@@ -228,5 +228,9 @@
     "no": {
         "message": "Нет",
         "description": "Текст для кнопки Нет"
+    },
+    "searchRecordsAndTweets": {
+        "message": "Поиск записей и твитов",
+        "description": "Плейсхолдер для поля поиска"
     }
 }

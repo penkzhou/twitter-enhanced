@@ -228,5 +228,9 @@
     "no": {
         "message": "Nein",
         "description": "Text für Nein-Schaltfläche"
+    },
+    "searchRecordsAndTweets": {
+        "message": "Suche nach Aufzeichnungen und Tweets",
+        "description": "Platzhalter für Suchfeld"
     }
 }

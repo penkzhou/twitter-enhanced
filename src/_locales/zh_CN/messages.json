@@ -228,5 +228,9 @@
     "no": {
         "message": "否",
         "description": "否按钮文本"
+    },
+    "searchRecordsAndTweets": {
+        "message": "搜索记录和推文",
+        "description": "搜索输入框的占位符"
     }
 }

@@ -228,5 +228,9 @@
     "no": {
         "message": "Não",
         "description": "Texto para o botão Não"
+    },
+    "searchRecordsAndTweets": {
+        "message": "Buscar registros y tweets",
+        "description": "Platzhalter für Suchfeld"
     }
 }

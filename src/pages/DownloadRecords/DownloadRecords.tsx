@@ -61,9 +61,11 @@ const DownloadRecords: React.FC = () => {
         setRecords(allRecords);
     };
 
+    // Update the filteredRecords to include tweetText in the search
     const filteredRecords = records.filter(record =>
         record.tweetId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.filename.toLowerCase().includes(searchTerm.toLowerCase())
+        record.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        record.tweetText.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const formatDate = (dateString: string) => {
@@ -177,7 +179,7 @@ const DownloadRecords: React.FC = () => {
                     <div className="w-full max-w-md mb-6">
                         <Input
                             type="text"
-                            placeholder={chrome.i18n.getMessage('searchRecords')}
+                            placeholder={chrome.i18n.getMessage('searchRecordsAndTweets')}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full"
