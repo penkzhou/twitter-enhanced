@@ -375,15 +375,19 @@ class TwitterEnhancer {
 
     private createDialog(): void {
         const dialogHTML = `
-            <div id="remarkDialog" class="remark-dialog">
-              <div class="remark-dialog-content">
-                <h2 id="remarkDialogTitle">${this.getI18nMessage('addRemark')}</h2>
-                <input type="text" id="remarkInput" placeholder="${this.getI18nMessage('enterRemark')}">
-                <div class="remark-dialog-buttons">
-                  <button id="cancelRemarkBtn">${this.getI18nMessage('cancel')}</button>
-                  <button id="saveRemarkBtn">${this.getI18nMessage('save')}</button>
+            <div id="remarkDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+                    <h2 id="remarkDialogTitle" class="text-xl font-semibold text-gray-800 mb-4"></h2>
+                    <input type="text" id="remarkInput" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="${this.getI18nMessage('enterRemark')}">
+                    <div class="flex justify-end space-x-2">
+                        <button id="cancelRemarkBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                            ${this.getI18nMessage('cancel')}
+                        </button>
+                        <button id="saveRemarkBtn" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            ${this.getI18nMessage('save')}
+                        </button>
+                    </div>
                 </div>
-              </div>
             </div>
         `;
 
@@ -407,11 +411,11 @@ class TwitterEnhancer {
 
         if (this.dialogTitle) this.dialogTitle.textContent = existingRemark ? this.getI18nMessage('editRemark') : this.getI18nMessage('addRemark');
         if (this.remarkInput) this.remarkInput.value = existingRemark || '';
-        if (this.dialog) this.dialog.style.display = 'block';
+        if (this.dialog) this.dialog.classList.remove('hidden');
     }
 
     private closeDialog(): void {
-        if (this.dialog) this.dialog.style.display = 'none';
+        if (this.dialog) this.dialog.classList.add('hidden');
         this.currentUsername = '';
     }
 

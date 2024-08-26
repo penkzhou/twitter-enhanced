@@ -13,8 +13,8 @@ const Popup = () => {
 
     const loadSettings = () => {
         chrome.storage.sync.get(['remarkFeatureEnabled', 'videoDownloadFeatureEnabled', 'downloadDirectory'], (result) => {
-            setRemarkFeatureEnabled(result.remarkFeatureEnabled || true);
-            setVideoDownloadFeatureEnabled(result.videoDownloadFeatureEnabled || true);
+            setRemarkFeatureEnabled(result.remarkFeatureEnabled ?? true);
+            setVideoDownloadFeatureEnabled(result.videoDownloadFeatureEnabled ?? true);
             setDownloadDirectory(result.downloadDirectory || 'TwitterVideos');
         });
     };
@@ -28,7 +28,7 @@ const Popup = () => {
             console.log('Settings saved');
             updateContentScript();
             setSaveMessage(chrome.i18n.getMessage('settingsSaved'));
-            setTimeout(() => setSaveMessage(''), 3000); // Clear message after 3 seconds
+            setTimeout(() => setSaveMessage(''), 3000);
         });
     };
 
@@ -53,41 +53,74 @@ const Popup = () => {
     };
 
     return (
-        <div className="container">
-            <h1>{chrome.i18n.getMessage('popupTitle')}</h1>
-            <p>{chrome.i18n.getMessage('customizeExperience')}</p>
+        <div className="popup-container">
+            <div className="popup-content">
+                <h1 className="text-2xl font-bold text-blue-600 mb-4">{chrome.i18n.getMessage('popupTitle')}</h1>
+                <p className="text-sm text-gray-600 mb-6">{chrome.i18n.getMessage('customizeExperience')}</p>
 
-            <div className="feature-toggle">
-                <input
-                    type="checkbox"
-                    id="remarkFeatureToggle"
-                    checked={remarkFeatureEnabled}
-                    onChange={(e) => setRemarkFeatureEnabled(e.target.checked)}
-                />
-                <label htmlFor="remarkFeatureToggle">{chrome.i18n.getMessage('enableUserRemarks')}</label>
+                <div className="space-y-4">
+                    <div className="flex items-center">
+                        <input
+                            type="checkbox"
+                            id="remarkFeatureToggle"
+                            checked={remarkFeatureEnabled}
+                            onChange={(e) => setRemarkFeatureEnabled(e.target.checked)}
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        />
+                        <label htmlFor="remarkFeatureToggle" className="ml-2 block text-sm text-gray-900">
+                            {chrome.i18n.getMessage('enableUserRemarks')}
+                        </label>
+                    </div>
+                    <div className="flex items-center">
+                        <input
+                            type="checkbox"
+                            id="videoDownloadFeatureToggle"
+                            checked={videoDownloadFeatureEnabled}
+                            onChange={(e) => setVideoDownloadFeatureEnabled(e.target.checked)}
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        />
+                        <label htmlFor="videoDownloadFeatureToggle" className="ml-2 block text-sm text-gray-900">
+                            {chrome.i18n.getMessage('enableVideoDownload')}
+                        </label>
+                    </div>
+                    <div>
+                        <label htmlFor="downloadDirectory" className="block text-sm font-medium text-gray-700 mb-1">
+                            {chrome.i18n.getMessage('downloadDirectory')}
+                        </label>
+                        <input
+                            type="text"
+                            id="downloadDirectory"
+                            value={downloadDirectory}
+                            onChange={(e) => setDownloadDirectory(e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+                        />
+                    </div>
+                </div>
+
+                <div className="mt-6 space-y-4">
+                    <button
+                        onClick={saveSettings}
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                        {chrome.i18n.getMessage('saveSettings')}
+                    </button>
+                    {saveMessage && <p className="text-sm text-green-600 text-center">{saveMessage}</p>}
+                    <div className="flex space-x-4">
+                        <button
+                            onClick={openRemarksManager}
+                            className="flex-1 flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            {chrome.i18n.getMessage('manageRemarks')}
+                        </button>
+                        <button
+                            onClick={openDownloadRecords}
+                            className="flex-1 flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            {chrome.i18n.getMessage('manageDownloads')}
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div className="feature-toggle">
-                <input
-                    type="checkbox"
-                    id="videoDownloadFeatureToggle"
-                    checked={videoDownloadFeatureEnabled}
-                    onChange={(e) => setVideoDownloadFeatureEnabled(e.target.checked)}
-                />
-                <label htmlFor="videoDownloadFeatureToggle">{chrome.i18n.getMessage('enableVideoDownload')}</label>
-            </div>
-            <div className="feature-toggle">
-                <label htmlFor="downloadDirectory">{chrome.i18n.getMessage('downloadDirectory')}</label>
-                <input
-                    type="text"
-                    id="downloadDirectory"
-                    value={downloadDirectory}
-                    onChange={(e) => setDownloadDirectory(e.target.value)}
-                />
-            </div>
-            <button onClick={saveSettings}>{chrome.i18n.getMessage('saveSettings')}</button>
-            {saveMessage && <p className="save-message">{saveMessage}</p>}
-            <button onClick={openRemarksManager} className="secondary-button">{chrome.i18n.getMessage('manageRemarks')}</button>
-            <button onClick={openDownloadRecords} className="secondary-button">{chrome.i18n.getMessage('manageDownloads')}</button>
         </div>
     );
 };
