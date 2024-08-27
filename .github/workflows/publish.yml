@@ -15,6 +15,21 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 20
+
+
+    - name: Configure .env file
+      id: generate_env_file
+      env:
+        GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+        GA_API_SECRET: ${{ secrets.GA_API_SECRET }}
+      run: |
+        set -e
+        mv .env.example .env
+        sed -i "s/GA_MEASUREMENT_ID=/GA_MEASUREMENT_ID=$GA_MEASUREMENT_ID/" .env
+        sed -i "s/GA_API_SECRET=/GA_API_SECRET=$GA_API_SECRET/" .env
+                 
+
+
     - name: Build
       run: |
         npm ci

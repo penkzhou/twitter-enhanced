@@ -13,8 +13,10 @@ const RemarkDialog: React.FC<RemarkDialogProps> = ({ onSave, onCancel, username,
     const [remark, setRemark] = useState(existingRemark || '');
 
     useEffect(() => {
-        setRemark(existingRemark || '');
-    }, [existingRemark]);
+        if (isOpen) {
+            setRemark(existingRemark || '');
+        }
+    }, [isOpen, existingRemark]);
 
     const handleSave = useCallback(() => {
         onSave(username, remark.trim());
@@ -27,17 +29,6 @@ const RemarkDialog: React.FC<RemarkDialogProps> = ({ onSave, onCancel, username,
             onCancel();
         }
     }, [handleSave, onCancel]);
-
-    useEffect(() => {
-        if (isOpen) {
-            document.body.classList.add('overflow-hidden');
-        } else {
-            document.body.classList.remove('overflow-hidden');
-        }
-        return () => {
-            document.body.classList.remove('overflow-hidden');
-        };
-    }, [isOpen]);
 
     if (!isOpen) return null;
 

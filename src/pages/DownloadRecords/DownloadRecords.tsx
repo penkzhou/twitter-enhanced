@@ -4,7 +4,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Input } from '../../components/ui/input';
-import { Badge } from '../../components/ui/badge';
 import {
     Dialog,
     DialogContent,
@@ -15,6 +14,7 @@ import {
 } from "../../components/ui/dialog";
 import * as db from '../../utils/db';
 import { format, formatDistanceToNow } from 'date-fns';
+import { Logger } from '../../utils/logger';
 
 interface DownloadRecord {
     id: number;
@@ -38,6 +38,7 @@ const DownloadRecords: React.FC = () => {
     const highlightedRowRef = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
+        Logger.logPageView("Download Records", "download_records", { page: "download_records" });
         loadRecords();
         const urlParams = new URLSearchParams(window.location.search);
         const recordId = urlParams.get('recordId');
@@ -132,11 +133,13 @@ const DownloadRecords: React.FC = () => {
     };
 
     const locateFile = (downloadId: number) => {
+        Logger.logEvent('locate_file', { download_id: downloadId });
         chrome.downloads.show(downloadId);
     };
 
     const openDeleteDialog = (id: number) => {
         setRecordToDelete(id);
+        Logger.logEvent('openDeleteDialog', { record_id: id });
         setDeleteDialogOpen(true);
     };
 
@@ -147,6 +150,7 @@ const DownloadRecords: React.FC = () => {
 
     const confirmDelete = async () => {
         if (recordToDelete !== null) {
+            Logger.logEvent('confirmDelete', { record_id: recordToDelete });
             await db.remove(recordToDelete);
             await loadRecords();
             closeDeleteDialog();
@@ -154,6 +158,7 @@ const DownloadRecords: React.FC = () => {
     };
 
     const openClearAllDialog = () => {
+        Logger.logEvent('openClearAllDialog', { record_id: recordToDelete });
         setClearAllDialogOpen(true);
     };
 
@@ -162,6 +167,7 @@ const DownloadRecords: React.FC = () => {
     };
 
     const confirmClearAll = async () => {
+        Logger.logEvent('clearAllRecords', {});
         await db.clear();
         await loadRecords();
         closeClearAllDialog();
