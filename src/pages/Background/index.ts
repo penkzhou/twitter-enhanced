@@ -3,31 +3,37 @@ import * as db from '../../utils/db';
 import { Analytics } from '../../lib/ga';
 import './analytics';
 
-addEventListener('unhandledrejection', async (event) => {
-    console.log('unhandledrejection', event);
-    Analytics.fireErrorEvent(event.reason);
-});
+// Create a function to set up the event listeners
+function setupEventListeners() {
+    // Handle unhandled rejections
+    window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
+        console.error('Unhandled rejection:', event.reason);
+        Analytics.fireErrorEvent(event.reason);
+    });
 
-chrome.runtime.onInstalled.addListener(() => {
-    Analytics.fireEvent('install');
-});
+    chrome.runtime.onInstalled.addListener(() => {
+        Analytics.fireEvent('install');
+    });
 
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        console.log('request', request);
+        if (request.action === "downloadVideo") {
+            const currentDomain = request.currentDomain;
+            console.log('currentDomain', currentDomain);
+            const isTwitter = currentDomain === 'twitter.com';
+            handleVideoDownload(request.tweetId, isTwitter, sendResponse);
+            return true; // Indicates that the response is sent asynchronously
+        }
+        if (request.action === "openDownloadRecords") {
+            chrome.tabs.create({
+                url: chrome.runtime.getURL('downloadRecords.html') + `?recordId=${request.recordId}`
+            });
+        }
+    });
+}
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log('request', request);
-    if (request.action === "downloadVideo") {
-        const currentDomain = request.currentDomain;
-        console.log('currentDomain', currentDomain);
-        const isTwitter = currentDomain === 'twitter.com';
-        handleVideoDownload(request.tweetId, isTwitter, sendResponse);
-        return true; // Indicates that the response is sent asynchronously
-    }
-    if (request.action === "openDownloadRecords") {
-        chrome.tabs.create({
-            url: chrome.runtime.getURL('downloadRecords.html') + `?recordId=${request.recordId}`
-        });
-    }
-});
+// Call the setup function
+setupEventListeners();
 
 async function handleVideoDownload(tweetId: string, isTwitter: boolean, sendResponse: (response: any) => void) {
     try {
@@ -90,3 +96,6 @@ function saveDownloadRecord(tweetId: string, filename: string, downloadId: numbe
         tweetText
     });
 }
+
+// If you need to export anything, do it like this:
+export { handleVideoDownload };

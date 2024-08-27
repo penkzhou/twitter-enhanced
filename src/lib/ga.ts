@@ -23,7 +23,7 @@ export class Analytics {
         let { clientId } = await chrome.storage.local.get('clientId');
         if (!clientId) {
             // Generate a unique client ID, the actual value is not relevant
-            clientId = self.crypto.randomUUID();
+            clientId = self.crypto.randomUUID();/* eslint-disable-line no-restricted-globals */
             await chrome.storage.local.set({ clientId });
         }
         return clientId;
@@ -115,4 +115,8 @@ export class Analytics {
     }
 }
 
-export default new Analytics();
+// Create an instance of the Analytics class
+const analyticsInstance = new Analytics();
+
+// Export the instance as the default export
+export default analyticsInstance;
