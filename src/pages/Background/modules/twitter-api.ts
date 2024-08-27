@@ -1,7 +1,7 @@
 export class TwitterAPI {
   private static instance: TwitterAPI;
 
-  private constructor() {}
+  private constructor() { }
 
   private bearerToken: string =
     'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
@@ -89,21 +89,40 @@ export class TwitterAPI {
       if (!tweet) {
         throw new Error('Tweet not found with id: ' + tweetId);
       }
+      let finalTweetId = tweetId;
 
-      const tweetText = tweet.legacy?.full_text ?? '';
-      const tweetUserScreenName =
+      let tweetText = tweet.legacy?.full_text ?? '';
+      let tweetUserScreenName =
         tweet.core?.user_results?.result &&
-        'legacy' in tweet.core?.user_results?.result
+          'legacy' in tweet.core?.user_results?.result
           ? tweet.core?.user_results?.result.legacy.screen_name
           : '';
-      const tweetUrl = isTwitter
-        ? `https://twitter.com/${tweetUserScreenName}/status/${tweetId}`
-        : `https://x.com/${tweetUserScreenName}/status/${tweetId}`;
 
-      const videoInfoList =
+      let videoInfoList =
         (await tweet.legacy?.entities?.media?.find(
           (media: any) => media.type === 'video'
         )?.video_info?.variants) ?? [];
+      if (videoInfoList.length === 0) {
+        const quotedStatus = tweet.tweet?.quoted_status_result?.result;
+        if (quotedStatus) {
+          videoInfoList =
+            (await quotedStatus.legacy?.entities?.media?.find(
+              (media: any) => media.type === 'video'
+            )?.video_info?.variants) ?? [];
+          tweetText = quotedStatus.legacy?.full_text ?? '';
+          tweetUserScreenName =
+            quotedStatus.core?.user_results?.result &&
+              'legacy' in quotedStatus.core?.user_results?.result
+              ? quotedStatus.core?.user_results?.result.legacy.screen_name
+              : '';
+          finalTweetId = quotedStatus?.rest_id ?? tweetId;
+        }
+
+      }
+
+      const tweetUrl = isTwitter
+        ? `https://twitter.com/${tweetUserScreenName}/status/${finalTweetId}`
+        : `https://x.com/${tweetUserScreenName}/status/${finalTweetId}`;
       const highestQualityVideo = videoInfoList
         .filter(
           (video: any) =>
