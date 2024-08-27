@@ -134,11 +134,13 @@ const DownloadRecords: React.FC = () => {
     };
 
     const locateFile = (downloadId: number) => {
+        Logger.logEvent('locate_file', { download_id: downloadId });
         chrome.downloads.show(downloadId);
     };
 
     const openDeleteDialog = (id: number) => {
         setRecordToDelete(id);
+        Logger.logEvent('openDeleteDialog', { record_id: id });
         setDeleteDialogOpen(true);
     };
 
@@ -149,6 +151,7 @@ const DownloadRecords: React.FC = () => {
 
     const confirmDelete = async () => {
         if (recordToDelete !== null) {
+            Logger.logEvent('confirmDelete', { record_id: recordToDelete });
             await db.remove(recordToDelete);
             await loadRecords();
             closeDeleteDialog();
@@ -156,6 +159,7 @@ const DownloadRecords: React.FC = () => {
     };
 
     const openClearAllDialog = () => {
+        Logger.logEvent('openClearAllDialog', { record_id: recordToDelete });
         setClearAllDialogOpen(true);
     };
 
@@ -164,6 +168,7 @@ const DownloadRecords: React.FC = () => {
     };
 
     const confirmClearAll = async () => {
+        Logger.logEvent('clearAllRecords', {});
         await db.clear();
         await loadRecords();
         closeClearAllDialog();

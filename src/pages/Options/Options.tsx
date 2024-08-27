@@ -36,6 +36,7 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const saveRemarks = (remarks: UserRemark[]) => {
+    Logger.logEvent('save_remarks_on_options', { remarks: remarks });
     chrome.storage.sync.set({ userRemarks: remarks }, () => {
       console.log('Remarks saved');
     });
@@ -73,6 +74,7 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const openEditDialog = (index: number) => {
+    Logger.logEvent('openEditDialogOnOptions', { index: index });
     const remark = userRemarks[index];
     setCurrentEditRemark(remark);
     setNewRemark(remark.remark);
@@ -97,6 +99,7 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const deleteRemark = (index: number) => {
+    Logger.logEvent('deleteRemarkOnOptions', { index: index });
     if (window.confirm(chrome.i18n.getMessage('deleteRemarkConfirm'))) {
       const updatedRemarks = userRemarks.filter((_, i) => i !== index);
       setUserRemarks(updatedRemarks);
@@ -108,6 +111,7 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const exportRemarks = () => {
+    Logger.logEvent('exportRemarksOnOptions', { remarks: userRemarks });
     const dataStr = JSON.stringify(userRemarks);
     const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
     const exportFileDefaultName = 'twitter_remarks.json';
@@ -119,8 +123,10 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const importRemarks = (event: React.ChangeEvent<HTMLInputElement>) => {
+    Logger.logEvent('clickImportRemarksOnOptions', { file: event.target.files?.[0]?.name });
     const file = event.target.files?.[0];
     if (file) {
+      Logger.logEvent('importRemarksOnOptions', { file: file.name });
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         try {
