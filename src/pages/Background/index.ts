@@ -6,10 +6,11 @@ import './analytics';
 // Create a function to set up the event listeners
 function setupEventListeners() {
     // Handle unhandled rejections
-    window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
+    addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => { /* eslint-disable-line no-restricted-globals */
         console.error('Unhandled rejection:', event.reason);
         Analytics.fireErrorEvent(event.reason);
     });
+
 
     chrome.runtime.onInstalled.addListener(() => {
         Analytics.fireEvent('install');
