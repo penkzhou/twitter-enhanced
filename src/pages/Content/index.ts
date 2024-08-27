@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './../../globals.css';
 import RemarkDialog from '../../components/RemarkDialog';
+import { Logger } from '../../utils/logger';
 
 interface UserRemark {
     username: string;
@@ -142,6 +143,8 @@ class TwitterEnhancer {
     }
 
     private async saveRemarks(): Promise<void> {
+        /// add analytics event
+        Logger.logEvent('remarks_updated', { username: this.currentUsername, remark: this.currentRemark, remarks: this.userRemarks, });
         return new Promise((resolve) => {
             chrome.storage.sync.set({ userRemarks: this.userRemarks }, () => {
                 resolve();
@@ -208,10 +211,14 @@ class TwitterEnhancer {
         this.currentUsername = username;
         this.currentRemark = existingRemark;
         this.remarkDialogOpen = true;
+
+        Logger.logEvent('click_remark_button', { username: this.currentUsername, remark: this.currentRemark });
         this.renderRemarkDialog();
     }
 
     private async handleSaveRemark(username: string, remark: string): Promise<void> {
+
+        Logger.logEvent('save_remark_on_dialog', { username: this.currentUsername, remark: this.currentRemark });
         if (remark !== '') {
             const existingRemarkIndex = this.userRemarks.findIndex(r => r.username === username);
             if (existingRemarkIndex !== -1) {
@@ -327,56 +334,12 @@ class TwitterEnhancer {
         });
     }
 
-    private fireAnalyticsEvent(eventName: string, params: Record<string, any>): void {
-        chrome.runtime.sendMessage({
-            action: 'fireAnalyticsEvent',
-            eventName,
-            params
-        });
-    }
-
-    private fireAnalyticsErrorEvent(error: Record<string, any>): void {
-        chrome.runtime.sendMessage({
-            action: 'fireAnalyticsErrorEvent',
-            error
-        });
-    }
-
     private logVideoDownloadClick(tweetId: string): void {
-        this.fireAnalyticsEvent('video_download_click', {
-            tweet_id: tweetId,
-            domain: window.location.hostname
-        });
-    }
-
-    private logVideoDownloadError(error: string, tweetId: string): void {
-        this.fireAnalyticsErrorEvent({
-            message: error,
-            tweet_id: tweetId,
-            error_type: 'download_error',
-            domain: window.location.hostname
-        });
-    }
-
-    private logVideoAlreadyDownloaded(tweetId: string, recordId: string): void {
-        this.fireAnalyticsEvent('video_already_downloaded', {
-            tweet_id: tweetId,
-            record_id: recordId
-        });
-    }
-
-    private logVideoDownloadInitiated(tweetId: string): void {
-        this.fireAnalyticsEvent('video_download_initiated', {
-            tweet_id: tweetId
-        });
+        Logger.logEvent('video_download_click', { tweet_id: tweetId, domain: window.location.hostname });
     }
 
     private logVideoDownloadFailure(error: string, tweetId: string): void {
-        this.fireAnalyticsErrorEvent({
-            error_type: 'download_failure',
-            message: error,
-            tweet_id: tweetId
-        });
+        Logger.logError(error, { tweet_id: tweetId, domain: window.location.hostname, error_type: 'download_failure' });
     }
 
     private async handleVideoDownload(tweetElement: Element, button: HTMLElement): Promise<void> {
@@ -397,7 +360,7 @@ class TwitterEnhancer {
             if (chrome.runtime.lastError) {
                 console.error('Error sending message:', chrome.runtime.lastError);
                 this.showAlert(this.getI18nMessage('downloadError'));
-                this.logVideoDownloadError(chrome.runtime.lastError.message ?? 'Unknown error', tweetId);
+                Logger.logError(chrome.runtime.lastError.message ?? 'Unknown error', { tweet_id: tweetId, domain: window.location.hostname, error_type: 'download_error' });
             } else if (response.success) {
                 if (response.alreadyDownloaded) {
                     console.log('Tweet already downloaded:', response);
@@ -407,10 +370,10 @@ class TwitterEnhancer {
                             chrome.runtime.sendMessage({ action: "openDownloadRecords", recordId: response.recordId });
                         }
                     );
-                    this.logVideoAlreadyDownloaded(tweetId, response.recordId);
+                    Logger.logEvent('video_already_downloaded', { tweet_id: tweetId, record_id: response.recordId });
                 } else {
                     console.log('Download initiated:', response);
-                    this.logVideoDownloadInitiated(tweetId);
+                    Logger.logEvent('video_download_initiated', { tweet_id: tweetId });
                 }
             } else {
                 console.error('Download failed:', response.error);

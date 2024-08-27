@@ -7,6 +7,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.action === 'fireAnalyticsErrorEvent') {
         Analytics.fireErrorEvent(request.error);
         sendResponse({ success: true });
+    } else if (request.action === 'fireAnalyticsPageLoadEvent') {
+        Analytics.firePageViewEvent(request.pageTitle, request.pageLocation, request.params);
+        sendResponse({ success: true });
     }
     return true;  // Indicates that the response is sent asynchronously
 });

@@ -4,8 +4,6 @@ const GA_ENDPOINT = 'https://www.google-analytics.com/mp/collect';
 const GA_DEBUG_ENDPOINT = 'https://www.google-analytics.com/debug/mp/collect';
 
 const DEFAULT_ENGAGEMENT_TIME_MSEC = 100;
-console.log(process.env.GA_MEASUREMENT_ID);
-console.log(process.env.GA_API_SECRET);
 
 // Duration of inactivity after which a new session is created
 const SESSION_EXPIRATION_IN_MIN = 30;
@@ -64,8 +62,6 @@ export class Analytics {
 
     // Fires an event with optional params. Event names must only include letters and underscores.
     static async fireEvent(name: string, params: Record<string, any> = {}) {
-        console.log('MEASUREMENT_ID', process.env.GA_MEASUREMENT_ID);
-        console.log('API_SECRET', process.env.GA_API_SECRET);
         // Configure session id and engagement time if not present, for more details see:
         // https://developers.google.com/analytics/devguides/collection/protocol/ga4/sending-events?client_type=gtag#recommended_parameters_for_reports
         if (!params.session_id) {

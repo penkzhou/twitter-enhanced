@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Popup.css';
+import { Logger } from '../../utils/logger';
 
 const Popup = () => {
     const [remarkFeatureEnabled, setRemarkFeatureEnabled] = useState(true);
@@ -8,6 +9,7 @@ const Popup = () => {
     const [saveMessage, setSaveMessage] = useState('');
 
     useEffect(() => {
+        Logger.logPageView("Popup", "popup", { page: "popup" });
         loadSettings();
     }, []);
 

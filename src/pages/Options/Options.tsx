@@ -4,6 +4,7 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog";
 import { Trash2, Edit2, ChevronLeft, ChevronRight, Download, Upload } from 'lucide-react';
+import { Logger } from '../../utils/logger';
 
 interface UserRemark {
   username: string;
@@ -24,6 +25,8 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
 
   useEffect(() => {
     loadRemarks();
+    // Fire the page_load event when the component mounts
+    Logger.logPageView("Remark Management", "options", { page: "remark_management" });
   }, []);
 
   const loadRemarks = () => {

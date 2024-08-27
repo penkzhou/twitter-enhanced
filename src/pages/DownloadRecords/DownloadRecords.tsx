@@ -15,6 +15,7 @@ import {
 } from "../../components/ui/dialog";
 import * as db from '../../utils/db';
 import { format, formatDistanceToNow } from 'date-fns';
+import { Logger } from '../../utils/logger';
 
 interface DownloadRecord {
     id: number;
@@ -38,6 +39,7 @@ const DownloadRecords: React.FC = () => {
     const highlightedRowRef = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
+        Logger.logPageView("Download Records", "download_records", { page: "download_records" });
         loadRecords();
         const urlParams = new URLSearchParams(window.location.search);
         const recordId = urlParams.get('recordId');
