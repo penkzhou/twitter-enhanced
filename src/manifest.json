@@ -15,7 +15,12 @@
       "16": "icon-16.png"
     }
   },
-  "permissions": ["activeTab", "storage", "cookies", "downloads"],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "cookies",
+    "downloads"
+  ],
   "host_permissions": [
     "*://twitter.com/*",
     "*://mobile.twitter.com/*",
@@ -39,8 +44,12 @@
         "*://x.com/*",
         "*://*.x.com/*"
       ],
-      "js": ["contentScript.bundle.js"],
-      "css": ["content.css"]
+      "js": [
+        "contentScript.bundle.js"
+      ],
+      "css": [
+        "content.css"
+      ]
     }
   ],
   "web_accessible_resources": [
@@ -50,9 +59,11 @@
         "icon-128.png",
         "icon-48.png",
         "icon-16.png",
-        "content/styles.css"
+        "content.css"
       ],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "content_security_policy": {
