@@ -1,8 +1,10 @@
 import { TwitterAPI } from './modules/twitter-api';
 import * as db from '../../utils/db';
 import { Analytics } from '../../lib/ga';
+import './analytics';
 
 addEventListener('unhandledrejection', async (event) => {
+    console.log('unhandledrejection', event);
     Analytics.fireErrorEvent(event.reason);
 });
 
