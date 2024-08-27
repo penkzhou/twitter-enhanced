@@ -1,6 +1,9 @@
 
 
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './../../globals.css';
+import RemarkDialog from '../../components/RemarkDialog';
 
 
 interface UserRemark {
@@ -14,21 +17,29 @@ interface TwitterEnhancerSettings {
     videoDownloadFeatureEnabled: boolean;
 }
 
+interface RemarkDialogProps {
+    onSave: (username: string, remark: string) => void;
+    onCancel: () => void;
+    username: string;
+    existingRemark?: string;
+    isOpen: boolean;
+}
+
 class TwitterEnhancer {
     private static instance: TwitterEnhancer;
     private userRemarks: UserRemark[] = [];
     private observer: MutationObserver;
     private remarkFeatureEnabled: boolean = true;
     private videoDownloadFeatureEnabled: boolean = true;
-    private dialog: HTMLElement | null = null;
-    private dialogTitle: HTMLElement | null = null;
-    private remarkInput: HTMLInputElement | null = null;
-    private saveRemarkBtn: HTMLElement | null = null;
-    private cancelRemarkBtn: HTMLElement | null = null;
+    private remarkDialogRoot: HTMLElement;
+    private remarkDialogOpen: boolean = false;
     private currentUsername: string = '';
+    private currentRemark: string | undefined;
 
     private constructor() {
         this.observer = new MutationObserver(this.handleMutations.bind(this));
+        this.remarkDialogRoot = document.createElement('div');
+        document.body.appendChild(this.remarkDialogRoot);
         this.init();
     }
 
@@ -102,126 +113,11 @@ class TwitterEnhancer {
     }
 
     private injectStyles(): void {
-        const style = document.createElement('style');
-        style.textContent = `
-            .remark-dialog {
-                display: none;
-                position: fixed;
-                z-index: 9999;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-            }
-
-            .remark-dialog-content {
-                background-color: #ffffff;
-                margin: 15% auto;
-                padding: 20px;
-                border-radius: 10px;
-                width: 90%;
-                max-width: 400px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            .remark-dialog h2 {
-                color: #1da1f2;
-                margin-bottom: 15px;
-            }
-
-            .remark-dialog input {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccd6dd;
-                border-radius: 5px;
-                font-size: 14px;
-                box-sizing: border-box;
-            }
-
-            .remark-dialog-buttons {
-                display: flex;
-                justify-content: flex-end;
-            }
-
-            .remark-dialog button {
-                padding: 8px 15px;
-                margin-left: 10px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 14px;
-            }
-
-            #cancelRemarkBtn {
-                background-color: #ccd6dd;
-                color: #14171a;
-            }
-
-            #saveRemarkBtn {
-                background-color: #1da1f2;
-                color: #ffffff;
-            }
-
-            #cancelRemarkBtn:hover {
-                background-color: #b1bbc3;
-            }
-
-            #saveRemarkBtn:hover {
-                background-color: #1a91da;
-            }
-
-            .video-download-btn {
-                color: rgb(83, 100, 113);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                min-width: 36px;
-                min-height: 36px;
-                cursor: pointer;
-                transition: color 0.2s ease;
-            }
-            .video-download-btn:hover {
-                color: rgb(29, 155, 240);
-            }
-            .video-download-btn > div {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .video-download-btn svg {
-                width: 1.25em;
-                height: 1.25em;
-            }
-
-            .video-download-btn .loading-icon {
-                display: none;
-            }
-            .video-download-btn.loading .loading-icon {
-                display: block;
-            }
-            .video-download-btn.loading .download-icon {
-                display: none;
-            }
-            .video-download-btn .loading-icon svg {
-                width: 24px;
-                height: 24px;
-            }
-            .video-download-btn .loading-icon svg circle {
-                stroke: currentColor;
-                opacity: 0.125;
-            }
-            .video-download-btn .loading-icon svg circle:nth-child(1) { stroke: #ff0000; }
-            .video-download-btn .loading-icon svg circle:nth-child(2) { stroke: #ff8000; }
-            .video-download-btn .loading-icon svg circle:nth-child(3) { stroke: #ffff00; }
-            .video-download-btn .loading-icon svg circle:nth-child(4) { stroke: #00ff00; }
-            .video-download-btn .loading-icon svg circle:nth-child(5) { stroke: #0080ff; }
-            .video-download-btn .loading-icon svg circle:nth-child(6) { stroke: #8000ff; }
-            .video-download-btn .loading-icon svg circle:nth-child(7) { stroke: #ff00ff; }
-            .video-download-btn .loading-icon svg circle:nth-child(8) { stroke: #ff0080; }
-        `;
-        document.head.appendChild(style);
+        const link = document.createElement('link');
+        link.href = chrome.runtime.getURL('content/styles.css');
+        link.type = 'text/css';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
     }
 
     private updateButtonText(username: string, hasRemark: boolean): void {
@@ -308,29 +204,50 @@ class TwitterEnhancer {
         });
     }
 
-    private async handleSaveRemark(): Promise<void> {
-        const remark = this.remarkInput?.value.trim();
-        if (remark !== undefined) {
-            if (remark !== '') {
-                const existingRemarkIndex = this.userRemarks.findIndex(r => r.username === this.currentUsername);
-                if (existingRemarkIndex !== -1) {
-                    this.userRemarks[existingRemarkIndex].remark = remark;
-                } else {
-                    this.userRemarks.push({ username: this.currentUsername, remark });
-                }
-                await this.saveRemarks();
-                console.log('Remark saved');
-                this.updateUsernames();
-                this.updateButtonText(this.currentUsername, true);
-            } else {
-                await this.removeRemark(this.currentUsername);
-            }
-        }
-        this.closeDialog();
+    private handleAddOrEditRemark(username: string): void {
+        const existingRemark = this.userRemarks.find(r => r.username === username)?.remark;
+        this.currentUsername = username;
+        this.currentRemark = existingRemark;
+        this.remarkDialogOpen = true;
+        this.renderRemarkDialog();
     }
 
-    private handleAddOrEditRemark(username: string): void {
-        this.openDialog(username);
+    private async handleSaveRemark(username: string, remark: string): Promise<void> {
+        if (remark !== '') {
+            const existingRemarkIndex = this.userRemarks.findIndex(r => r.username === username);
+            if (existingRemarkIndex !== -1) {
+                this.userRemarks[existingRemarkIndex].remark = remark;
+            } else {
+                this.userRemarks.push({ username, remark });
+            }
+            await this.saveRemarks();
+            console.log('Remark saved');
+            this.updateUsernames();
+            this.updateButtonText(username, true);
+        } else {
+            await this.removeRemark(username);
+        }
+        this.closeRemarkDialog();
+    }
+
+    private closeRemarkDialog(): void {
+        this.remarkDialogOpen = false;
+        this.currentUsername = '';
+        this.currentRemark = undefined;
+        this.renderRemarkDialog();
+    }
+
+    private renderRemarkDialog(): void {
+        ReactDOM.render(
+            React.createElement<RemarkDialogProps>(RemarkDialog, {
+                onSave: this.handleSaveRemark.bind(this),
+                onCancel: this.closeRemarkDialog.bind(this),
+                username: this.currentUsername,
+                existingRemark: this.currentRemark,
+                isOpen: this.remarkDialogOpen,
+            }),
+            this.remarkDialogRoot
+        );
     }
 
     private handleMutations(mutations: MutationRecord[]): void {
@@ -371,75 +288,6 @@ class TwitterEnhancer {
         });
         document.querySelectorAll('.add-remark-btn').forEach((button) => button.remove());
         document.querySelectorAll('.remark-button-added').forEach((element) => element.classList.remove('remark-button-added'));
-    }
-
-    private createDialog(): void {
-        const dialogHTML = `
-            <div id="remarkDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-auto transform transition-all">
-                    <div class="p-6">
-                        <h2 id="remarkDialogTitle" class="text-2xl font-bold text-gray-900 dark:text-white mb-4"></h2>
-                        <input type="text" id="remarkInput" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-6" placeholder="${this.getI18nMessage('enterRemark')}">
-                        <div class="flex justify-end space-x-3">
-                            <button id="cancelRemarkBtn" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded-md hover:bg-gray-300 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 transition-colors">
-                                ${this.getI18nMessage('cancel')}
-                            </button>
-                            <button id="saveRemarkBtn" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors">
-                                ${this.getI18nMessage('save')}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        document.body.insertAdjacentHTML('beforeend', dialogHTML);
-
-        this.dialog = document.getElementById('remarkDialog');
-        this.dialogTitle = document.getElementById('remarkDialogTitle');
-        this.remarkInput = document.getElementById('remarkInput') as HTMLInputElement;
-        this.saveRemarkBtn = document.getElementById('saveRemarkBtn');
-        this.cancelRemarkBtn = document.getElementById('cancelRemarkBtn');
-
-        this.saveRemarkBtn?.addEventListener('click', this.handleSaveRemark.bind(this));
-        this.cancelRemarkBtn?.addEventListener('click', this.closeDialog.bind(this));
-
-        // Close dialog when clicking outside
-        this.dialog?.addEventListener('click', (e) => {
-            if (e.target === this.dialog) {
-                this.closeDialog();
-            }
-        });
-
-        // Add keydown event listener for Enter and Escape keys
-        this.dialog?.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                this.handleSaveRemark();
-            } else if (e.key === 'Escape') {
-                this.closeDialog();
-            }
-        });
-    }
-
-    private openDialog(username: string): void {
-        if (!this.dialog) this.createDialog();
-
-        const existingRemark = this.userRemarks.find(r => r.username === username)?.remark;
-        this.currentUsername = username;
-
-        if (this.dialogTitle) this.dialogTitle.textContent = existingRemark ? this.getI18nMessage('editRemark') : this.getI18nMessage('addRemark');
-        if (this.remarkInput) {
-            this.remarkInput.value = existingRemark || '';
-            this.remarkInput.focus();
-        }
-        if (this.dialog) this.dialog.classList.remove('hidden');
-        document.body.classList.add('overflow-hidden'); // Prevent scrolling when dialog is open
-    }
-
-    private closeDialog(): void {
-        if (this.dialog) this.dialog.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
-        this.currentUsername = '';
     }
 
     private addVideoDownloadButtons(): void {

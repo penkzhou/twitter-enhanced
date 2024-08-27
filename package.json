@@ -1,6 +1,6 @@
 {
   "name": "twitter-enhanced-extension",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A Chrome extension to enhance Twitter and X, featuring video information retrieval and support for both domains",
   "license": "MIT",
   "repository": {
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
-    "lint": "eslint --ignore-pattern '!.eslint-plugin-local.js' -- 'src/**/*.ts' 'src/**/*.tsx' 'src/**/*.jsx'",
+    "lint": "eslint --ignore-pattern '!.eslint-plugin-local.js' -- 'src/**/*.ts' 'src/**/*.tsx'",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
   "dependencies": {
