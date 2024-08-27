@@ -162,9 +162,6 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const importRemarks = (event: React.ChangeEvent<HTMLInputElement>) => {
-    Logger.logEvent('clickImportRemarksOnOptions', {
-      file: event.target.files?.[0]?.name,
-    });
     const file = event.target.files?.[0];
     if (file) {
       Logger.logEvent('importRemarksOnOptions', { file: file.name });
@@ -172,10 +169,7 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
       reader.onload = (e: ProgressEvent<FileReader>) => {
         try {
           const importedRemarks = JSON.parse(e.target?.result as string);
-          if (
-            Array.isArray(importedRemarks) &&
-            importedRemarks.every(isValidRemark)
-          ) {
+          if (Array.isArray(importedRemarks) && importedRemarks.every(isValidRemark)) {
             setUserRemarks(importedRemarks);
             saveRemarks(importedRemarks);
             setCurrentPage(1);
@@ -189,6 +183,10 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
       };
       reader.readAsText(file);
     }
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById('importRemarks')?.click();
   };
 
   const isValidRemark = (remark: any): remark is UserRemark => {
@@ -243,14 +241,13 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
               <Download className="w-4 h-4 mr-2" />
               {chrome.i18n.getMessage('exportRemarks')}
             </Button>
-            <label htmlFor="importRemarks" className="cursor-pointer">
-              <span className="inline-block">
-                <Button className="bg-blue-500 hover:bg-blue-600">
-                  <Upload className="w-4 h-4 mr-2" />
-                  {chrome.i18n.getMessage('importRemarks')}
-                </Button>
-              </span>
-            </label>
+            <Button
+              onClick={triggerFileInput}
+              className="bg-blue-500 hover:bg-blue-600"
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              {chrome.i18n.getMessage('importRemarks')}
+            </Button>
             <input
               type="file"
               id="importRemarks"
