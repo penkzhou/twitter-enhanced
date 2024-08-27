@@ -34,15 +34,15 @@ body {
 /* Remove custom scrollbar styles */
 
 /* Ensure inputs and buttons have consistent sizing */
-input[type="text"],
-input[type="checkbox"],
+input[type='text'],
+input[type='checkbox'],
 button {
   font-size: 14px;
 }
 
 /* Add some transition effects */
 button,
-input[type="checkbox"] {
+input[type='checkbox'] {
   transition: all 0.2s ease-in-out;
 }
 
@@ -54,13 +54,13 @@ button:hover {
 /* Remove unnecessary styles */
 
 .save-message {
-  color: #10B981;
+  color: #10b981;
   font-weight: bold;
   margin-top: 8px;
   text-align: center;
 }
 
 /* Adjust spacing for the last button group */
-.popup-content>div:last-child {
+.popup-content > div:last-child {
   margin-bottom: 0;
 }

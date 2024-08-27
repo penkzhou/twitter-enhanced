@@ -1,9 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog";
-import { Trash2, Edit2, ChevronLeft, ChevronRight, Download, Upload } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../../components/ui/dialog';
+import {
+  Trash2,
+  Edit2,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  Upload,
+} from 'lucide-react';
 import { Logger } from '../../utils/logger';
 
 interface UserRemark {
@@ -19,14 +38,18 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   const [userRemarks, setUserRemarks] = useState<UserRemark[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [currentEditRemark, setCurrentEditRemark] = useState<UserRemark | null>(null);
+  const [currentEditRemark, setCurrentEditRemark] = useState<UserRemark | null>(
+    null
+  );
   const [newRemark, setNewRemark] = useState('');
   const remarksPerPage = 10;
 
   useEffect(() => {
     loadRemarks();
     // Fire the page_load event when the component mounts
-    Logger.logPageView("Remark Management", "options", { page: "remark_management" });
+    Logger.logPageView('Remark Management', 'options', {
+      page: 'remark_management',
+    });
   }, []);
 
   const loadRemarks = () => {
@@ -51,14 +74,24 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-blue-500 font-bold">@{remark.username}</p>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">{remark.remark}</p>
+              <p className="text-gray-700 dark:text-gray-300 mt-1">
+                {remark.remark}
+              </p>
             </div>
             <div className="flex space-x-2">
-              <Button variant="outline" size="sm" onClick={() => openEditDialog(startIndex + index)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => openEditDialog(startIndex + index)}
+              >
                 <Edit2 className="w-4 h-4 mr-2" />
                 {chrome.i18n.getMessage('editRemarkInOptions')}
               </Button>
-              <Button variant="destructive" size="sm" onClick={() => deleteRemark(startIndex + index)}>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => deleteRemark(startIndex + index)}
+              >
                 <Trash2 className="w-4 h-4 mr-2" />
                 {chrome.i18n.getMessage('deleteRemarkInOptions')}
               </Button>
@@ -70,7 +103,7 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const changePage = (delta: number) => {
-    setCurrentPage(prevPage => prevPage + delta);
+    setCurrentPage((prevPage) => prevPage + delta);
   };
 
   const openEditDialog = (index: number) => {
@@ -89,8 +122,10 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
 
   const handleEditRemark = () => {
     if (currentEditRemark) {
-      const updatedRemarks = userRemarks.map(remark =>
-        remark.username === currentEditRemark.username ? { ...remark, remark: newRemark } : remark
+      const updatedRemarks = userRemarks.map((remark) =>
+        remark.username === currentEditRemark.username
+          ? { ...remark, remark: newRemark }
+          : remark
       );
       setUserRemarks(updatedRemarks);
       saveRemarks(updatedRemarks);
@@ -104,8 +139,11 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
       const updatedRemarks = userRemarks.filter((_, i) => i !== index);
       setUserRemarks(updatedRemarks);
       saveRemarks(updatedRemarks);
-      if (updatedRemarks.length <= (currentPage - 1) * remarksPerPage && currentPage > 1) {
-        setCurrentPage(prevPage => prevPage - 1);
+      if (
+        updatedRemarks.length <= (currentPage - 1) * remarksPerPage &&
+        currentPage > 1
+      ) {
+        setCurrentPage((prevPage) => prevPage - 1);
       }
     }
   };
@@ -113,7 +151,8 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   const exportRemarks = () => {
     Logger.logEvent('exportRemarksOnOptions', { remarks: userRemarks });
     const dataStr = JSON.stringify(userRemarks);
-    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    const dataUri =
+      'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
     const exportFileDefaultName = 'twitter_remarks.json';
 
     const linkElement = document.createElement('a');
@@ -123,7 +162,9 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const importRemarks = (event: React.ChangeEvent<HTMLInputElement>) => {
-    Logger.logEvent('clickImportRemarksOnOptions', { file: event.target.files?.[0]?.name });
+    Logger.logEvent('clickImportRemarksOnOptions', {
+      file: event.target.files?.[0]?.name,
+    });
     const file = event.target.files?.[0];
     if (file) {
       Logger.logEvent('importRemarksOnOptions', { file: file.name });
@@ -131,7 +172,10 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
       reader.onload = (e: ProgressEvent<FileReader>) => {
         try {
           const importedRemarks = JSON.parse(e.target?.result as string);
-          if (Array.isArray(importedRemarks) && importedRemarks.every(isValidRemark)) {
+          if (
+            Array.isArray(importedRemarks) &&
+            importedRemarks.every(isValidRemark)
+          ) {
             setUserRemarks(importedRemarks);
             saveRemarks(importedRemarks);
             setCurrentPage(1);
@@ -148,9 +192,11 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
   };
 
   const isValidRemark = (remark: any): remark is UserRemark => {
-    return typeof remark === 'object' &&
+    return (
+      typeof remark === 'object' &&
       typeof remark.username === 'string' &&
-      typeof remark.remark === 'string';
+      typeof remark.remark === 'string'
+    );
   };
 
   const totalPages = Math.ceil(userRemarks.length / remarksPerPage);
@@ -159,12 +205,12 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
     <div className="container mx-auto px-4 py-8">
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center text-blue-500">{chrome.i18n.getMessage('manageRemarks')}</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center text-blue-500">
+            {chrome.i18n.getMessage('manageRemarks')}
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {displayRemarks()}
-          </div>
+          <div className="space-y-4">{displayRemarks()}</div>
           <div className="flex justify-between items-center mt-6">
             <Button
               variant="outline"
@@ -175,7 +221,10 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
               {chrome.i18n.getMessage('previousPage')}
             </Button>
             <span className="text-sm text-gray-600 dark:text-gray-400">
-              {chrome.i18n.getMessage('pageOf', [currentPage.toString(), totalPages.toString()])}
+              {chrome.i18n.getMessage('pageOf', [
+                currentPage.toString(),
+                totalPages.toString(),
+              ])}
             </span>
             <Button
               variant="outline"
@@ -187,7 +236,10 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
             </Button>
           </div>
           <div className="flex justify-center space-x-4 mt-8">
-            <Button onClick={exportRemarks} className="bg-green-500 hover:bg-green-600">
+            <Button
+              onClick={exportRemarks}
+              className="bg-green-500 hover:bg-green-600"
+            >
               <Download className="w-4 h-4 mr-2" />
               {chrome.i18n.getMessage('exportRemarks')}
             </Button>
@@ -215,7 +267,9 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
           <DialogHeader>
             <DialogTitle>{chrome.i18n.getMessage('editRemark')}</DialogTitle>
             <DialogDescription>
-              {chrome.i18n.getMessage('editRemarkFor', [currentEditRemark?.username || ''])}
+              {chrome.i18n.getMessage('editRemarkFor', [
+                currentEditRemark?.username || '',
+              ])}
             </DialogDescription>
           </DialogHeader>
           <Input

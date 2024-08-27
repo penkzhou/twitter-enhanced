@@ -1,236 +1,236 @@
 {
-    "extensionName": {
-        "message": "Twitter Erweitert",
-        "description": "Der Name der Erweiterung"
-    },
-    "extensionDescription": {
-        "message": "Fügt zusätzliche Funktionen zu Twitter und X hinzu, einschließlich Videoinformationen und Unterstützung für beide Domänen",
-        "description": "Die Beschreibung der Erweiterung"
-    },
-    "addRemark": {
-        "message": "Anmerkung hinzufügen",
-        "description": "Schaltflächentext zum Hinzufügen einer Anmerkung"
-    },
-    "editRemark": {
-        "message": "Anmerkung bearbeiten",
-        "description": "Schaltflächentext zum Bearbeiten einer Anmerkung"
-    },
-    "enterRemark": {
-        "message": "Anmerkung eingeben",
-        "description": "Platzhaltertext für die Anmerkungseingabe"
-    },
-    "cancel": {
-        "message": "Abbrechen",
-        "description": "Text der Abbrechen-Schaltfläche"
-    },
-    "save": {
-        "message": "Speichern",
-        "description": "Text der Speichern-Schaltfläche"
-    },
-    "downloadMedia": {
-        "message": "Medien herunterladen",
-        "description": "Aria-Beschriftung für die Download-Schaltfläche"
-    },
-    "tweetIdError": {
-        "message": "Entschuldigung, die Tweet-ID für den Download konnte nicht gefunden werden.",
-        "description": "Fehlermeldung, wenn die Tweet-ID nicht gefunden wird"
-    },
-    "downloadError": {
-        "message": "Beim Versuch, das Video herunterzuladen, ist ein Fehler aufgetreten.",
-        "description": "Fehlermeldung, wenn der Download fehlschlägt"
-    },
-    "unableToDownload": {
-        "message": "Entschuldigung, das Video konnte nicht heruntergeladen werden: $ERROR$",
-        "description": "Fehlermeldung mit Details, wenn der Download nicht möglich ist",
-        "placeholders": {
-            "error": {
-                "content": "$1",
-                "example": "Netzwerkfehler"
-            }
-        }
-    },
-    "popupTitle": {
-        "message": "Twitter Erweitert",
-        "description": "Titel des Popups"
-    },
-    "customizeExperience": {
-        "message": "Passen Sie Ihre Twitter-Erfahrung an:",
-        "description": "Untertitel im Popup"
-    },
-    "enableUserRemarks": {
-        "message": "Benutzeranmerkungen aktivieren",
-        "description": "Beschriftung für den Schalter für Benutzeranmerkungen"
-    },
-    "enableVideoDownload": {
-        "message": "Video-Download-Funktion aktivieren",
-        "description": "Beschriftung für den Schalter zum Video-Download"
-    },
-    "downloadDirectory": {
-        "message": "Download-Verzeichnis:",
-        "description": "Beschriftung für die Eingabe des Download-Verzeichnisses"
-    },
-    "saveSettings": {
-        "message": "Einstellungen speichern",
-        "description": "Text für die Schaltfläche zum Speichern der Einstellungen"
-    },
-    "settingsSaved": {
-        "message": "Einstellungen erfolgreich gespeichert!",
-        "description": "Meldung, die angezeigt wird, wenn die Einstellungen gespeichert wurden"
-    },
-    "manageRemarks": {
-        "message": "Anmerkungen verwalten",
-        "description": "Titel für die Optionsseite"
-    },
-    "editRemarkInOptions": {
-        "message": "Bearbeiten",
-        "description": "Text der Bearbeiten-Schaltfläche"
-    },
-    "deleteRemarkInOptions": {
-        "message": "Löschen",
-        "description": "Text der Löschen-Schaltfläche"
-    },
-    "previousPage": {
-        "message": "Vorherige",
-        "description": "Text der Schaltfläche für die vorherige Seite"
-    },
-    "nextPage": {
-        "message": "Nächste",
-        "description": "Text der Schaltfläche für die nächste Seite"
-    },
-    "pageOf": {
-        "message": "Seite $CURRENT$ von $TOTAL$",
-        "description": "Seitenzahlanzeige",
-        "placeholders": {
-            "current": {
-                "content": "$1",
-                "example": "1"
-            },
-            "total": {
-                "content": "$2",
-                "example": "5"
-            }
-        }
-    },
-    "exportRemarks": {
-        "message": "Anmerkungen exportieren",
-        "description": "Text der Schaltfläche zum Exportieren von Anmerkungen"
-    },
-    "importRemarks": {
-        "message": "Anmerkungen importieren",
-        "description": "Text der Schaltfläche zum Importieren von Anmerkungen"
-    },
-    "editRemarkPrompt": {
-        "message": "Anmerkung für @$USERNAME$ bearbeiten:",
-        "description": "Aufforderung beim Bearbeiten einer Anmerkung",
-        "placeholders": {
-            "username": {
-                "content": "$1",
-                "example": "johndoe"
-            }
-        }
-    },
-    "deleteRemarkConfirm": {
-        "message": "Sind Sie sicher, dass Sie diese Anmerkung löschen möchten?",
-        "description": "Bestätigungsmeldung beim Löschen einer Anmerkung"
-    },
-    "importSuccessful": {
-        "message": "Anmerkungen erfolgreich importiert!",
-        "description": "Meldung, die angezeigt wird, wenn Anmerkungen erfolgreich importiert wurden"
-    },
-    "importError": {
-        "message": "Fehler beim Importieren der Anmerkungen. Bitte stellen Sie sicher, dass die Datei im richtigen Format vorliegt.",
-        "description": "Fehlermeldung, wenn der Import von Anmerkungen fehlschlägt"
-    },
-    "manageDownloads": {
-        "message": "Downloads verwalten",
-        "description": "Text der Schaltfläche zum Öffnen der Seite mit den Download-Aufzeichnungen"
-    },
-    "downloadRecords": {
-        "message": "Download-Aufzeichnungen",
-        "description": "Titel der Seite mit den Download-Aufzeichnungen"
-    },
-    "locateFile": {
-        "message": "Datei lokalisieren",
-        "description": "Text der Schaltfläche zum Lokalisieren der heruntergeladenen Datei"
-    },
-    "fileNotFound": {
-        "message": "Datei nicht in den Downloads gefunden.",
-        "description": "Meldung, die angezeigt wird, wenn eine Datei nicht lokalisiert werden kann"
-    },
-    "confirmDelete": {
-        "message": "Löschen bestätigen",
-        "description": "Titel des Bestätigungsdialogs zum Löschen"
-    },
-    "deleteRecordConfirmation": {
-        "message": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
-        "description": "Bestätigungsmeldung beim Löschen eines Eintrags"
-    },
-    "delete": {
-        "message": "Löschen",
-        "description": "Text der Löschen-Schaltfläche"
-    },
-    "openOriginTweet": {
-        "message": "Original-Tweet öffnen",
-        "description": "Text der Schaltfläche zum Öffnen des Original-Tweets"
-    },
-    "tweetId": {
-        "message": "Tweet-ID",
-        "description": "Titel der Tweet-ID-Spalte"
-    },
-    "originTweet": {
-        "message": "Original-Tweet",
-        "description": "Titel der Original-Tweet-Spalte"
-    },
-    "downloadDate": {
-        "message": "Download-Datum",
-        "description": "Titel der Download-Datum-Spalte"
-    },
-    "tweetText": {
-        "message": "Tweet-Text",
-        "description": "Titel der Tweet-Text-Spalte"
-    },
-    "actions": {
-        "message": "Aktionen",
-        "description": "Titel der Aktionen-Spalte"
-    },
-    "tweetAlreadyDownloaded": {
-        "message": "Dieser Tweet wurde bereits heruntergeladen. Möchten Sie die Seite mit den Download-Aufzeichnungen öffnen?",
-        "description": "Meldung, die angezeigt wird, wenn ein Tweet bereits heruntergeladen wurde"
-    },
-    "clearAllRecords": {
-        "message": "Alle Einträge löschen",
-        "description": "Text der Schaltfläche zum Löschen aller Einträge"
-    },
-    "confirmClearAll": {
-        "message": "Löschen aller Einträge bestätigen",
-        "description": "Titel des Bestätigungsdialogs zum Löschen aller Einträge"
-    },
-    "clearAllRecordsConfirmation": {
-        "message": "Sind Sie sicher, dass Sie alle Download-Aufzeichnungen löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
-        "description": "Bestätigungsmeldung beim Löschen aller Einträge"
-    },
-    "clearAllWarning": {
-        "message": "Warnung: Dies wird alle Ihre Download-Aufzeichnungen dauerhaft löschen.",
-        "description": "Warnmeldung beim Löschen aller Einträge"
-    },
-    "clearAll": {
-        "message": "Alles löschen",
-        "description": "Text der Schaltfläche zum Löschen aller Einträge"
-    },
-    "ok": {
-        "message": "OK",
-        "description": "Text für OK-Schaltfläche"
-    },
-    "yes": {
-        "message": "Ja",
-        "description": "Text für Ja-Schaltfläche"
-    },
-    "no": {
-        "message": "Nein",
-        "description": "Text für Nein-Schaltfläche"
-    },
-    "searchRecordsAndTweets": {
-        "message": "Suche nach Aufzeichnungen und Tweets",
-        "description": "Platzhalter für Suchfeld"
+  "extensionName": {
+    "message": "Twitter Erweitert",
+    "description": "Der Name der Erweiterung"
+  },
+  "extensionDescription": {
+    "message": "Fügt zusätzliche Funktionen zu Twitter und X hinzu, einschließlich Videoinformationen und Unterstützung für beide Domänen",
+    "description": "Die Beschreibung der Erweiterung"
+  },
+  "addRemark": {
+    "message": "Anmerkung hinzufügen",
+    "description": "Schaltflächentext zum Hinzufügen einer Anmerkung"
+  },
+  "editRemark": {
+    "message": "Anmerkung bearbeiten",
+    "description": "Schaltflächentext zum Bearbeiten einer Anmerkung"
+  },
+  "enterRemark": {
+    "message": "Anmerkung eingeben",
+    "description": "Platzhaltertext für die Anmerkungseingabe"
+  },
+  "cancel": {
+    "message": "Abbrechen",
+    "description": "Text der Abbrechen-Schaltfläche"
+  },
+  "save": {
+    "message": "Speichern",
+    "description": "Text der Speichern-Schaltfläche"
+  },
+  "downloadMedia": {
+    "message": "Medien herunterladen",
+    "description": "Aria-Beschriftung für die Download-Schaltfläche"
+  },
+  "tweetIdError": {
+    "message": "Entschuldigung, die Tweet-ID für den Download konnte nicht gefunden werden.",
+    "description": "Fehlermeldung, wenn die Tweet-ID nicht gefunden wird"
+  },
+  "downloadError": {
+    "message": "Beim Versuch, das Video herunterzuladen, ist ein Fehler aufgetreten.",
+    "description": "Fehlermeldung, wenn der Download fehlschlägt"
+  },
+  "unableToDownload": {
+    "message": "Entschuldigung, das Video konnte nicht heruntergeladen werden: $ERROR$",
+    "description": "Fehlermeldung mit Details, wenn der Download nicht möglich ist",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "Netzwerkfehler"
+      }
     }
+  },
+  "popupTitle": {
+    "message": "Twitter Erweitert",
+    "description": "Titel des Popups"
+  },
+  "customizeExperience": {
+    "message": "Passen Sie Ihre Twitter-Erfahrung an:",
+    "description": "Untertitel im Popup"
+  },
+  "enableUserRemarks": {
+    "message": "Benutzeranmerkungen aktivieren",
+    "description": "Beschriftung für den Schalter für Benutzeranmerkungen"
+  },
+  "enableVideoDownload": {
+    "message": "Video-Download-Funktion aktivieren",
+    "description": "Beschriftung für den Schalter zum Video-Download"
+  },
+  "downloadDirectory": {
+    "message": "Download-Verzeichnis:",
+    "description": "Beschriftung für die Eingabe des Download-Verzeichnisses"
+  },
+  "saveSettings": {
+    "message": "Einstellungen speichern",
+    "description": "Text für die Schaltfläche zum Speichern der Einstellungen"
+  },
+  "settingsSaved": {
+    "message": "Einstellungen erfolgreich gespeichert!",
+    "description": "Meldung, die angezeigt wird, wenn die Einstellungen gespeichert wurden"
+  },
+  "manageRemarks": {
+    "message": "Anmerkungen verwalten",
+    "description": "Titel für die Optionsseite"
+  },
+  "editRemarkInOptions": {
+    "message": "Bearbeiten",
+    "description": "Text der Bearbeiten-Schaltfläche"
+  },
+  "deleteRemarkInOptions": {
+    "message": "Löschen",
+    "description": "Text der Löschen-Schaltfläche"
+  },
+  "previousPage": {
+    "message": "Vorherige",
+    "description": "Text der Schaltfläche für die vorherige Seite"
+  },
+  "nextPage": {
+    "message": "Nächste",
+    "description": "Text der Schaltfläche für die nächste Seite"
+  },
+  "pageOf": {
+    "message": "Seite $CURRENT$ von $TOTAL$",
+    "description": "Seitenzahlanzeige",
+    "placeholders": {
+      "current": {
+        "content": "$1",
+        "example": "1"
+      },
+      "total": {
+        "content": "$2",
+        "example": "5"
+      }
+    }
+  },
+  "exportRemarks": {
+    "message": "Anmerkungen exportieren",
+    "description": "Text der Schaltfläche zum Exportieren von Anmerkungen"
+  },
+  "importRemarks": {
+    "message": "Anmerkungen importieren",
+    "description": "Text der Schaltfläche zum Importieren von Anmerkungen"
+  },
+  "editRemarkPrompt": {
+    "message": "Anmerkung für @$USERNAME$ bearbeiten:",
+    "description": "Aufforderung beim Bearbeiten einer Anmerkung",
+    "placeholders": {
+      "username": {
+        "content": "$1",
+        "example": "johndoe"
+      }
+    }
+  },
+  "deleteRemarkConfirm": {
+    "message": "Sind Sie sicher, dass Sie diese Anmerkung löschen möchten?",
+    "description": "Bestätigungsmeldung beim Löschen einer Anmerkung"
+  },
+  "importSuccessful": {
+    "message": "Anmerkungen erfolgreich importiert!",
+    "description": "Meldung, die angezeigt wird, wenn Anmerkungen erfolgreich importiert wurden"
+  },
+  "importError": {
+    "message": "Fehler beim Importieren der Anmerkungen. Bitte stellen Sie sicher, dass die Datei im richtigen Format vorliegt.",
+    "description": "Fehlermeldung, wenn der Import von Anmerkungen fehlschlägt"
+  },
+  "manageDownloads": {
+    "message": "Downloads verwalten",
+    "description": "Text der Schaltfläche zum Öffnen der Seite mit den Download-Aufzeichnungen"
+  },
+  "downloadRecords": {
+    "message": "Download-Aufzeichnungen",
+    "description": "Titel der Seite mit den Download-Aufzeichnungen"
+  },
+  "locateFile": {
+    "message": "Datei lokalisieren",
+    "description": "Text der Schaltfläche zum Lokalisieren der heruntergeladenen Datei"
+  },
+  "fileNotFound": {
+    "message": "Datei nicht in den Downloads gefunden.",
+    "description": "Meldung, die angezeigt wird, wenn eine Datei nicht lokalisiert werden kann"
+  },
+  "confirmDelete": {
+    "message": "Löschen bestätigen",
+    "description": "Titel des Bestätigungsdialogs zum Löschen"
+  },
+  "deleteRecordConfirmation": {
+    "message": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
+    "description": "Bestätigungsmeldung beim Löschen eines Eintrags"
+  },
+  "delete": {
+    "message": "Löschen",
+    "description": "Text der Löschen-Schaltfläche"
+  },
+  "openOriginTweet": {
+    "message": "Original-Tweet öffnen",
+    "description": "Text der Schaltfläche zum Öffnen des Original-Tweets"
+  },
+  "tweetId": {
+    "message": "Tweet-ID",
+    "description": "Titel der Tweet-ID-Spalte"
+  },
+  "originTweet": {
+    "message": "Original-Tweet",
+    "description": "Titel der Original-Tweet-Spalte"
+  },
+  "downloadDate": {
+    "message": "Download-Datum",
+    "description": "Titel der Download-Datum-Spalte"
+  },
+  "tweetText": {
+    "message": "Tweet-Text",
+    "description": "Titel der Tweet-Text-Spalte"
+  },
+  "actions": {
+    "message": "Aktionen",
+    "description": "Titel der Aktionen-Spalte"
+  },
+  "tweetAlreadyDownloaded": {
+    "message": "Dieser Tweet wurde bereits heruntergeladen. Möchten Sie die Seite mit den Download-Aufzeichnungen öffnen?",
+    "description": "Meldung, die angezeigt wird, wenn ein Tweet bereits heruntergeladen wurde"
+  },
+  "clearAllRecords": {
+    "message": "Alle Einträge löschen",
+    "description": "Text der Schaltfläche zum Löschen aller Einträge"
+  },
+  "confirmClearAll": {
+    "message": "Löschen aller Einträge bestätigen",
+    "description": "Titel des Bestätigungsdialogs zum Löschen aller Einträge"
+  },
+  "clearAllRecordsConfirmation": {
+    "message": "Sind Sie sicher, dass Sie alle Download-Aufzeichnungen löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "description": "Bestätigungsmeldung beim Löschen aller Einträge"
+  },
+  "clearAllWarning": {
+    "message": "Warnung: Dies wird alle Ihre Download-Aufzeichnungen dauerhaft löschen.",
+    "description": "Warnmeldung beim Löschen aller Einträge"
+  },
+  "clearAll": {
+    "message": "Alles löschen",
+    "description": "Text der Schaltfläche zum Löschen aller Einträge"
+  },
+  "ok": {
+    "message": "OK",
+    "description": "Text für OK-Schaltfläche"
+  },
+  "yes": {
+    "message": "Ja",
+    "description": "Text für Ja-Schaltfläche"
+  },
+  "no": {
+    "message": "Nein",
+    "description": "Text für Nein-Schaltfläche"
+  },
+  "searchRecordsAndTweets": {
+    "message": "Suche nach Aufzeichnungen und Tweets",
+    "description": "Platzhalter für Suchfeld"
+  }
 }

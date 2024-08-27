@@ -1,65 +1,65 @@
 .container {
-    width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
 h1 {
-    color: #1da1f2;
-    text-align: center;
+  color: #1da1f2;
+  text-align: center;
 }
 
 .record-item {
-    background-color: #f8f9fa;
-    border: 1px solid #e1e8ed;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #e1e8ed;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .record-content {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .tweet-id,
 .filename,
 .download-date {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .record-actions {
-    text-align: right;
+  text-align: right;
 }
 
 .record-actions button {
-    background-color: #1da1f2;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 .pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .pagination button {
-    background-color: #1da1f2;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 .pagination button:disabled {
-    background-color: #ccd6dd;
-    cursor: not-allowed;
+  background-color: #ccd6dd;
+  cursor: not-allowed;
 }

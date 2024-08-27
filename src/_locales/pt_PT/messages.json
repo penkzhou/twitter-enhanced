@@ -1,236 +1,236 @@
 {
-    "extensionName": {
-        "message": "Twitter Aprimorado",
-        "description": "Nome da extensão"
-    },
-    "extensionDescription": {
-        "message": "Adicione recursos extras ao Twitter e X, incluindo a recuperação de informações de vídeo e suporte para ambos os domínios",
-        "description": "Descrição da extensão"
-    },
-    "addRemark": {
-        "message": "Adicionar Observação",
-        "description": "Texto do botão para adicionar uma observação"
-    },
-    "editRemark": {
-        "message": "Editar Observação",
-        "description": "Texto do botão para editar uma observação"
-    },
-    "enterRemark": {
-        "message": "Digite a observação",
-        "description": "Texto de placeholder para entrada de observação"
-    },
-    "cancel": {
-        "message": "Cancelar",
-        "description": "Texto do botão cancelar"
-    },
-    "save": {
-        "message": "Salvar",
-        "description": "Texto do botão salvar"
-    },
-    "downloadMedia": {
-        "message": "Baixar mídia",
-        "description": "Rótulo aria para o botão de download"
-    },
-    "tweetIdError": {
-        "message": "Desculpe, não foi possível encontrar o ID do tweet para download.",
-        "description": "Mensagem de erro quando o ID do tweet não é encontrado"
-    },
-    "downloadError": {
-        "message": "Ocorreu um erro ao tentar baixar o vídeo.",
-        "description": "Mensagem de erro quando o download falha"
-    },
-    "unableToDownload": {
-        "message": "Desculpe, não foi possível baixar o vídeo: $ERROR$",
-        "description": "Mensagem de erro com detalhes quando não é possível baixar",
-        "placeholders": {
-            "error": {
-                "content": "$1",
-                "example": "Erro de rede"
-            }
-        }
-    },
-    "popupTitle": {
-        "message": "Twitter Aprimorado",
-        "description": "Título da janela popup"
-    },
-    "customizeExperience": {
-        "message": "Personalize sua experiência no Twitter:",
-        "description": "Subtítulo no popup"
-    },
-    "enableUserRemarks": {
-        "message": "Ativar observações do usuário",
-        "description": "Rótulo para ativar observações do usuário"
-    },
-    "enableVideoDownload": {
-        "message": "Ativar recurso de download de vídeo",
-        "description": "Rótulo para ativar download de vídeo"
-    },
-    "downloadDirectory": {
-        "message": "Diretório de Download:",
-        "description": "Rótulo para o campo de diretório de download"
-    },
-    "saveSettings": {
-        "message": "Salvar Configurações",
-        "description": "Texto do botão para salvar configurações"
-    },
-    "settingsSaved": {
-        "message": "Configurações salvas com sucesso!",
-        "description": "Mensagem exibida quando as configurações são salvas"
-    },
-    "manageRemarks": {
-        "message": "Gerenciar Observações",
-        "description": "Título da página de opções"
-    },
-    "editRemarkInOptions": {
-        "message": "Editar",
-        "description": "Texto do botão editar"
-    },
-    "deleteRemarkInOptions": {
-        "message": "Excluir",
-        "description": "Texto do botão excluir"
-    },
-    "previousPage": {
-        "message": "Anterior",
-        "description": "Texto do botão página anterior"
-    },
-    "nextPage": {
-        "message": "Próxima",
-        "description": "Texto do botão próxima página"
-    },
-    "pageOf": {
-        "message": "Página $CURRENT$ de $TOTAL$",
-        "description": "Indicador de número da página",
-        "placeholders": {
-            "current": {
-                "content": "$1",
-                "example": "1"
-            },
-            "total": {
-                "content": "$2",
-                "example": "5"
-            }
-        }
-    },
-    "exportRemarks": {
-        "message": "Exportar Observações",
-        "description": "Texto do botão exportar observações"
-    },
-    "importRemarks": {
-        "message": "Importar Observações",
-        "description": "Texto do botão importar observações"
-    },
-    "editRemarkPrompt": {
-        "message": "Editar observação para @$USERNAME$:",
-        "description": "Prompt ao editar uma observação",
-        "placeholders": {
-            "username": {
-                "content": "$1",
-                "example": "johndoe"
-            }
-        }
-    },
-    "deleteRemarkConfirm": {
-        "message": "Tem certeza que deseja excluir esta observação?",
-        "description": "Mensagem de confirmação ao excluir uma observação"
-    },
-    "importSuccessful": {
-        "message": "Observações importadas com sucesso!",
-        "description": "Mensagem exibida quando as observações são importadas com sucesso"
-    },
-    "importError": {
-        "message": "Erro ao importar observações. Certifique-se de que o arquivo está no formato correto.",
-        "description": "Mensagem de erro quando a importação de observações falha"
-    },
-    "manageDownloads": {
-        "message": "Gerenciar Downloads",
-        "description": "Texto do botão para abrir a página de registros de download"
-    },
-    "downloadRecords": {
-        "message": "Registros de Download",
-        "description": "Título da página de registros de download"
-    },
-    "locateFile": {
-        "message": "Localizar Arquivo",
-        "description": "Texto do botão para localizar o arquivo baixado"
-    },
-    "fileNotFound": {
-        "message": "Arquivo não encontrado nos downloads.",
-        "description": "Mensagem exibida quando não é possível localizar um arquivo"
-    },
-    "confirmDelete": {
-        "message": "Confirmar Exclusão",
-        "description": "Título para o diálogo de confirmação de exclusão"
-    },
-    "deleteRecordConfirmation": {
-        "message": "Tem certeza de que deseja excluir este registro?",
-        "description": "Mensagem de confirmação ao excluir um registro"
-    },
-    "delete": {
-        "message": "Excluir",
-        "description": "Texto do botão de exclusão"
-    },
-    "openOriginTweet": {
-        "message": "Abrir Tweet Original",
-        "description": "Texto do botão para abrir o tweet original"
-    },
-    "tweetId": {
-        "message": "ID do Tweet",
-        "description": "Título da coluna ID do Tweet"
-    },
-    "originTweet": {
-        "message": "Tweet Original",
-        "description": "Título da coluna Tweet Original"
-    },
-    "downloadDate": {
-        "message": "Data de Download",
-        "description": "Título da coluna Data de Download"
-    },
-    "tweetText": {
-        "message": "Texto do Tweet",
-        "description": "Título da coluna Texto do Tweet"
-    },
-    "actions": {
-        "message": "Ações",
-        "description": "Título da coluna Ações"
-    },
-    "tweetAlreadyDownloaded": {
-        "message": "Este tweet já foi baixado. Deseja abrir a página de registros de download?",
-        "description": "Mensagem mostrada quando um tweet já foi baixado"
-    },
-    "clearAllRecords": {
-        "message": "Eliminar todos os registros",
-        "description": "Texto do botão para eliminar todos os registros"
-    },
-    "confirmClearAll": {
-        "message": "Confirmar Exclusão",
-        "description": "Título para o diálogo de confirmação de exclusão"
-    },
-    "clearAllRecordsConfirmation": {
-        "message": "Tem certeza de que deseja excluir todos os registros?",
-        "description": "Confirmación de eliminación de todos los registros"
-    },
-    "clearAllWarning": {
-        "message": "Aviso: Isso eliminará permanentemente todos os seus registros de download!",
-        "description": "Aviso de eliminación de todos los registros"
-    },
-    "clearAll": {
-        "message": "Eliminar Todos",
-        "description": "Texto do botão para eliminar todos os registros"
-    },
-    "ok": {
-        "message": "OK",
-        "description": "Texto para o botão OK"
-    },
-    "yes": {
-        "message": "Sim",
-        "description": "Texto para o botão Sim"
-    },
-    "no": {
-        "message": "Não",
-        "description": "Texto para o botão Não"
-    },
-    "searchRecordsAndTweets": {
-        "message": "Buscar registros y tweets",
-        "description": "Platzhalter für Suchfeld"
+  "extensionName": {
+    "message": "Twitter Aprimorado",
+    "description": "Nome da extensão"
+  },
+  "extensionDescription": {
+    "message": "Adicione recursos extras ao Twitter e X, incluindo a recuperação de informações de vídeo e suporte para ambos os domínios",
+    "description": "Descrição da extensão"
+  },
+  "addRemark": {
+    "message": "Adicionar Observação",
+    "description": "Texto do botão para adicionar uma observação"
+  },
+  "editRemark": {
+    "message": "Editar Observação",
+    "description": "Texto do botão para editar uma observação"
+  },
+  "enterRemark": {
+    "message": "Digite a observação",
+    "description": "Texto de placeholder para entrada de observação"
+  },
+  "cancel": {
+    "message": "Cancelar",
+    "description": "Texto do botão cancelar"
+  },
+  "save": {
+    "message": "Salvar",
+    "description": "Texto do botão salvar"
+  },
+  "downloadMedia": {
+    "message": "Baixar mídia",
+    "description": "Rótulo aria para o botão de download"
+  },
+  "tweetIdError": {
+    "message": "Desculpe, não foi possível encontrar o ID do tweet para download.",
+    "description": "Mensagem de erro quando o ID do tweet não é encontrado"
+  },
+  "downloadError": {
+    "message": "Ocorreu um erro ao tentar baixar o vídeo.",
+    "description": "Mensagem de erro quando o download falha"
+  },
+  "unableToDownload": {
+    "message": "Desculpe, não foi possível baixar o vídeo: $ERROR$",
+    "description": "Mensagem de erro com detalhes quando não é possível baixar",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "Erro de rede"
+      }
     }
+  },
+  "popupTitle": {
+    "message": "Twitter Aprimorado",
+    "description": "Título da janela popup"
+  },
+  "customizeExperience": {
+    "message": "Personalize sua experiência no Twitter:",
+    "description": "Subtítulo no popup"
+  },
+  "enableUserRemarks": {
+    "message": "Ativar observações do usuário",
+    "description": "Rótulo para ativar observações do usuário"
+  },
+  "enableVideoDownload": {
+    "message": "Ativar recurso de download de vídeo",
+    "description": "Rótulo para ativar download de vídeo"
+  },
+  "downloadDirectory": {
+    "message": "Diretório de Download:",
+    "description": "Rótulo para o campo de diretório de download"
+  },
+  "saveSettings": {
+    "message": "Salvar Configurações",
+    "description": "Texto do botão para salvar configurações"
+  },
+  "settingsSaved": {
+    "message": "Configurações salvas com sucesso!",
+    "description": "Mensagem exibida quando as configurações são salvas"
+  },
+  "manageRemarks": {
+    "message": "Gerenciar Observações",
+    "description": "Título da página de opções"
+  },
+  "editRemarkInOptions": {
+    "message": "Editar",
+    "description": "Texto do botão editar"
+  },
+  "deleteRemarkInOptions": {
+    "message": "Excluir",
+    "description": "Texto do botão excluir"
+  },
+  "previousPage": {
+    "message": "Anterior",
+    "description": "Texto do botão página anterior"
+  },
+  "nextPage": {
+    "message": "Próxima",
+    "description": "Texto do botão próxima página"
+  },
+  "pageOf": {
+    "message": "Página $CURRENT$ de $TOTAL$",
+    "description": "Indicador de número da página",
+    "placeholders": {
+      "current": {
+        "content": "$1",
+        "example": "1"
+      },
+      "total": {
+        "content": "$2",
+        "example": "5"
+      }
+    }
+  },
+  "exportRemarks": {
+    "message": "Exportar Observações",
+    "description": "Texto do botão exportar observações"
+  },
+  "importRemarks": {
+    "message": "Importar Observações",
+    "description": "Texto do botão importar observações"
+  },
+  "editRemarkPrompt": {
+    "message": "Editar observação para @$USERNAME$:",
+    "description": "Prompt ao editar uma observação",
+    "placeholders": {
+      "username": {
+        "content": "$1",
+        "example": "johndoe"
+      }
+    }
+  },
+  "deleteRemarkConfirm": {
+    "message": "Tem certeza que deseja excluir esta observação?",
+    "description": "Mensagem de confirmação ao excluir uma observação"
+  },
+  "importSuccessful": {
+    "message": "Observações importadas com sucesso!",
+    "description": "Mensagem exibida quando as observações são importadas com sucesso"
+  },
+  "importError": {
+    "message": "Erro ao importar observações. Certifique-se de que o arquivo está no formato correto.",
+    "description": "Mensagem de erro quando a importação de observações falha"
+  },
+  "manageDownloads": {
+    "message": "Gerenciar Downloads",
+    "description": "Texto do botão para abrir a página de registros de download"
+  },
+  "downloadRecords": {
+    "message": "Registros de Download",
+    "description": "Título da página de registros de download"
+  },
+  "locateFile": {
+    "message": "Localizar Arquivo",
+    "description": "Texto do botão para localizar o arquivo baixado"
+  },
+  "fileNotFound": {
+    "message": "Arquivo não encontrado nos downloads.",
+    "description": "Mensagem exibida quando não é possível localizar um arquivo"
+  },
+  "confirmDelete": {
+    "message": "Confirmar Exclusão",
+    "description": "Título para o diálogo de confirmação de exclusão"
+  },
+  "deleteRecordConfirmation": {
+    "message": "Tem certeza de que deseja excluir este registro?",
+    "description": "Mensagem de confirmação ao excluir um registro"
+  },
+  "delete": {
+    "message": "Excluir",
+    "description": "Texto do botão de exclusão"
+  },
+  "openOriginTweet": {
+    "message": "Abrir Tweet Original",
+    "description": "Texto do botão para abrir o tweet original"
+  },
+  "tweetId": {
+    "message": "ID do Tweet",
+    "description": "Título da coluna ID do Tweet"
+  },
+  "originTweet": {
+    "message": "Tweet Original",
+    "description": "Título da coluna Tweet Original"
+  },
+  "downloadDate": {
+    "message": "Data de Download",
+    "description": "Título da coluna Data de Download"
+  },
+  "tweetText": {
+    "message": "Texto do Tweet",
+    "description": "Título da coluna Texto do Tweet"
+  },
+  "actions": {
+    "message": "Ações",
+    "description": "Título da coluna Ações"
+  },
+  "tweetAlreadyDownloaded": {
+    "message": "Este tweet já foi baixado. Deseja abrir a página de registros de download?",
+    "description": "Mensagem mostrada quando um tweet já foi baixado"
+  },
+  "clearAllRecords": {
+    "message": "Eliminar todos os registros",
+    "description": "Texto do botão para eliminar todos os registros"
+  },
+  "confirmClearAll": {
+    "message": "Confirmar Exclusão",
+    "description": "Título para o diálogo de confirmação de exclusão"
+  },
+  "clearAllRecordsConfirmation": {
+    "message": "Tem certeza de que deseja excluir todos os registros?",
+    "description": "Confirmación de eliminación de todos los registros"
+  },
+  "clearAllWarning": {
+    "message": "Aviso: Isso eliminará permanentemente todos os seus registros de download!",
+    "description": "Aviso de eliminación de todos los registros"
+  },
+  "clearAll": {
+    "message": "Eliminar Todos",
+    "description": "Texto do botão para eliminar todos os registros"
+  },
+  "ok": {
+    "message": "OK",
+    "description": "Texto para o botão OK"
+  },
+  "yes": {
+    "message": "Sim",
+    "description": "Texto para o botão Sim"
+  },
+  "no": {
+    "message": "Não",
+    "description": "Texto para o botão Não"
+  },
+  "searchRecordsAndTweets": {
+    "message": "Buscar registros y tweets",
+    "description": "Platzhalter für Suchfeld"
+  }
 }

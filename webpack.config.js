@@ -43,7 +43,13 @@ var options = {
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.tsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.ts'),
     contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.ts'),
-    downloadRecords: path.join(__dirname, 'src', 'pages', 'DownloadRecords', 'index.tsx'),
+    downloadRecords: path.join(
+      __dirname,
+      'src',
+      'pages',
+      'DownloadRecords',
+      'index.tsx'
+    ),
   },
   chromeExtensionBoilerplate: {
     notHotReload: ['background', 'contentScript', 'devtools'],
@@ -199,7 +205,7 @@ var options = {
       patterns: [
         {
           from: 'src/_locales',
-          to: '_locales'
+          to: '_locales',
         },
       ],
     }),
@@ -216,7 +222,13 @@ var options = {
       cache: false,
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'DownloadRecords', 'index.html'),
+      template: path.join(
+        __dirname,
+        'src',
+        'pages',
+        'DownloadRecords',
+        'index.html'
+      ),
       filename: 'downloadRecords.html',
       chunks: ['downloadRecords'],
       cache: false,

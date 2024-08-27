@@ -1,236 +1,236 @@
 {
-    "extensionName": {
-        "message": "트위터 인핸서",
-        "description": "확장 프로그램의 이름"
-    },
-    "extensionDescription": {
-        "message": "트위터와 X에 비디오 정보 검색 및 두 도메인 지원 기능을 추가하는 크롬 확장 프로그램",
-        "description": "확장 프로그램의 설명"
-    },
-    "addRemark": {
-        "message": "메모 추가",
-        "description": "메모 추가 버튼 텍스트"
-    },
-    "editRemark": {
-        "message": "메모 수정",
-        "description": "메모 수정 버튼 텍스트"
-    },
-    "enterRemark": {
-        "message": "메모 입력",
-        "description": "메모 입력 필드 플레이스홀더"
-    },
-    "cancel": {
-        "message": "취소",
-        "description": "취소 버튼 텍스트"
-    },
-    "save": {
-        "message": "저장",
-        "description": "저장 버튼 텍스트"
-    },
-    "downloadMedia": {
-        "message": "미디어 다운로드",
-        "description": "다운로드 버튼 aria 라벨"
-    },
-    "tweetIdError": {
-        "message": "죄송합니다. 다운로드할 트윗 ID를 찾을 수 없습니다.",
-        "description": "트윗 ID를 찾을 수 없을 때 오류 메시지"
-    },
-    "downloadError": {
-        "message": "비디오 다운로드 중 오류가 발생했습니다.",
-        "description": "다운로드 실패 시 오류 메시지"
-    },
-    "unableToDownload": {
-        "message": "죄송합니다. 비디오를 다운로드할 수 없습니다: $ERROR$",
-        "description": "다운로드 불가 시 상세 오류 메시지",
-        "placeholders": {
-            "error": {
-                "content": "$1",
-                "example": "네트워크 오류"
-            }
-        }
-    },
-    "popupTitle": {
-        "message": "트위터 인핸서",
-        "description": "팝업 제목"
-    },
-    "customizeExperience": {
-        "message": "트위터 경험 맞춤 설정:",
-        "description": "팝업 부제목"
-    },
-    "enableUserRemarks": {
-        "message": "사용자 메모 기능 활성화",
-        "description": "사용자 메모 토글 라벨"
-    },
-    "enableVideoDownload": {
-        "message": "비디오 다운로드 기능 활성화",
-        "description": "비디오 다운로드 토글 라벨"
-    },
-    "downloadDirectory": {
-        "message": "다운로드 디렉토리:",
-        "description": "다운로드 디렉토리 입력 라벨"
-    },
-    "saveSettings": {
-        "message": "설정 저장",
-        "description": "설정 저장 버튼 텍스트"
-    },
-    "settingsSaved": {
-        "message": "설정이 성공적으로 저장되었습니다!",
-        "description": "설정 저장 시 표시되는 메시지"
-    },
-    "manageRemarks": {
-        "message": "메모 관리",
-        "description": "옵션 페이지 제목"
-    },
-    "editRemarkInOptions": {
-        "message": "수정",
-        "description": "수정 버튼 텍스트"
-    },
-    "deleteRemarkInOptions": {
-        "message": "삭제",
-        "description": "삭제 버튼 텍스트"
-    },
-    "previousPage": {
-        "message": "이전",
-        "description": "이전 페이지 버튼 텍스트"
-    },
-    "nextPage": {
-        "message": "다음",
-        "description": "다음 페이지 버튼 텍스트"
-    },
-    "pageOf": {
-        "message": "$CURRENT$ / $TOTAL$ 페이지",
-        "description": "페이지 번호 표시",
-        "placeholders": {
-            "current": {
-                "content": "$1",
-                "example": "1"
-            },
-            "total": {
-                "content": "$2",
-                "example": "5"
-            }
-        }
-    },
-    "exportRemarks": {
-        "message": "메모 내보내기",
-        "description": "메모 내보내기 버튼 텍스트"
-    },
-    "importRemarks": {
-        "message": "메모 가져오기",
-        "description": "메모 가져오기 버튼 텍스트"
-    },
-    "editRemarkPrompt": {
-        "message": "@$USERNAME$의 메모 수정:",
-        "description": "메모 수정 시 프롬프트",
-        "placeholders": {
-            "username": {
-                "content": "$1",
-                "example": "johndoe"
-            }
-        }
-    },
-    "deleteRemarkConfirm": {
-        "message": "이 메모를 삭제하시겠습니까?",
-        "description": "메모 삭제 시 확인 메시지"
-    },
-    "importSuccessful": {
-        "message": "메모를 성공적으로 가져왔습니다!",
-        "description": "메모 가져오기 성공 시 메시지"
-    },
-    "importError": {
-        "message": "메모 가져오기 오류. 파일 형식이 올바른지 확인해 주세요.",
-        "description": "메모 가져오기 실패 시 오류 메시지"
-    },
-    "manageDownloads": {
-        "message": "다운로드 관리",
-        "description": "다운로드 기록 페이지 열기 버튼 텍스트"
-    },
-    "downloadRecords": {
-        "message": "다운로드 기록",
-        "description": "다운로드 기록 페이지 제목"
-    },
-    "locateFile": {
-        "message": "파일 찾기",
-        "description": "다운로드된 파일 찾기 버튼 텍스트"
-    },
-    "fileNotFound": {
-        "message": "다운로드에서 파일을 찾을 수 없습니다.",
-        "description": "파일을 찾을 수 없을 때 표시되는 메시지"
-    },
-    "confirmDelete": {
-        "message": "삭제 확인",
-        "description": "삭제 확인 대화 상자 제목"
-    },
-    "deleteRecordConfirmation": {
-        "message": "이 기록을 삭제하시겠습니까?",
-        "description": "기록 삭제 시 확인 메시지"
-    },
-    "delete": {
-        "message": "삭제",
-        "description": "삭제 버튼 텍스트"
-    },
-    "openOriginTweet": {
-        "message": "원본 트윗 열기",
-        "description": "원본 트윗 열기 버튼 텍스트"
-    },
-    "tweetId": {
-        "message": "트윗 ID",
-        "description": "트윗 ID 열 제목"
-    },
-    "originTweet": {
-        "message": "원본 트윗",
-        "description": "원본 트윗 열 제목"
-    },
-    "downloadDate": {
-        "message": "다운로드 날짜",
-        "description": "다운로드 날짜 열 제목"
-    },
-    "tweetText": {
-        "message": "트윗 내용",
-        "description": "트윗 내용 열 제목"
-    },
-    "actions": {
-        "message": "작업",
-        "description": "작업 열 제목"
-    },
-    "tweetAlreadyDownloaded": {
-        "message": "이 트윗은 이미 다운로드되었습니다. 다운로드 기록 페이지를 여시겠습니까?",
-        "description": "이미 다운로드된 트윗에 대한 메시지"
-    },
-    "clearAllRecords": {
-        "message": "모든 기록 삭제",
-        "description": "모든 기록 삭제 버튼 텍스트"
-    },
-    "confirmClearAll": {
-        "message": "모든 기록 삭제 확인",
-        "description": "모든 기록 삭제 확인 대화 상자 제목"
-    },
-    "clearAllRecordsConfirmation": {
-        "message": "모든 다운로드 기록을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
-        "description": "모든 기록 삭제 시 확인 메시지"
-    },
-    "clearAllWarning": {
-        "message": "경고: 이 작업은 모든 다운로드 기록을 영구적으로 삭제합니다.",
-        "description": "모든 기록 삭제 시 경고 메시지"
-    },
-    "clearAll": {
-        "message": "모두 삭제",
-        "description": "모든 기록 삭제 버튼 텍스트"
-    },
-    "ok": {
-        "message": "확인",
-        "description": "확인 버튼 텍스트"
-    },
-    "yes": {
-        "message": "예",
-        "description": "예 버튼 텍스트"
-    },
-    "no": {
-        "message": "아니오",
-        "description": "아니오 버튼 텍스트"
-    },
-    "searchRecordsAndTweets": {
-        "message": "기록 및 트윗 검색",
-        "description": "검색 입력 필드 플레이스홀더"
+  "extensionName": {
+    "message": "트위터 인핸서",
+    "description": "확장 프로그램의 이름"
+  },
+  "extensionDescription": {
+    "message": "트위터와 X에 비디오 정보 검색 및 두 도메인 지원 기능을 추가하는 크롬 확장 프로그램",
+    "description": "확장 프로그램의 설명"
+  },
+  "addRemark": {
+    "message": "메모 추가",
+    "description": "메모 추가 버튼 텍스트"
+  },
+  "editRemark": {
+    "message": "메모 수정",
+    "description": "메모 수정 버튼 텍스트"
+  },
+  "enterRemark": {
+    "message": "메모 입력",
+    "description": "메모 입력 필드 플레이스홀더"
+  },
+  "cancel": {
+    "message": "취소",
+    "description": "취소 버튼 텍스트"
+  },
+  "save": {
+    "message": "저장",
+    "description": "저장 버튼 텍스트"
+  },
+  "downloadMedia": {
+    "message": "미디어 다운로드",
+    "description": "다운로드 버튼 aria 라벨"
+  },
+  "tweetIdError": {
+    "message": "죄송합니다. 다운로드할 트윗 ID를 찾을 수 없습니다.",
+    "description": "트윗 ID를 찾을 수 없을 때 오류 메시지"
+  },
+  "downloadError": {
+    "message": "비디오 다운로드 중 오류가 발생했습니다.",
+    "description": "다운로드 실패 시 오류 메시지"
+  },
+  "unableToDownload": {
+    "message": "죄송합니다. 비디오를 다운로드할 수 없습니다: $ERROR$",
+    "description": "다운로드 불가 시 상세 오류 메시지",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "네트워크 오류"
+      }
     }
+  },
+  "popupTitle": {
+    "message": "트위터 인핸서",
+    "description": "팝업 제목"
+  },
+  "customizeExperience": {
+    "message": "트위터 경험 맞춤 설정:",
+    "description": "팝업 부제목"
+  },
+  "enableUserRemarks": {
+    "message": "사용자 메모 기능 활성화",
+    "description": "사용자 메모 토글 라벨"
+  },
+  "enableVideoDownload": {
+    "message": "비디오 다운로드 기능 활성화",
+    "description": "비디오 다운로드 토글 라벨"
+  },
+  "downloadDirectory": {
+    "message": "다운로드 디렉토리:",
+    "description": "다운로드 디렉토리 입력 라벨"
+  },
+  "saveSettings": {
+    "message": "설정 저장",
+    "description": "설정 저장 버튼 텍스트"
+  },
+  "settingsSaved": {
+    "message": "설정이 성공적으로 저장되었습니다!",
+    "description": "설정 저장 시 표시되는 메시지"
+  },
+  "manageRemarks": {
+    "message": "메모 관리",
+    "description": "옵션 페이지 제목"
+  },
+  "editRemarkInOptions": {
+    "message": "수정",
+    "description": "수정 버튼 텍스트"
+  },
+  "deleteRemarkInOptions": {
+    "message": "삭제",
+    "description": "삭제 버튼 텍스트"
+  },
+  "previousPage": {
+    "message": "이전",
+    "description": "이전 페이지 버튼 텍스트"
+  },
+  "nextPage": {
+    "message": "다음",
+    "description": "다음 페이지 버튼 텍스트"
+  },
+  "pageOf": {
+    "message": "$CURRENT$ / $TOTAL$ 페이지",
+    "description": "페이지 번호 표시",
+    "placeholders": {
+      "current": {
+        "content": "$1",
+        "example": "1"
+      },
+      "total": {
+        "content": "$2",
+        "example": "5"
+      }
+    }
+  },
+  "exportRemarks": {
+    "message": "메모 내보내기",
+    "description": "메모 내보내기 버튼 텍스트"
+  },
+  "importRemarks": {
+    "message": "메모 가져오기",
+    "description": "메모 가져오기 버튼 텍스트"
+  },
+  "editRemarkPrompt": {
+    "message": "@$USERNAME$의 메모 수정:",
+    "description": "메모 수정 시 프롬프트",
+    "placeholders": {
+      "username": {
+        "content": "$1",
+        "example": "johndoe"
+      }
+    }
+  },
+  "deleteRemarkConfirm": {
+    "message": "이 메모를 삭제하시겠습니까?",
+    "description": "메모 삭제 시 확인 메시지"
+  },
+  "importSuccessful": {
+    "message": "메모를 성공적으로 가져왔습니다!",
+    "description": "메모 가져오기 성공 시 메시지"
+  },
+  "importError": {
+    "message": "메모 가져오기 오류. 파일 형식이 올바른지 확인해 주세요.",
+    "description": "메모 가져오기 실패 시 오류 메시지"
+  },
+  "manageDownloads": {
+    "message": "다운로드 관리",
+    "description": "다운로드 기록 페이지 열기 버튼 텍스트"
+  },
+  "downloadRecords": {
+    "message": "다운로드 기록",
+    "description": "다운로드 기록 페이지 제목"
+  },
+  "locateFile": {
+    "message": "파일 찾기",
+    "description": "다운로드된 파일 찾기 버튼 텍스트"
+  },
+  "fileNotFound": {
+    "message": "다운로드에서 파일을 찾을 수 없습니다.",
+    "description": "파일을 찾을 수 없을 때 표시되는 메시지"
+  },
+  "confirmDelete": {
+    "message": "삭제 확인",
+    "description": "삭제 확인 대화 상자 제목"
+  },
+  "deleteRecordConfirmation": {
+    "message": "이 기록을 삭제하시겠습니까?",
+    "description": "기록 삭제 시 확인 메시지"
+  },
+  "delete": {
+    "message": "삭제",
+    "description": "삭제 버튼 텍스트"
+  },
+  "openOriginTweet": {
+    "message": "원본 트윗 열기",
+    "description": "원본 트윗 열기 버튼 텍스트"
+  },
+  "tweetId": {
+    "message": "트윗 ID",
+    "description": "트윗 ID 열 제목"
+  },
+  "originTweet": {
+    "message": "원본 트윗",
+    "description": "원본 트윗 열 제목"
+  },
+  "downloadDate": {
+    "message": "다운로드 날짜",
+    "description": "다운로드 날짜 열 제목"
+  },
+  "tweetText": {
+    "message": "트윗 내용",
+    "description": "트윗 내용 열 제목"
+  },
+  "actions": {
+    "message": "작업",
+    "description": "작업 열 제목"
+  },
+  "tweetAlreadyDownloaded": {
+    "message": "이 트윗은 이미 다운로드되었습니다. 다운로드 기록 페이지를 여시겠습니까?",
+    "description": "이미 다운로드된 트윗에 대한 메시지"
+  },
+  "clearAllRecords": {
+    "message": "모든 기록 삭제",
+    "description": "모든 기록 삭제 버튼 텍스트"
+  },
+  "confirmClearAll": {
+    "message": "모든 기록 삭제 확인",
+    "description": "모든 기록 삭제 확인 대화 상자 제목"
+  },
+  "clearAllRecordsConfirmation": {
+    "message": "모든 다운로드 기록을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
+    "description": "모든 기록 삭제 시 확인 메시지"
+  },
+  "clearAllWarning": {
+    "message": "경고: 이 작업은 모든 다운로드 기록을 영구적으로 삭제합니다.",
+    "description": "모든 기록 삭제 시 경고 메시지"
+  },
+  "clearAll": {
+    "message": "모두 삭제",
+    "description": "모든 기록 삭제 버튼 텍스트"
+  },
+  "ok": {
+    "message": "확인",
+    "description": "확인 버튼 텍스트"
+  },
+  "yes": {
+    "message": "예",
+    "description": "예 버튼 텍스트"
+  },
+  "no": {
+    "message": "아니오",
+    "description": "아니오 버튼 텍스트"
+  },
+  "searchRecordsAndTweets": {
+    "message": "기록 및 트윗 검색",
+    "description": "검색 입력 필드 플레이스홀더"
+  }
 }

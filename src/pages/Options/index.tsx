@@ -5,10 +5,9 @@ import Options from './Options';
 import './index.css';
 import './../../globals.css';
 
-
 const container = document.getElementById('app-container');
 
 if (container) {
-    const root = createRoot(container); // createRoot(container!) if you use TypeScript
-    root.render(<Options title={'Settings'} />);
+  const root = createRoot(container); // createRoot(container!) if you use TypeScript
+  root.render(<Options title={'Settings'} />);
 }

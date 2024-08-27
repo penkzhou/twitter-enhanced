@@ -1,236 +1,236 @@
 {
-    "extensionName": {
-        "message": "Twitter Amélioré",
-        "description": "Le nom de l'extension"
-    },
-    "extensionDescription": {
-        "message": "Ajouter des fonctionnalités supplémentaires à Twitter et X, incluant la récupération d'informations vidéo et le support pour les deux domaines",
-        "description": "La description de l'extension"
-    },
-    "addRemark": {
-        "message": "Ajouter une remarque",
-        "description": "Texte du bouton pour ajouter une remarque"
-    },
-    "editRemark": {
-        "message": "Modifier la remarque",
-        "description": "Texte du bouton pour modifier une remarque"
-    },
-    "enterRemark": {
-        "message": "Entrez une remarque",
-        "description": "Texte d'espace réservé pour la saisie de remarque"
-    },
-    "cancel": {
-        "message": "Annuler",
-        "description": "Texte du bouton d'annulation"
-    },
-    "save": {
-        "message": "Enregistrer",
-        "description": "Texte du bouton d'enregistrement"
-    },
-    "downloadMedia": {
-        "message": "Télécharger le média",
-        "description": "Étiquette aria pour le bouton de téléchargement"
-    },
-    "tweetIdError": {
-        "message": "Désolé, impossible de trouver l'ID du tweet pour le téléchargement.",
-        "description": "Message d'erreur lorsque l'ID du tweet n'est pas trouvé"
-    },
-    "downloadError": {
-        "message": "Une erreur s'est produite lors de la tentative de téléchargement de la vidéo.",
-        "description": "Message d'erreur lorsque le téléchargement échoue"
-    },
-    "unableToDownload": {
-        "message": "Désolé, impossible de télécharger la vidéo : $ERROR$",
-        "description": "Message d'erreur avec détails lorsque le téléchargement est impossible",
-        "placeholders": {
-            "error": {
-                "content": "$1",
-                "example": "Erreur réseau"
-            }
-        }
-    },
-    "popupTitle": {
-        "message": "Twitter Amélioré",
-        "description": "Titre de la fenêtre contextuelle"
-    },
-    "customizeExperience": {
-        "message": "Personnalisez votre expérience Twitter :",
-        "description": "Sous-titre dans la fenêtre contextuelle"
-    },
-    "enableUserRemarks": {
-        "message": "Activer les remarques utilisateur",
-        "description": "Étiquette pour l'interrupteur des remarques utilisateur"
-    },
-    "enableVideoDownload": {
-        "message": "Activer la fonction de téléchargement vidéo",
-        "description": "Étiquette pour l'interrupteur de téléchargement vidéo"
-    },
-    "downloadDirectory": {
-        "message": "Répertoire de téléchargement :",
-        "description": "Étiquette pour l'entrée du répertoire de téléchargement"
-    },
-    "saveSettings": {
-        "message": "Enregistrer les paramètres",
-        "description": "Texte du bouton pour enregistrer les paramètres"
-    },
-    "settingsSaved": {
-        "message": "Paramètres enregistrés avec succès !",
-        "description": "Message affiché lorsque les paramètres sont enregistrés"
-    },
-    "manageRemarks": {
-        "message": "Gérer les remarques",
-        "description": "Titre de la page d'options"
-    },
-    "editRemarkInOptions": {
-        "message": "Modifier",
-        "description": "Texte du bouton de modification"
-    },
-    "deleteRemarkInOptions": {
-        "message": "Supprimer",
-        "description": "Texte du bouton de suppression"
-    },
-    "previousPage": {
-        "message": "Précédent",
-        "description": "Texte du bouton de page précédente"
-    },
-    "nextPage": {
-        "message": "Suivant",
-        "description": "Texte du bouton de page suivante"
-    },
-    "pageOf": {
-        "message": "Page $CURRENT$ sur $TOTAL$",
-        "description": "Indicateur de numéro de page",
-        "placeholders": {
-            "current": {
-                "content": "$1",
-                "example": "1"
-            },
-            "total": {
-                "content": "$2",
-                "example": "5"
-            }
-        }
-    },
-    "exportRemarks": {
-        "message": "Exporter les remarques",
-        "description": "Texte du bouton d'exportation des remarques"
-    },
-    "importRemarks": {
-        "message": "Importer les remarques",
-        "description": "Texte du bouton d'importation des remarques"
-    },
-    "editRemarkPrompt": {
-        "message": "Modifier la remarque pour @$USERNAME$ :",
-        "description": "Invite lors de la modification d'une remarque",
-        "placeholders": {
-            "username": {
-                "content": "$1",
-                "example": "johndoe"
-            }
-        }
-    },
-    "deleteRemarkConfirm": {
-        "message": "Êtes-vous sûr de vouloir supprimer cette remarque ?",
-        "description": "Message de confirmation lors de la suppression d'une remarque"
-    },
-    "importSuccessful": {
-        "message": "Remarques importées avec succès !",
-        "description": "Message affiché lorsque les remarques sont importées avec succès"
-    },
-    "importError": {
-        "message": "Erreur lors de l'importation des remarques. Assurez-vous que le fichier est au bon format.",
-        "description": "Message d'erreur lorsque l'importation des remarques échoue"
-    },
-    "manageDownloads": {
-        "message": "Gérer les téléchargements",
-        "description": "Texte du bouton pour ouvrir la page des enregistrements de téléchargement"
-    },
-    "downloadRecords": {
-        "message": "Enregistrements de téléchargement",
-        "description": "Titre de la page des enregistrements de téléchargement"
-    },
-    "locateFile": {
-        "message": "Localiser le fichier",
-        "description": "Texte du bouton pour localiser le fichier téléchargé"
-    },
-    "fileNotFound": {
-        "message": "Fichier introuvable dans les téléchargements.",
-        "description": "Message affiché lorsqu'un fichier ne peut pas être localisé"
-    },
-    "confirmDelete": {
-        "message": "Confirmer la suppression",
-        "description": "Titre de la boîte de dialogue de confirmation de suppression"
-    },
-    "deleteRecordConfirmation": {
-        "message": "Êtes-vous sûr de vouloir supprimer cet enregistrement ?",
-        "description": "Message de confirmation lors de la suppression d'un enregistrement"
-    },
-    "delete": {
-        "message": "Supprimer",
-        "description": "Texte du bouton de suppression"
-    },
-    "openOriginTweet": {
-        "message": "Ouvrir le tweet d'origine",
-        "description": "Texte du bouton pour ouvrir le tweet d'origine"
-    },
-    "tweetId": {
-        "message": "ID du tweet",
-        "description": "Titre de la colonne ID du tweet"
-    },
-    "originTweet": {
-        "message": "Tweet d'origine",
-        "description": "Titre de la colonne du tweet d'origine"
-    },
-    "downloadDate": {
-        "message": "Date de téléchargement",
-        "description": "Titre de la colonne de date de téléchargement"
-    },
-    "tweetText": {
-        "message": "Texte du tweet",
-        "description": "Titre de la colonne de texte du tweet"
-    },
-    "actions": {
-        "message": "Actions",
-        "description": "Titre de la colonne des actions"
-    },
-    "tweetAlreadyDownloaded": {
-        "message": "Ce tweet a déjà été téléchargé. Voulez-vous ouvrir la page des enregistrements de téléchargement ?",
-        "description": "Message affiché lorsqu'un tweet a déjà été téléchargé"
-    },
-    "clearAllRecords": {
-        "message": "Effacer tous les enregistrements",
-        "description": "Texte du bouton pour effacer tous les enregistrements"
-    },
-    "confirmClearAll": {
-        "message": "Confirmer l'effacement de tous les enregistrements",
-        "description": "Titre de la boîte de dialogue de confirmation pour effacer tous les enregistrements"
-    },
-    "clearAllRecordsConfirmation": {
-        "message": "Êtes-vous sûr de vouloir supprimer tous les enregistrements de téléchargement ? Cette action ne peut pas être annulée.",
-        "description": "Message de confirmation lors de la suppression de tous les enregistrements"
-    },
-    "clearAllWarning": {
-        "message": "Attention : Cela supprimera définitivement tous vos enregistrements de téléchargement.",
-        "description": "Message d'avertissement lors de la suppression de tous les enregistrements"
-    },
-    "clearAll": {
-        "message": "Tout effacer",
-        "description": "Texte du bouton pour effacer tous les enregistrements"
-    },
-    "ok": {
-        "message": "OK",
-        "description": "Texte pour le bouton OK"
-    },
-    "yes": {
-        "message": "Oui",
-        "description": "Texte pour le bouton Oui"
-    },
-    "no": {
-        "message": "Non",
-        "description": "Texte pour le bouton Non"
-    },
-    "searchRecordsAndTweets": {
-        "message": "Rechercher des enregistrements et des tweets",
-        "description": "Platzhalter für Suchfeld"
+  "extensionName": {
+    "message": "Twitter Amélioré",
+    "description": "Le nom de l'extension"
+  },
+  "extensionDescription": {
+    "message": "Ajouter des fonctionnalités supplémentaires à Twitter et X, incluant la récupération d'informations vidéo et le support pour les deux domaines",
+    "description": "La description de l'extension"
+  },
+  "addRemark": {
+    "message": "Ajouter une remarque",
+    "description": "Texte du bouton pour ajouter une remarque"
+  },
+  "editRemark": {
+    "message": "Modifier la remarque",
+    "description": "Texte du bouton pour modifier une remarque"
+  },
+  "enterRemark": {
+    "message": "Entrez une remarque",
+    "description": "Texte d'espace réservé pour la saisie de remarque"
+  },
+  "cancel": {
+    "message": "Annuler",
+    "description": "Texte du bouton d'annulation"
+  },
+  "save": {
+    "message": "Enregistrer",
+    "description": "Texte du bouton d'enregistrement"
+  },
+  "downloadMedia": {
+    "message": "Télécharger le média",
+    "description": "Étiquette aria pour le bouton de téléchargement"
+  },
+  "tweetIdError": {
+    "message": "Désolé, impossible de trouver l'ID du tweet pour le téléchargement.",
+    "description": "Message d'erreur lorsque l'ID du tweet n'est pas trouvé"
+  },
+  "downloadError": {
+    "message": "Une erreur s'est produite lors de la tentative de téléchargement de la vidéo.",
+    "description": "Message d'erreur lorsque le téléchargement échoue"
+  },
+  "unableToDownload": {
+    "message": "Désolé, impossible de télécharger la vidéo : $ERROR$",
+    "description": "Message d'erreur avec détails lorsque le téléchargement est impossible",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "Erreur réseau"
+      }
     }
+  },
+  "popupTitle": {
+    "message": "Twitter Amélioré",
+    "description": "Titre de la fenêtre contextuelle"
+  },
+  "customizeExperience": {
+    "message": "Personnalisez votre expérience Twitter :",
+    "description": "Sous-titre dans la fenêtre contextuelle"
+  },
+  "enableUserRemarks": {
+    "message": "Activer les remarques utilisateur",
+    "description": "Étiquette pour l'interrupteur des remarques utilisateur"
+  },
+  "enableVideoDownload": {
+    "message": "Activer la fonction de téléchargement vidéo",
+    "description": "Étiquette pour l'interrupteur de téléchargement vidéo"
+  },
+  "downloadDirectory": {
+    "message": "Répertoire de téléchargement :",
+    "description": "Étiquette pour l'entrée du répertoire de téléchargement"
+  },
+  "saveSettings": {
+    "message": "Enregistrer les paramètres",
+    "description": "Texte du bouton pour enregistrer les paramètres"
+  },
+  "settingsSaved": {
+    "message": "Paramètres enregistrés avec succès !",
+    "description": "Message affiché lorsque les paramètres sont enregistrés"
+  },
+  "manageRemarks": {
+    "message": "Gérer les remarques",
+    "description": "Titre de la page d'options"
+  },
+  "editRemarkInOptions": {
+    "message": "Modifier",
+    "description": "Texte du bouton de modification"
+  },
+  "deleteRemarkInOptions": {
+    "message": "Supprimer",
+    "description": "Texte du bouton de suppression"
+  },
+  "previousPage": {
+    "message": "Précédent",
+    "description": "Texte du bouton de page précédente"
+  },
+  "nextPage": {
+    "message": "Suivant",
+    "description": "Texte du bouton de page suivante"
+  },
+  "pageOf": {
+    "message": "Page $CURRENT$ sur $TOTAL$",
+    "description": "Indicateur de numéro de page",
+    "placeholders": {
+      "current": {
+        "content": "$1",
+        "example": "1"
+      },
+      "total": {
+        "content": "$2",
+        "example": "5"
+      }
+    }
+  },
+  "exportRemarks": {
+    "message": "Exporter les remarques",
+    "description": "Texte du bouton d'exportation des remarques"
+  },
+  "importRemarks": {
+    "message": "Importer les remarques",
+    "description": "Texte du bouton d'importation des remarques"
+  },
+  "editRemarkPrompt": {
+    "message": "Modifier la remarque pour @$USERNAME$ :",
+    "description": "Invite lors de la modification d'une remarque",
+    "placeholders": {
+      "username": {
+        "content": "$1",
+        "example": "johndoe"
+      }
+    }
+  },
+  "deleteRemarkConfirm": {
+    "message": "Êtes-vous sûr de vouloir supprimer cette remarque ?",
+    "description": "Message de confirmation lors de la suppression d'une remarque"
+  },
+  "importSuccessful": {
+    "message": "Remarques importées avec succès !",
+    "description": "Message affiché lorsque les remarques sont importées avec succès"
+  },
+  "importError": {
+    "message": "Erreur lors de l'importation des remarques. Assurez-vous que le fichier est au bon format.",
+    "description": "Message d'erreur lorsque l'importation des remarques échoue"
+  },
+  "manageDownloads": {
+    "message": "Gérer les téléchargements",
+    "description": "Texte du bouton pour ouvrir la page des enregistrements de téléchargement"
+  },
+  "downloadRecords": {
+    "message": "Enregistrements de téléchargement",
+    "description": "Titre de la page des enregistrements de téléchargement"
+  },
+  "locateFile": {
+    "message": "Localiser le fichier",
+    "description": "Texte du bouton pour localiser le fichier téléchargé"
+  },
+  "fileNotFound": {
+    "message": "Fichier introuvable dans les téléchargements.",
+    "description": "Message affiché lorsqu'un fichier ne peut pas être localisé"
+  },
+  "confirmDelete": {
+    "message": "Confirmer la suppression",
+    "description": "Titre de la boîte de dialogue de confirmation de suppression"
+  },
+  "deleteRecordConfirmation": {
+    "message": "Êtes-vous sûr de vouloir supprimer cet enregistrement ?",
+    "description": "Message de confirmation lors de la suppression d'un enregistrement"
+  },
+  "delete": {
+    "message": "Supprimer",
+    "description": "Texte du bouton de suppression"
+  },
+  "openOriginTweet": {
+    "message": "Ouvrir le tweet d'origine",
+    "description": "Texte du bouton pour ouvrir le tweet d'origine"
+  },
+  "tweetId": {
+    "message": "ID du tweet",
+    "description": "Titre de la colonne ID du tweet"
+  },
+  "originTweet": {
+    "message": "Tweet d'origine",
+    "description": "Titre de la colonne du tweet d'origine"
+  },
+  "downloadDate": {
+    "message": "Date de téléchargement",
+    "description": "Titre de la colonne de date de téléchargement"
+  },
+  "tweetText": {
+    "message": "Texte du tweet",
+    "description": "Titre de la colonne de texte du tweet"
+  },
+  "actions": {
+    "message": "Actions",
+    "description": "Titre de la colonne des actions"
+  },
+  "tweetAlreadyDownloaded": {
+    "message": "Ce tweet a déjà été téléchargé. Voulez-vous ouvrir la page des enregistrements de téléchargement ?",
+    "description": "Message affiché lorsqu'un tweet a déjà été téléchargé"
+  },
+  "clearAllRecords": {
+    "message": "Effacer tous les enregistrements",
+    "description": "Texte du bouton pour effacer tous les enregistrements"
+  },
+  "confirmClearAll": {
+    "message": "Confirmer l'effacement de tous les enregistrements",
+    "description": "Titre de la boîte de dialogue de confirmation pour effacer tous les enregistrements"
+  },
+  "clearAllRecordsConfirmation": {
+    "message": "Êtes-vous sûr de vouloir supprimer tous les enregistrements de téléchargement ? Cette action ne peut pas être annulée.",
+    "description": "Message de confirmation lors de la suppression de tous les enregistrements"
+  },
+  "clearAllWarning": {
+    "message": "Attention : Cela supprimera définitivement tous vos enregistrements de téléchargement.",
+    "description": "Message d'avertissement lors de la suppression de tous les enregistrements"
+  },
+  "clearAll": {
+    "message": "Tout effacer",
+    "description": "Texte du bouton pour effacer tous les enregistrements"
+  },
+  "ok": {
+    "message": "OK",
+    "description": "Texte pour le bouton OK"
+  },
+  "yes": {
+    "message": "Oui",
+    "description": "Texte pour le bouton Oui"
+  },
+  "no": {
+    "message": "Non",
+    "description": "Texte pour le bouton Non"
+  },
+  "searchRecordsAndTweets": {
+    "message": "Rechercher des enregistrements et des tweets",
+    "description": "Platzhalter für Suchfeld"
+  }
 }

@@ -1,108 +1,108 @@
 .username-replaced {
-    font-style: italic;
-    color: #1DA1F2;
+  font-style: italic;
+  color: #1da1f2;
 }
 
 .add-remark-btn {
-    background-color: #1DA1F2;
-    color: white;
-    border: none;
-    border-radius: 15px;
-    padding: 2px 8px;
-    font-size: 12px;
-    cursor: pointer;
-    margin-left: 10px;
-    vertical-align: middle;
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 2px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle;
 }
 
 .add-remark-btn:hover {
-    background-color: #0c85d0;
+  background-color: #0c85d0;
 }
 
 /* Ensure our button doesn't get hidden */
-[data-testid="User-Name"],
-[data-testid="User-Name"]>div {
-    overflow: visible !important;
-    display: inline-flex !important;
-    align-items: center !important;
+[data-testid='User-Name'],
+[data-testid='User-Name'] > div {
+  overflow: visible !important;
+  display: inline-flex !important;
+  align-items: center !important;
 }
 
 .video-download-btn {
-    color: rgb(83, 100, 113);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 36px;
-    min-height: 36px;
-    cursor: pointer;
-    transition: color 0.2s ease;
+  color: rgb(83, 100, 113);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .video-download-btn:hover {
-    color: rgb(29, 155, 240);
+  color: rgb(29, 155, 240);
 }
 
-.video-download-btn>div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.video-download-btn > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-download-btn svg {
-    width: 1.25em;
-    height: 1.25em;
+  width: 1.25em;
+  height: 1.25em;
 }
 
 .video-download-btn .loading-icon {
-    display: none;
+  display: none;
 }
 
 .video-download-btn.loading .loading-icon {
-    display: block;
+  display: block;
 }
 
 .video-download-btn.loading .download-icon {
-    display: none;
+  display: none;
 }
 
 .video-download-btn .loading-icon svg {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .video-download-btn .loading-icon svg circle {
-    stroke: currentColor;
-    opacity: 0.125;
+  stroke: currentColor;
+  opacity: 0.125;
 }
 
 .video-download-btn .loading-icon svg circle:nth-child(1) {
-    stroke: #ff0000;
+  stroke: #ff0000;
 }
 
 .video-download-btn .loading-icon svg circle:nth-child(2) {
-    stroke: #ff8000;
+  stroke: #ff8000;
 }
 
 .video-download-btn .loading-icon svg circle:nth-child(3) {
-    stroke: #ffff00;
+  stroke: #ffff00;
 }
 
 .video-download-btn .loading-icon svg circle:nth-child(4) {
-    stroke: #00ff00;
+  stroke: #00ff00;
 }
 
 .video-download-btn .loading-icon svg circle:nth-child(5) {
-    stroke: #0080ff;
+  stroke: #0080ff;
 }
 
 .video-download-btn .loading-icon svg circle:nth-child(6) {
-    stroke: #8000ff;
+  stroke: #8000ff;
 }
 
 .video-download-btn .loading-icon svg circle:nth-child(7) {
-    stroke: #ff00ff;
+  stroke: #ff00ff;
 }
 
 .video-download-btn .loading-icon svg circle:nth-child(8) {
-    stroke: #ff0080;
+  stroke: #ff0080;
 }
