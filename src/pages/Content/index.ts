@@ -360,10 +360,12 @@ class TwitterEnhancer {
         );
         tweets.forEach((tweet) => {
             const videoContainer = tweet.querySelector(
-                '[data-testid="videoComponent"], [data-testid="videoPlayer"], [data-testid="previewInterstitial"], [data-testid="tweetPhoto"]'
+                '[data-testid="videoComponent"], [data-testid="videoPlayer"], [data-testid="previewInterstitial"]'
             );
-            if (videoContainer) {
-                console.log('Media container found:', videoContainer);
+            const gifContainer = tweet.querySelector('[data-testid="tweetPhoto"] img[src*=".gif"]');
+
+            if (videoContainer || gifContainer) {
+                console.log('Video or GIF container found:', videoContainer || gifContainer);
                 const actionBar = tweet.querySelector('[role="group"]');
                 if (actionBar && !actionBar.querySelector('.video-download-btn')) {
                     const downloadButton = document.createElement('div');
@@ -490,8 +492,8 @@ class TwitterEnhancer {
         const dialog = document.createElement('div');
         dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
         dialog.innerHTML = `
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-xl w-full mx-auto">
-                <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">${this.getI18nMessage('selectVideo')}</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-4xl w-full mx-auto">
+                <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">${this.getI18nMessage('selectVideos')}</h2>
                 <div class="grid ${videos.length <= 4 ? 'grid-cols-2' : 'grid-cols-3'} gap-4 mb-4">
                     ${videos.map((video, index) => `
                         <div class="flex flex-col p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
@@ -703,7 +705,7 @@ class TwitterEnhancer {
 
     private generateLoadingIconSVG(): string {
         return `
-            <svg height='100%' viewBox='0 0 24 24' width='100%' 
+            <svg height='100%' viewBox='0 0 32 32' width='100%' 
                 xmlns='http://www.w3.org/2000/svg'>
                 <style>
                     @keyframes circle__svg {
@@ -721,13 +723,14 @@ class TwitterEnhancer {
                         animation-duration: 1s;
                         animation-timing-function: linear;
                         animation-iteration-count: infinite;
+                        height: 1px;
                     }
                 </style>
                 <g>
-                    <circle cx='12' cy='12' fill='none' r='10' stroke-width='4' style='stroke: rgb(29, 161, 242); opacity: 0.2;'></circle>
+                    <circle cx='16' cy='16' fill='none' r='14' stroke-width='4' style='stroke: rgb(29, 161, 242); opacity: 0.2;'></circle>
                 </g>
                 <g class='circle__svg-circle'>
-                    <circle cx='12' cy='12' fill='none' r='10' stroke-width='4' style='stroke: rgb(29, 161, 242); stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 31.41592653589793px;'></circle>
+                    <circle cx='16' cy='16' fill='none' r='14' stroke-width='4' style='stroke: rgb(29, 161, 242); stroke-dasharray: 80px; stroke-dashoffset: 60px;'></circle>
                 </g>
             </svg>
         `;
