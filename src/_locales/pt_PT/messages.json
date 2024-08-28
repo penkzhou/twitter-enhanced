@@ -240,5 +240,13 @@
   "downloadVideo": {
     "message": "Baixar vídeo",
     "description": "Texto do botão para baixar um vídeo"
+  },
+  "downloadSelected": {
+    "message": "Baixar Selecionado",
+    "description": "Texto do botão para baixar selecionado"
+  },
+  "downloadAll": {
+    "message": "Baixar Todos",
+    "description": "Texto do botão para baixar todos"
   }
 }

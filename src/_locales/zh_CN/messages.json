@@ -240,5 +240,13 @@
   "downloadVideo": {
     "message": "下载视频",
     "description": "下载视频按钮文本"
+  },
+  "downloadSelected": {
+    "message": "下载选中的视频",
+    "description": "下载选中的视频按钮文本"
+  },
+  "downloadAll": {
+    "message": "下载所有视频",
+    "description": "下载所有视频按钮文本"
   }
 }

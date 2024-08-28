@@ -240,5 +240,13 @@
   "downloadVideo": {
     "message": "Download video",
     "description": "Download video button text"
+  },
+  "downloadSelected": {
+    "message": "Download Selected",
+    "description": "Download selected button text"
+  },
+  "downloadAll": {
+    "message": "Download All",
+    "description": "Download all button text"
   }
 }

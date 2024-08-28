@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './../../globals.css';
 import RemarkDialog from '../../components/RemarkDialog';
 import { Logger } from '../../utils/logger';
+import { VideoInfo } from '../../lib/types';
 
 interface UserRemark {
     username: string;
@@ -23,12 +24,6 @@ interface RemarkDialogProps {
     isOpen: boolean;
 }
 
-interface VideoInfo {
-    videoUrl: string;
-    thumbnailUrl: string;
-    tweetUrl: string;
-    tweetText: string;
-}
 
 class TwitterEnhancer {
     private static instance: TwitterEnhancer;
@@ -491,43 +486,105 @@ class TwitterEnhancer {
         const dialog = document.createElement('div');
         dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
         dialog.innerHTML = `
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full mx-auto">
-                <h2 class="text-2xl font-bold mb-4">${this.getI18nMessage('selectVideo')}</h2>
-                <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-xl w-full mx-auto">
+                <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">${this.getI18nMessage('selectVideo')}</h2>
+                <div class="grid ${videos.length <= 4 ? 'grid-cols-2' : 'grid-cols-3'} gap-4 mb-4">
                     ${videos.map((video, index) => `
-                        <div class="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
-                            <img src="${video.thumbnailUrl}" alt="Video ${index + 1}" class="w-full h-auto mb-2">
-                            <button class="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors">
-                                ${this.getI18nMessage('downloadVideo')} ${index + 1}
-                            </button>
+                        <div class="flex flex-col p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                            <label for="video-${index}" class="cursor-pointer flex flex-col">
+                                <div class="aspect-w-1 aspect-h-1 mb-2 relative">
+                                    <img src="${video.thumbnailUrl}" alt="Video ${index + 1}" class="object-cover rounded w-full h-full">
+                                    <div class="absolute top-2 left-2">
+                                        <input type="checkbox" id="video-${index}" class="video-checkbox sr-only">
+                                        <div class="w-6 h-6 border-2 border-blue-500 rounded-md flex items-center justify-center bg-white dark:bg-gray-800 transition-colors">
+                                            <svg class="w-4 h-4 text-blue-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Video ${index + 1}</span>
+                            </label>
                         </div>
                     `).join('')}
                 </div>
-                <button class="w-full px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors">
-                    ${this.getI18nMessage('cancel')}
-                </button>
+                <div class="flex justify-between">
+                    <button id="cancel" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors">
+                        ${this.getI18nMessage('cancel')}
+                    </button>
+                    <button id="download-selected" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        ${this.getI18nMessage('downloadSelected')}
+                    </button>
+                    <button id="download-all" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition-colors">
+                        ${this.getI18nMessage('downloadAll')}
+                    </button>
+                </div>
             </div>
         `;
 
         document.body.appendChild(dialog);
 
-        dialog.querySelectorAll('button').forEach((button, index) => {
-            button.addEventListener('click', () => {
-                if (index < videos.length) {
-                    this.initiateDownload(videos[index], tweetId);
+        const downloadSelected = dialog.querySelector('#download-selected') as HTMLButtonElement;
+        const downloadAll = dialog.querySelector('#download-all');
+        const cancel = dialog.querySelector('#cancel');
+        const checkboxes = dialog.querySelectorAll('.video-checkbox') as NodeListOf<HTMLInputElement>;
+
+        const updateCheckboxStyles = () => {
+            checkboxes.forEach((checkbox) => {
+                const checkmark = checkbox.nextElementSibling?.querySelector('svg');
+                if (checkmark) {
+                    if (checkbox.checked) {
+                        checkmark.classList.remove('hidden');
+                        checkbox.nextElementSibling?.classList.add('bg-blue-500');
+                    } else {
+                        checkmark.classList.add('hidden');
+                        checkbox.nextElementSibling?.classList.remove('bg-blue-500');
+                    }
                 }
-                document.body.removeChild(dialog);
+            });
+        };
+
+        const updateDownloadSelectedButton = () => {
+            const selectedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            downloadSelected.disabled = selectedCount === 0;
+            downloadSelected.textContent = this.getI18nMessage('downloadSelected') + (selectedCount > 0 ? ` (${selectedCount})` : '');
+        };
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateCheckboxStyles();
+                updateDownloadSelectedButton();
             });
         });
+
+        downloadSelected?.addEventListener('click', () => {
+            const selectedVideos = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => videos[parseInt(checkbox.id.split('-')[1])]);
+            this.initiateMultipleDownloads(selectedVideos, tweetId);
+            document.body.removeChild(dialog);
+        });
+
+        downloadAll?.addEventListener('click', () => {
+            this.initiateMultipleDownloads(videos, tweetId);
+            document.body.removeChild(dialog);
+        });
+
+        cancel?.addEventListener('click', () => {
+            document.body.removeChild(dialog);
+        });
+
+        // Initialize button state and checkbox styles
+        updateDownloadSelectedButton();
+        updateCheckboxStyles();
     }
 
     private initiateDownload(videoInfo: VideoInfo, tweetId: string): void {
         chrome.runtime.sendMessage(
             {
                 action: 'downloadVideo',
-                videoUrl: videoInfo.videoUrl,
-                tweetId: tweetId,
-                tweetInfo: { tweetUrl: videoInfo?.tweetUrl ?? '', tweetText: videoInfo?.tweetText ?? '' },
+                videoInfo: videoInfo,
+                tweetId: tweetId
             },
             (response) => {
                 if (response.success) {
@@ -540,6 +597,12 @@ class TwitterEnhancer {
                 }
             }
         );
+    }
+
+    private initiateMultipleDownloads(videos: VideoInfo[], tweetId: string): void {
+        videos.forEach(video => {
+            this.initiateDownload(video, tweetId);
+        });
     }
 
     private showAlert(message: string): void {
@@ -644,10 +707,10 @@ class TwitterEnhancer {
                     }
                 </style>
                 <g>
-                    <circle cx='12' cy='12' fill='none' r='10' stroke-width='4' style='stroke: currentColor; opacity: 0.2;'></circle>
+                    <circle cx='12' cy='12' fill='none' r='10' stroke-width='4' style='stroke: rgb(29, 161, 242); opacity: 0.2;'></circle>
                 </g>
                 <g class='circle__svg-circle'>
-                    <circle cx='12' cy='12' fill='none' r='10' stroke-width='4' style='stroke: currentColor; stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 40.11919491863072px;'></circle>
+                    <circle cx='12' cy='12' fill='none' r='10' stroke-width='4' style='stroke: rgb(29, 161, 242); stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 31.41592653589793px;'></circle>
                 </g>
             </svg>
         `;

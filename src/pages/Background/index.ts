@@ -2,6 +2,7 @@ import { TwitterAPI } from './modules/twitter-api';
 import * as db from '../../utils/db';
 import { Analytics } from '../../lib/ga';
 import './analytics';
+import { VideoInfo } from '../../lib/types';
 
 // Create a function to set up the event listeners
 function setupEventListeners() {
@@ -23,7 +24,7 @@ function setupEventListeners() {
             return true; // Indicates that the response is sent asynchronously
         }
         if (request.action === 'downloadVideo') {
-            handleVideoDownload(request.videoUrl, request.tweetId, request.tweetInfo, sendResponse);
+            handleVideoDownload(request.videoInfo, request.tweetId, sendResponse);
             return true; // Indicates that the response is sent asynchronously
         }
         if (request.action === 'openDownloadRecords') {
@@ -80,9 +81,8 @@ async function handleGetVideoInfo(
 }
 
 async function handleVideoDownload(
-    videoUrl: string,
+    videoInfo: VideoInfo,
     tweetId: string,
-    tweetInfo: any,
     sendResponse: (response: any) => void
 ) {
     try {
@@ -92,8 +92,8 @@ async function handleVideoDownload(
 
             chrome.downloads.download(
                 {
-                    url: videoUrl,
-                    filename: `${downloadDirectory}/twitter_video_${tweetId}.mp4`,
+                    url: videoInfo.videoUrl,
+                    filename: `${downloadDirectory}/twitter_video_${videoInfo.mediaId}.mp4`,
                     saveAs: false,
                 },
                 (downloadId) => {
@@ -109,8 +109,8 @@ async function handleVideoDownload(
                             tweetId,
                             `twitter_video_${tweetId}.mp4`,
                             downloadId,
-                            tweetInfo.tweetUrl,
-                            tweetInfo.tweetText
+                            videoInfo.tweetUrl,
+                            videoInfo.tweetText
                         );
                         sendResponse({ success: true, downloadId: downloadId });
                     }

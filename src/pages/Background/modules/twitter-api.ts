@@ -110,6 +110,7 @@ export class TwitterAPI {
             return {
               videoUrl: highestQualityVideo?.url,
               thumbnailUrl: media.media_url_https,
+              mediaId: media.id_str,
             };
           }) ?? [];
       };

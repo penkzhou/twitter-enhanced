@@ -21,7 +21,7 @@
 
 /* Ensure our button doesn't get hidden */
 [data-testid='User-Name'],
-[data-testid='User-Name'] > div {
+[data-testid='User-Name']>div {
   overflow: visible !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -42,7 +42,7 @@
   color: rgb(29, 155, 240);
 }
 
-.video-download-btn > div {
+.video-download-btn>div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,4 +105,21 @@
 
 .video-download-btn .loading-icon svg circle:nth-child(8) {
   stroke: #ff0080;
+}
+
+.aspect-w-1 {
+  position: relative;
+  padding-bottom: 100%;
+  /* 1:1 Aspect Ratio */
+}
+
+.aspect-w-1>img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  object-fit: cover;
 }

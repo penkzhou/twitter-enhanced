@@ -240,5 +240,13 @@
   "downloadVideo": {
     "message": "비디오 다운로드",
     "description": "비디오 다운로드 버튼 텍스트"
+  },
+  "downloadSelected": {
+    "message": "선택한 비디오 다운로드",
+    "description": "선택한 비디오 다운로드 버튼 텍스트"
+  },
+  "downloadAll": {
+    "message": "모든 비디오 다운로드",
+    "description": "모든 비디오 다운로드 버튼 텍스트"
   }
 }
