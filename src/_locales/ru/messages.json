@@ -232,5 +232,13 @@
   "searchRecordsAndTweets": {
     "message": "Поиск записей и твитов",
     "description": "Плейсхолдер для поля поиска"
+  },
+  "selectVideo": {
+    "message": "Выбрать видео",
+    "description": "Текст кнопки для выбора видео"
+  },
+  "downloadVideo": {
+    "message": "Скачать видео",
+    "description": "Текст кнопки для скачивания видео"
   }
 }

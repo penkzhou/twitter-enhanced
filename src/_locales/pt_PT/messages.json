@@ -232,5 +232,13 @@
   "searchRecordsAndTweets": {
     "message": "Buscar registros y tweets",
     "description": "Platzhalter für Suchfeld"
+  },
+  "selectVideo": {
+    "message": "Selecionar vídeo",
+    "description": "Texto do botão para selecionar um vídeo"
+  },
+  "downloadVideo": {
+    "message": "Baixar vídeo",
+    "description": "Texto do botão para baixar um vídeo"
   }
 }

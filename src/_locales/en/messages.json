@@ -232,5 +232,13 @@
   "searchRecordsAndTweets": {
     "message": "Search records and tweets",
     "description": "Placeholder for search input"
+  },
+  "selectVideo": {
+    "message": "Select video",
+    "description": "Select video button text"
+  },
+  "downloadVideo": {
+    "message": "Download video",
+    "description": "Download video button text"
   }
 }

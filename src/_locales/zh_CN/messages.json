@@ -232,5 +232,13 @@
   "searchRecordsAndTweets": {
     "message": "搜索记录和推文",
     "description": "搜索输入框的占位符"
+  },
+  "selectVideo": {
+    "message": "选择视频",
+    "description": "选择视频按钮文本"
+  },
+  "downloadVideo": {
+    "message": "下载视频",
+    "description": "下载视频按钮文本"
   }
 }

@@ -232,5 +232,13 @@
   "searchRecordsAndTweets": {
     "message": "기록 및 트윗 검색",
     "description": "검색 입력 필드 플레이스홀더"
+  },
+  "selectVideo": {
+    "message": "비디오 선택",
+    "description": "비디오 선택 버튼 텍스트"
+  },
+  "downloadVideo": {
+    "message": "비디오 다운로드",
+    "description": "비디오 다운로드 버튼 텍스트"
   }
 }
