@@ -483,6 +483,10 @@ class TwitterEnhancer {
     }
 
     private showVideoSelectionDialog(videos: VideoInfo[], tweetId: string): void {
+        Logger.logEvent('video_selection_dialog_open', {
+            tweet_id: tweetId,
+            video_count: videos.length,
+        });
         const dialog = document.createElement('div');
         dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
         dialog.innerHTML = `
@@ -552,12 +556,21 @@ class TwitterEnhancer {
 
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', () => {
+                Logger.logEvent('video_selection_dialog_checkbox_change', {
+                    tweet_id: tweetId,
+                    video_index: parseInt(checkbox.id.split('-')[1]),
+                    checked: checkbox.checked,
+                });
                 updateCheckboxStyles();
                 updateDownloadSelectedButton();
             });
         });
 
         downloadSelected?.addEventListener('click', () => {
+            Logger.logEvent('video_selection_dialog_download_selected', {
+                tweet_id: tweetId,
+                video_count: videos.length,
+            });
             const selectedVideos = Array.from(checkboxes)
                 .filter(checkbox => checkbox.checked)
                 .map(checkbox => videos[parseInt(checkbox.id.split('-')[1])]);
@@ -566,6 +579,10 @@ class TwitterEnhancer {
         });
 
         downloadAll?.addEventListener('click', () => {
+            Logger.logEvent('video_selection_dialog_download_all', {
+                tweet_id: tweetId,
+                video_count: videos.length,
+            });
             this.initiateMultipleDownloads(videos, tweetId);
             document.body.removeChild(dialog);
         });
