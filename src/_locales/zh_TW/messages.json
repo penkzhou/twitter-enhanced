@@ -230,7 +230,27 @@
     "description": "否按鈕文字"
   },
   "searchRecordsAndTweets": {
-    "message": "搜索记录和推文",
-    "description": "搜索输入框的占位符"
+    "message": "搜索記錄和推文",
+    "description": "搜索輸入框的佔位符"
+  },
+  "selectVideo": {
+    "message": "選擇影片",
+    "description": "選擇影片按鈕文字"
+  },
+  "downloadVideo": {
+    "message": "下載影片",
+    "description": "下載影片按鈕文字"
+  },
+  "downloadSelected": {
+    "message": "下載選中的影片",
+    "description": "下載選中的影片按鈕文字"
+  },
+  "downloadAll": {
+    "message": "下載所有影片",
+    "description": "下載所有影片按鈕文字"
+  },
+  "video": {
+    "message": "影片",
+    "description": "影片的文本"
   }
 }

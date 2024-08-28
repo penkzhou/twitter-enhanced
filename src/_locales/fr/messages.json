@@ -232,5 +232,25 @@
   "searchRecordsAndTweets": {
     "message": "Rechercher des enregistrements et des tweets",
     "description": "Platzhalter für Suchfeld"
+  },
+  "selectVideo": {
+    "message": "Sélectionner la vidéo",
+    "description": "Sélectionner la vidéo button text"
+  },
+  "downloadVideo": {
+    "message": "Télécharger la vidéo",
+    "description": "Télécharger la vidéo button text"
+  },
+  "downloadSelected": {
+    "message": "Télécharger sélectionné",
+    "description": "Télécharger sélectionné button text"
+  },
+  "downloadAll": {
+    "message": "Télécharger tout",
+    "description": "Télécharger tout button text"
+  },
+  "video": {
+    "message": "Vidéo",
+    "description": "Vidéo text"
   }
 }

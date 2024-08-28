@@ -232,5 +232,25 @@
   "searchRecordsAndTweets": {
     "message": "Suche nach Aufzeichnungen und Tweets",
     "description": "Platzhalter für Suchfeld"
+  },
+  "selectVideo": {
+    "message": "Video auswählen",
+    "description": "Videoauswahl-Schaltflächentext"
+  },
+  "downloadVideo": {
+    "message": "Video herunterladen",
+    "description": "Videoherunterladen-Schaltflächentext"
+  },
+  "downloadSelected": {
+    "message": "Ausgewählte herunterladen",
+    "description": "Download selected button text"
+  },
+  "downloadAll": {
+    "message": "Alle herunterladen",
+    "description": "Download all button text"
+  },
+  "video": {
+    "message": "Video",
+    "description": "Video text"
   }
 }

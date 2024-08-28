@@ -232,5 +232,25 @@
   "searchRecordsAndTweets": {
     "message": "レコードとツイートを検索",
     "description": "検索フィールドのプレースホルダー"
+  },
+  "selectVideo": {
+    "message": "ビデオを選択",
+    "description": "ビデオ選択ボタンのテキスト"
+  },
+  "downloadVideo": {
+    "message": "ビデオをダウンロード",
+    "description": "ビデオダウンロードボタンのテキスト"
+  },
+  "downloadSelected": {
+    "message": "選択したビデオをダウンロード",
+    "description": "選択したビデオをダウンロードボタンのテキスト"
+  },
+  "downloadAll": {
+    "message": "全てのビデオをダウンロード",
+    "description": "全てのビデオをダウンロードボタンのテキスト"
+  },
+  "video": {
+    "message": "ビデオ",
+    "description": "ビデオのテキスト"
   }
 }
