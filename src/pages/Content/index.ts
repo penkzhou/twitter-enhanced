@@ -23,6 +23,13 @@ interface RemarkDialogProps {
     isOpen: boolean;
 }
 
+interface VideoInfo {
+    videoUrl: string;
+    thumbnailUrl: string;
+    tweetUrl: string;
+    tweetText: string;
+}
+
 class TwitterEnhancer {
     private static instance: TwitterEnhancer;
     private userRemarks: UserRemark[] = [];
@@ -427,11 +434,13 @@ class TwitterEnhancer {
         const currentDomain = window.location.hostname;
         chrome.runtime.sendMessage(
             {
-                action: 'downloadVideo',
+                action: 'getVideoInfo',
                 tweetId: tweetId,
                 currentDomain: currentDomain,
             },
             (response) => {
+                button.classList.remove('loading');
+
                 if (chrome.runtime.lastError) {
                     console.error('Error sending message:', chrome.runtime.lastError);
                     this.showAlert(this.getI18nMessage('downloadError'));
@@ -442,23 +451,13 @@ class TwitterEnhancer {
                     });
                 } else if (response.success) {
                     if (response.alreadyDownloaded) {
-                        console.log('Tweet already downloaded:', response);
-                        this.showConfirmDialog(
-                            this.getI18nMessage('tweetAlreadyDownloaded'),
-                            () => {
-                                chrome.runtime.sendMessage({
-                                    action: 'openDownloadRecords',
-                                    recordId: response.recordId,
-                                });
-                            }
-                        );
-                        Logger.logEvent('video_already_downloaded', {
-                            tweet_id: tweetId,
-                            record_id: response.recordId,
-                        });
+                        this.handleAlreadyDownloaded(response, tweetId);
+                    } else if (Array.isArray(response.videoInfo) && response.videoInfo.length > 1) {
+                        this.showVideoSelectionDialog(response.videoInfo, tweetId);
+                    } else if (response.videoInfo.length === 1) {
+                        this.initiateDownload(response.videoInfo[0], tweetId);
                     } else {
-                        console.log('Download initiated:', response);
-                        Logger.logEvent('video_download_initiated', { tweet_id: tweetId });
+                        this.showAlert(this.getI18nMessage('noVideoFound'));
                     }
                 } else {
                     console.error('Download failed:', response.error);
@@ -467,7 +466,78 @@ class TwitterEnhancer {
                     );
                     this.logVideoDownloadFailure(response.error, tweetId);
                 }
-                button.classList.remove('loading');
+            }
+        );
+    }
+
+    private handleAlreadyDownloaded(response: any, tweetId: string): void {
+        console.log('Tweet already downloaded:', response);
+        this.showConfirmDialog(
+            this.getI18nMessage('tweetAlreadyDownloaded'),
+            () => {
+                chrome.runtime.sendMessage({
+                    action: 'openDownloadRecords',
+                    recordId: response.recordId,
+                });
+            }
+        );
+        Logger.logEvent('video_already_downloaded', {
+            tweet_id: tweetId,
+            record_id: response.recordId,
+        });
+    }
+
+    private showVideoSelectionDialog(videos: VideoInfo[], tweetId: string): void {
+        const dialog = document.createElement('div');
+        dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        dialog.innerHTML = `
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full mx-auto">
+                <h2 class="text-2xl font-bold mb-4">${this.getI18nMessage('selectVideo')}</h2>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    ${videos.map((video, index) => `
+                        <div class="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
+                            <img src="${video.thumbnailUrl}" alt="Video ${index + 1}" class="w-full h-auto mb-2">
+                            <button class="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors">
+                                ${this.getI18nMessage('downloadVideo')} ${index + 1}
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="w-full px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors">
+                    ${this.getI18nMessage('cancel')}
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(dialog);
+
+        dialog.querySelectorAll('button').forEach((button, index) => {
+            button.addEventListener('click', () => {
+                if (index < videos.length) {
+                    this.initiateDownload(videos[index], tweetId);
+                }
+                document.body.removeChild(dialog);
+            });
+        });
+    }
+
+    private initiateDownload(videoInfo: VideoInfo, tweetId: string): void {
+        chrome.runtime.sendMessage(
+            {
+                action: 'downloadVideo',
+                videoUrl: videoInfo.videoUrl,
+                tweetId: tweetId,
+                tweetInfo: { tweetUrl: videoInfo?.tweetUrl ?? '', tweetText: videoInfo?.tweetText ?? '' },
+            },
+            (response) => {
+                if (response.success) {
+                    console.log('Download initiated:', response);
+                    Logger.logEvent('video_download_initiated', { tweet_id: tweetId });
+                } else {
+                    console.error('Download failed:', response.error);
+                    this.showAlert(this.getI18nMessage('unableToDownload', [response.error]));
+                    this.logVideoDownloadFailure(response.error, tweetId);
+                }
             }
         );
     }
@@ -553,7 +623,7 @@ class TwitterEnhancer {
 
     private generateLoadingIconSVG(): string {
         return `
-            <svg height='100%' viewBox='0 0 32 32' width='100%' 
+            <svg height='100%' viewBox='0 0 24 24' width='100%' 
                 xmlns='http://www.w3.org/2000/svg'>
                 <style>
                     @keyframes circle__svg {
@@ -571,14 +641,13 @@ class TwitterEnhancer {
                         animation-duration: 1s;
                         animation-timing-function: linear;
                         animation-iteration-count: infinite;
-                        height: 1px;
                     }
                 </style>
                 <g>
-                    <circle cx='16' cy='16' fill='none' r='14' stroke-width='4' style='stroke: rgb(29, 161, 242); opacity: 0.2;'></circle>
+                    <circle cx='12' cy='12' fill='none' r='10' stroke-width='4' style='stroke: currentColor; opacity: 0.2;'></circle>
                 </g>
                 <g class='circle__svg-circle'>
-                    <circle cx='16' cy='16' fill='none' r='14' stroke-width='4' style='stroke: rgb(29, 161, 242); stroke-dasharray: 80px; stroke-dashoffset: 60px;'></circle>
+                    <circle cx='12' cy='12' fill='none' r='10' stroke-width='4' style='stroke: currentColor; stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 40.11919491863072px;'></circle>
                 </g>
             </svg>
         `;

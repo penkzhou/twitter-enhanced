@@ -18,11 +18,12 @@ function setupEventListeners() {
 
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.log('request', request);
+        if (request.action === 'getVideoInfo') {
+            handleGetVideoInfo(request.tweetId, request.currentDomain, sendResponse);
+            return true; // Indicates that the response is sent asynchronously
+        }
         if (request.action === 'downloadVideo') {
-            const currentDomain = request.currentDomain;
-            console.log('currentDomain', currentDomain);
-            const isTwitter = currentDomain === 'twitter.com';
-            handleVideoDownload(request.tweetId, isTwitter, sendResponse);
+            handleVideoDownload(request.videoUrl, request.tweetId, request.tweetInfo, sendResponse);
             return true; // Indicates that the response is sent asynchronously
         }
         if (request.action === 'openDownloadRecords') {
@@ -38,9 +39,9 @@ function setupEventListeners() {
 // Call the setup function
 setupEventListeners();
 
-async function handleVideoDownload(
+async function handleGetVideoInfo(
     tweetId: string,
-    isTwitter: boolean,
+    currentDomain: string,
     sendResponse: (response: any) => void
 ) {
     try {
@@ -60,46 +61,64 @@ async function handleVideoDownload(
         }
 
         const api = await TwitterAPI.getInstance();
-        const videoInfo = await api.getVideoInfo(tweetId, isTwitter);
-        console.log('videoInfo', videoInfo);
+        const videoInfoList = await api.getVideoInfo(tweetId, currentDomain === 'twitter.com');
+        console.log('videoInfoList', videoInfoList);
 
-        if (videoInfo) {
-            chrome.storage.sync.get(['downloadDirectory'], (result) => {
-                const downloadDirectory = result.downloadDirectory || 'TwitterVideos';
-
-                chrome.downloads.download(
-                    {
-                        url: videoInfo.videoUrl,
-                        filename: `${downloadDirectory}/twitter_video_${tweetId}.mp4`,
-                        saveAs: false,
-                    },
-                    (downloadId) => {
-                        if (chrome.runtime.lastError) {
-                            console.error('Download failed:', chrome.runtime.lastError);
-                            sendResponse({
-                                success: false,
-                                error: chrome.runtime.lastError.message,
-                            });
-                        } else {
-                            console.log('Download started with ID:', downloadId);
-                            saveDownloadRecord(
-                                tweetId,
-                                `twitter_video_${tweetId}.mp4`,
-                                downloadId,
-                                videoInfo.tweetUrl,
-                                videoInfo.tweetText
-                            );
-                            sendResponse({ success: true, downloadId: downloadId });
-                        }
-                    }
-                );
-            });
+        if (videoInfoList && videoInfoList.length > 0) {
+            sendResponse({ success: true, videoInfo: videoInfoList });
         } else {
             console.error('Video info not found');
             sendResponse({ success: false, error: 'Video info not found' });
         }
     } catch (error) {
         console.error('Error fetching video info:', error);
+        sendResponse({
+            success: false,
+            error: error instanceof Error ? error.message : String(error),
+        });
+    }
+}
+
+async function handleVideoDownload(
+    videoUrl: string,
+    tweetId: string,
+    tweetInfo: any,
+    sendResponse: (response: any) => void
+) {
+    try {
+
+        chrome.storage.sync.get(['downloadDirectory'], (result) => {
+            const downloadDirectory = result.downloadDirectory || 'TwitterVideos';
+
+            chrome.downloads.download(
+                {
+                    url: videoUrl,
+                    filename: `${downloadDirectory}/twitter_video_${tweetId}.mp4`,
+                    saveAs: false,
+                },
+                (downloadId) => {
+                    if (chrome.runtime.lastError) {
+                        console.error('Download failed:', chrome.runtime.lastError);
+                        sendResponse({
+                            success: false,
+                            error: chrome.runtime.lastError.message,
+                        });
+                    } else {
+                        console.log('Download started with ID:', downloadId);
+                        saveDownloadRecord(
+                            tweetId,
+                            `twitter_video_${tweetId}.mp4`,
+                            downloadId,
+                            tweetInfo.tweetUrl,
+                            tweetInfo.tweetText
+                        );
+                        sendResponse({ success: true, downloadId: downloadId });
+                    }
+                }
+            );
+        });
+    } catch (error) {
+        console.error('Error downloading video:', error);
         sendResponse({
             success: false,
             error: error instanceof Error ? error.message : String(error),
@@ -126,4 +145,4 @@ function saveDownloadRecord(
 }
 
 // If you need to export anything, do it like this:
-export { handleVideoDownload };
+export { handleGetVideoInfo, handleVideoDownload };

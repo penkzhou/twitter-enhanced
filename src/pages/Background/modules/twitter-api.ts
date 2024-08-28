@@ -60,7 +60,7 @@ export class TwitterAPI {
   public async getVideoInfo(
     tweetId: string,
     isTwitter: boolean
-  ): Promise<{ videoUrl: string; tweetUrl: string; tweetText: string } | null> {
+  ): Promise<{ videoUrl: string; thumbnailUrl: string; tweetUrl: string; tweetText: string }[] | null> {
     try {
       const domain = isTwitter ? 'twitter.com' : 'x.com';
       const csrfToken = isTwitter ? this.csrfTokenOfTwitter : this.csrfTokenOfX;
@@ -98,17 +98,29 @@ export class TwitterAPI {
           ? tweet.core?.user_results?.result.legacy.screen_name
           : '';
 
-      let videoInfoList =
-        (await tweet.legacy?.entities?.media?.find(
-          (media: any) => media.type === 'video'
-        )?.video_info?.variants) ?? [];
+      let videoInfoList: any[] = [];
+      const processMediaEntities = (entities: any) => {
+        return entities?.media?.filter((media: any) => media.type === 'video' || media.type === 'animated_gif')
+          .map((media: any) => {
+            const variants = media.video_info?.variants ?? [];
+            const highestQualityVideo = variants
+              .filter((v: any) => v.content_type === 'video/mp4')
+              .reduce((prev: any, current: any) => (prev.bitrate > current.bitrate) ? prev : current);
+
+            return {
+              videoUrl: highestQualityVideo?.url,
+              thumbnailUrl: media.media_url_https,
+            };
+          }) ?? [];
+      };
+
+      videoInfoList = processMediaEntities(tweet.legacy?.entities);
+
       if (videoInfoList.length === 0) {
         const quotedStatus = tweet.tweet?.quoted_status_result?.result;
         if (quotedStatus) {
           videoInfoList =
-            (await quotedStatus.legacy?.entities?.media?.find(
-              (media: any) => media.type === 'video'
-            )?.video_info?.variants) ?? [];
+            processMediaEntities(quotedStatus.legacy?.entities);
           tweetText = quotedStatus.legacy?.full_text ?? '';
           tweetUserScreenName =
             quotedStatus.core?.user_results?.result &&
@@ -120,21 +132,14 @@ export class TwitterAPI {
 
       }
 
-      const tweetUrl = isTwitter
-        ? `https://twitter.com/${tweetUserScreenName}/status/${finalTweetId}`
-        : `https://x.com/${tweetUserScreenName}/status/${finalTweetId}`;
-      const highestQualityVideo = videoInfoList
-        .filter(
-          (video: any) =>
-            video.bitrate !== undefined && video.content_type === 'video/mp4'
-        )
-        .reduce((highest: any, current: any) => {
-          return highest.bitrate > current.bitrate ? highest : current;
-        }, videoInfoList[0]);
+      const tweetUrl = `https://${domain}/${tweetUserScreenName}/status/${finalTweetId}`;
 
-      if (highestQualityVideo) {
-        const videoUrl = highestQualityVideo.url;
-        return { videoUrl, tweetUrl, tweetText };
+      if (videoInfoList.length > 0) {
+        return videoInfoList.map(info => ({
+          ...info,
+          tweetUrl,
+          tweetText,
+        }));
       }
     } catch (error) {
       console.error('Error fetching video info:', error);
