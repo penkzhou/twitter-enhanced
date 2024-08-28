@@ -493,7 +493,7 @@ class TwitterEnhancer {
                         <div class="flex flex-col p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
                             <label for="video-${index}" class="cursor-pointer flex flex-col">
                                 <div class="aspect-w-1 aspect-h-1 mb-2 relative">
-                                    <img src="${video.thumbnailUrl}" alt="Video ${index + 1}" class="object-cover rounded w-full h-full">
+                                    <img src="${video.thumbnailUrl}" alt="${this.getI18nMessage('video')} ${index + 1}" class="object-cover rounded w-full h-full">
                                     <div class="absolute top-2 left-2">
                                         <input type="checkbox" id="video-${index}" class="video-checkbox sr-only">
                                         <div class="w-6 h-6 border-2 border-blue-500 rounded-md flex items-center justify-center bg-white dark:bg-gray-800 transition-colors">
@@ -503,7 +503,7 @@ class TwitterEnhancer {
                                         </div>
                                     </div>
                                 </div>
-                                <span class="text-sm text-gray-700 dark:text-gray-300">Video ${index + 1}</span>
+                                <span class="text-sm text-gray-700 dark:text-gray-300">${this.getI18nMessage('video')} ${index + 1}</span>
                             </label>
                         </div>
                     `).join('')}

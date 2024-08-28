@@ -248,5 +248,9 @@
   "downloadAll": {
     "message": "Скачать все",
     "description": "Текст кнопки для скачивания всех"
+  },
+  "video": {
+    "message": "Видео",
+    "description": "Текст для видео"
   }
 }

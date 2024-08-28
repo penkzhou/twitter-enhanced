@@ -248,5 +248,9 @@
   "downloadAll": {
     "message": "下載所有影片",
     "description": "下載所有影片按鈕文字"
+  },
+  "video": {
+    "message": "影片",
+    "description": "影片的文本"
   }
 }
