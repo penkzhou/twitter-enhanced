@@ -153,11 +153,25 @@ class TwitterEnhancer {
     }
 
     private async removeRemark(username: string): Promise<void> {
+        console.log('removeRemark', username);
         this.userRemarks = this.userRemarks.filter((r) => r.username !== username);
         await this.saveRemarks();
         console.log('Remark removed');
         this.updateUsernames();
+        this.restoreRemarkToUsername(username);
         this.updateButtonText(username, false);
+    }
+
+    private restoreRemarkToUsername(username: string): void {
+        console.log('restoreRemarkToUsername', username);
+        const userElements = document.body.querySelectorAll(
+            `a[href="/${username}"]:not([data-testid="UserName-container"])`
+        );
+        userElements.forEach((element) => {
+            if (!element.textContent?.trim().startsWith('@')) {
+                this.replaceUsername(element, username, null);
+            }
+        });
     }
 
     private async saveRemarks(): Promise<void> {
@@ -195,6 +209,8 @@ class TwitterEnhancer {
 
     private updateUsernames(container: Element = document.body): void {
         if (!this.remarkFeatureEnabled) return;
+
+        console.log('updateUsernames with this.userRemarks', this.userRemarks);
 
         this.userRemarks.forEach(({ username, remark }) => {
             const userElements = container.querySelectorAll(
