@@ -252,5 +252,9 @@
   "video": {
     "message": "ビデオ",
     "description": "ビデオのテキスト"
+  },
+  "recordNotFound": {
+    "message": "ID $1 のレコードが見つかりません。削除された可能性があります。",
+    "description": "レコードが見つからない場合のテキスト"
   }
 }

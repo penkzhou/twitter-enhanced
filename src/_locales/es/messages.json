@@ -252,5 +252,9 @@
   "video": {
     "message": "Video",
     "description": "Texto para el video"
+  },
+  "recordNotFound": {
+    "message": "El registro con ID $1 no se encontró. Es posible que haya sido eliminado.",
+    "description": "Texto cuando un registro no se encuentra"
   }
 }

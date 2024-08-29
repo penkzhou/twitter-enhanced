@@ -55,6 +55,7 @@ const DownloadRecords: React.FC = () => {
     null
   );
   const [clearAllDialogOpen, setClearAllDialogOpen] = useState(false);
+  const [notFoundRecordId, setNotFoundRecordId] = useState<number | null>(null);
   const recordsPerPage = 10;
   const highlightedRowRef = useRef<HTMLTableRowElement>(null);
 
@@ -62,12 +63,20 @@ const DownloadRecords: React.FC = () => {
     Logger.logPageView('Download Records', 'download_records', {
       page: 'download_records',
     });
-    loadRecords();
-    const urlParams = new URLSearchParams(window.location.search);
-    const recordId = urlParams.get('recordId');
-    if (recordId) {
-      setHighlightedRecordId(parseInt(recordId, 10));
-    }
+
+    const initializeRecords = async () => {
+      const allRecords = await db.getAll();
+      setRecords(allRecords);
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const recordId = urlParams.get('recordId');
+      if (recordId) {
+        const id = parseInt(recordId, 10);
+        findAndNavigateToRecord(allRecords, id);
+      }
+    };
+
+    initializeRecords();
   }, []);
 
   useEffect(() => {
@@ -86,9 +95,21 @@ const DownloadRecords: React.FC = () => {
   const loadRecords = async () => {
     const allRecords = await db.getAll();
     setRecords(allRecords);
+    return allRecords;
   };
 
-  // Update the filteredRecords to include tweetText in the search
+  const findAndNavigateToRecord = (records: DownloadRecord[], recordId: number) => {
+    const recordIndex = records.findIndex(record => record.id === recordId);
+    if (recordIndex === -1) {
+      setNotFoundRecordId(recordId);
+      return;
+    }
+
+    const pageNumber = Math.floor(recordIndex / recordsPerPage) + 1;
+    setCurrentPage(pageNumber);
+    setHighlightedRecordId(recordId);
+  };
+
   const filteredRecords = records.filter(
     (record) =>
       record.tweetId.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -192,8 +213,13 @@ const DownloadRecords: React.FC = () => {
     if (recordToDelete !== null) {
       Logger.logEvent('confirmDelete', { record_id: recordToDelete });
       await db.remove(recordToDelete);
-      await loadRecords();
+      const updatedRecords = await loadRecords();
       closeDeleteDialog();
+
+      // Check if we need to adjust the current page
+      if (updatedRecords.length <= (currentPage - 1) * recordsPerPage && currentPage > 1) {
+        setCurrentPage(prevPage => prevPage - 1);
+      }
     }
   };
 
@@ -211,6 +237,7 @@ const DownloadRecords: React.FC = () => {
     await db.clear();
     await loadRecords();
     closeClearAllDialog();
+    setCurrentPage(1);
   };
 
   const totalPages = Math.max(
@@ -227,6 +254,11 @@ const DownloadRecords: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6 flex flex-col items-center">
+          {notFoundRecordId && (
+            <div className="w-full mb-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
+              <p>{chrome.i18n.getMessage('recordNotFound', [notFoundRecordId.toString()])}</p>
+            </div>
+          )}
           <div className="w-full max-w-md mb-6">
             <Input
               type="text"

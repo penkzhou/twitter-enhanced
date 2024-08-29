@@ -252,5 +252,9 @@
   "video": {
     "message": "影片",
     "description": "影片的文本"
+  },
+  "recordNotFound": {
+    "message": "記錄 ID $1 未找到。可能已被刪除。",
+    "description": "記錄未找到時的文本"
   }
 }
