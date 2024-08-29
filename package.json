@@ -54,7 +54,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "file-loader": "^6.2.0",
     "fs-extra": "^11.1.0",
-    "html-loader": "^4.2.0",
+    "html-loader": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "postcss": "^8.4.41",
     "postcss-import": "^16.1.0",
