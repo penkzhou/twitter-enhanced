@@ -73,7 +73,14 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
         <CardContent className="p-4">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-blue-500 font-bold">@{remark.username}</p>
+              <a
+                href={`https://twitter.com/${remark.username}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:text-blue-600 font-bold"
+              >
+                @{remark.username}
+              </a>
               <p className="text-gray-700 dark:text-gray-300 mt-1">
                 {remark.remark}
               </p>
