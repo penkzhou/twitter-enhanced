@@ -255,6 +255,6 @@
   },
   "recordNotFound": {
     "message": "L'enregistrement avec l'ID $1 n'a pas été trouvé. Il a peut-être été supprimé.",
-    "description": "recordNotFound text"
+    "description": "Record not found text"
   }
 }
