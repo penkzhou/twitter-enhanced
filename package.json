@@ -1,6 +1,6 @@
 {
   "name": "twitter-enhanced-extension",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A Chrome extension to enhance Twitter and X, featuring video information retrieval and support for both domains",
   "license": "MIT",
   "repository": {
