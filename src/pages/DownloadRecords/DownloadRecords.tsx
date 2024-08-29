@@ -115,11 +115,10 @@ const DownloadRecords: React.FC = () => {
     return filteredRecords.slice(startIndex, endIndex).map((record) => (
       <TableRow
         key={record.id}
-        className={`hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors ${
-          record.id === highlightedRecordId
-            ? 'bg-blue-100 dark:bg-blue-900'
-            : ''
-        }`}
+        className={`hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors ${record.id === highlightedRecordId
+          ? 'bg-blue-100 dark:bg-blue-900'
+          : ''
+          }`}
         ref={record.id === highlightedRecordId ? highlightedRowRef : null}
       >
         <TableCell className="py-4">
@@ -221,7 +220,7 @@ const DownloadRecords: React.FC = () => {
 
   return (
     <>
-      <Card className="shadow-lg w-full max-w-4xl">
+      <Card className="shadow-lg w-full max-w-6xl">
         <CardHeader className="bg-gray-50 dark:bg-gray-800">
           <CardTitle className="text-2xl font-bold text-center">
             {chrome.i18n.getMessage('downloadRecords')}

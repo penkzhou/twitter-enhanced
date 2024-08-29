@@ -492,7 +492,7 @@ class TwitterEnhancer {
         const dialog = document.createElement('div');
         dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
         dialog.innerHTML = `
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-4xl w-full mx-auto">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-xl w-full mx-auto">
                 <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">${this.getI18nMessage('selectVideos')}</h2>
                 <div class="grid ${videos.length <= 4 ? 'grid-cols-2' : 'grid-cols-3'} gap-4 mb-4">
                     ${videos.map((video, index) => `
