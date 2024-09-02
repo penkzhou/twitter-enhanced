@@ -1,9 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+
 import './../../globals.css';
-import RemarkDialog from '../../components/RemarkDialog';
+import RemarkDialog, { RemarkDialogProps } from '../../components/RemarkDialog';
 import { Logger } from '../../utils/logger';
 import { VideoInfo } from '../../lib/types';
+import VideoSelectionDialog, { VideoSelectionDialogProps } from '../../components/VideoSelectionDialog';
+import ReactDOM from 'react-dom';
+
 
 interface UserRemark {
     username: string;
@@ -16,13 +20,6 @@ interface TwitterEnhancerSettings {
     videoDownloadFeatureEnabled: boolean;
 }
 
-interface RemarkDialogProps {
-    onSave: (username: string, remark: string) => void;
-    onCancel: () => void;
-    username: string;
-    existingRemark?: string;
-    isOpen: boolean;
-}
 
 
 class TwitterEnhancer {
@@ -505,113 +502,42 @@ class TwitterEnhancer {
             tweet_id: tweetId,
             video_count: videos.length,
         });
-        const dialog = document.createElement('div');
-        dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-        dialog.innerHTML = `
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-xl w-full mx-auto">
-                <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">${this.getI18nMessage('selectVideo')}</h2>
-                <div class="grid ${videos.length <= 4 ? 'grid-cols-2' : 'grid-cols-3'} gap-4 mb-4">
-                    ${videos.map((video, index) => `
-                        <div class="flex flex-col p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-                            <label for="video-${index}" class="cursor-pointer flex flex-col">
-                                <div class="aspect-w-1 aspect-h-1 mb-2 relative">
-                                    <img src="${video.thumbnailUrl}" alt="${this.getI18nMessage('video')} ${index + 1}" class="object-cover rounded w-full h-full">
-                                    <div class="absolute top-2 left-2">
-                                        <input type="checkbox" id="video-${index}" class="video-checkbox sr-only">
-                                        <div class="w-6 h-6 border-2 border-blue-500 rounded-md flex items-center justify-center bg-white dark:bg-gray-800 transition-colors">
-                                            <svg class="w-4 h-4 text-blue-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="text-sm text-gray-700 dark:text-gray-300">${this.getI18nMessage('video')} ${index + 1}</span>
-                            </label>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="flex justify-between">
-                    <button id="cancel" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors">
-                        ${this.getI18nMessage('cancel')}
-                    </button>
-                    <button id="download-selected" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                        ${this.getI18nMessage('downloadSelected')}
-                    </button>
-                    <button id="download-all" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition-colors">
-                        ${this.getI18nMessage('downloadAll')}
-                    </button>
-                </div>
-            </div>
-        `;
 
-        document.body.appendChild(dialog);
+        const dialogRoot = document.createElement('div');
+        document.body.appendChild(dialogRoot);
 
-        const downloadSelected = dialog.querySelector('#download-selected') as HTMLButtonElement;
-        const downloadAll = dialog.querySelector('#download-all');
-        const cancel = dialog.querySelector('#cancel');
-        const checkboxes = dialog.querySelectorAll('.video-checkbox') as NodeListOf<HTMLInputElement>;
-
-        const updateCheckboxStyles = () => {
-            checkboxes.forEach((checkbox) => {
-                const checkmark = checkbox.nextElementSibling?.querySelector('svg');
-                if (checkmark) {
-                    if (checkbox.checked) {
-                        checkmark.classList.remove('hidden');
-                        checkbox.nextElementSibling?.classList.add('bg-blue-500');
-                    } else {
-                        checkmark.classList.add('hidden');
-                        checkbox.nextElementSibling?.classList.remove('bg-blue-500');
-                    }
-                }
-            });
-        };
-
-        const updateDownloadSelectedButton = () => {
-            const selectedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
-            downloadSelected.disabled = selectedCount === 0;
-            downloadSelected.textContent = this.getI18nMessage('downloadSelected') + (selectedCount > 0 ? ` (${selectedCount})` : '');
-        };
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                Logger.logEvent('video_selection_dialog_checkbox_change', {
-                    tweet_id: tweetId,
-                    video_index: parseInt(checkbox.id.split('-')[1]),
-                    checked: checkbox.checked,
-                });
-                updateCheckboxStyles();
-                updateDownloadSelectedButton();
-            });
-        });
-
-        downloadSelected?.addEventListener('click', () => {
+        const handleDownloadSelected = (selectedVideos: VideoInfo[]) => {
             Logger.logEvent('video_selection_dialog_download_selected', {
                 tweet_id: tweetId,
-                video_count: videos.length,
+                video_count: selectedVideos.length,
             });
-            const selectedVideos = Array.from(checkboxes)
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => videos[parseInt(checkbox.id.split('-')[1])]);
             this.initiateMultipleDownloads(selectedVideos, tweetId);
-            document.body.removeChild(dialog);
-        });
+            document.body.removeChild(dialogRoot);
+        };
 
-        downloadAll?.addEventListener('click', () => {
+        const handleDownloadAll = () => {
             Logger.logEvent('video_selection_dialog_download_all', {
                 tweet_id: tweetId,
                 video_count: videos.length,
             });
             this.initiateMultipleDownloads(videos, tweetId);
-            document.body.removeChild(dialog);
-        });
+            document.body.removeChild(dialogRoot);
+        };
 
-        cancel?.addEventListener('click', () => {
-            document.body.removeChild(dialog);
-        });
+        const handleCancel = () => {
+            document.body.removeChild(dialogRoot);
+        };
+        const root = createRoot(dialogRoot);
+        root.render(
+            React.createElement<VideoSelectionDialogProps>(VideoSelectionDialog, {
+                videos: videos,
+                tweetId: tweetId,
+                onDownloadSelected: handleDownloadSelected,
+                onDownloadAll: handleDownloadAll,
+                onCancel: handleCancel,
+            }));
 
-        // Initialize button state and checkbox styles
-        updateDownloadSelectedButton();
-        updateCheckboxStyles();
+        ;
     }
 
     private initiateDownload(videoInfo: VideoInfo, tweetId: string): void {
