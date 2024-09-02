@@ -2,7 +2,7 @@
 
 ## Overview
 
-Enhance your Twitter browsing with three powerful features:
+Enhance your Twitter browsing with four powerful features:
 
 1. User Remarks:
    Add personal notes to Twitter profiles. Never forget why you followed someone or what they're known for. Easily manage, edit, and organize your remarks for a more personalized Twitter experience.
@@ -10,7 +10,10 @@ Enhance your Twitter browsing with three powerful features:
 2. Video Downloads:
    Seamlessly download Twitter videos with just a click. Save your favorite content directly to your chosen directory for offline viewing or sharing.
 
-3. Download Records Management:
+3. Multiple Video Select Download:
+   When a tweet contains multiple videos, you can select and download multiple videos at once. This feature allows you to choose specific videos from a tweet and download them in one go.
+
+4. Download Records Management:
    Keep track of all your downloaded videos with an easy-to-use management interface. View download history, search records, and manage your downloads efficiently.
 
 This extension puts you in control, allowing you to customize your Twitter interface and interact with content in new ways. Streamline your social media experience with Twitter Enhanced - your personal Twitter assistant.
@@ -21,13 +24,14 @@ This extension puts you in control, allowing you to customize your Twitter inter
 - Edit existing remarks
 - Remove remarks to restore original usernames
 - Download Twitter videos directly from tweets
+- Select and download multiple videos from a single tweet
 - Manage download records with a user-friendly interface
 - Search and filter your download history
 - Locate downloaded files on your computer
 - Clear individual or all download records
 - Remarks and download records persist across sessions and page reloads
 - Seamless integration with Twitter's interface
-- Multi-language support (English, Spanish, French, German, Japanese, Russian,Portuguese and Chinese)
+- Multi-language support (English, Spanish, French, German, Japanese, Russian, Portuguese, and Chinese)
 
 ## Installation
 
@@ -62,6 +66,14 @@ This extension puts you in control, allowing you to customize your Twitter inter
 1. When viewing a tweet with a video, you'll see a "Download Video" button.
 2. Click the button to download the video to your default downloads folder.
 3. The extension will notify you when the download is complete.
+
+### Multiple Video Select Download
+
+1. When viewing a tweet with multiple videos, you'll see a "Download Video" button.
+2. Click the button to open the video selection dialog.
+3. Select the videos you want to download by clicking on them.
+4. Click "Download Selected" to download the selected videos to your default downloads folder.
+5. The extension will notify you when the downloads are complete.
 
 ### Download Records Management
 
