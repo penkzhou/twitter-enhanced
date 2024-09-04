@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "node utils/build.js",
+    "dev": "node utils/dev.js",
     "start": "node utils/webserver.js",
     "lint": "eslint --ignore-pattern '!.eslint-plugin-local.js' -- 'src/**/*.ts' 'src/**/*.tsx'",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
