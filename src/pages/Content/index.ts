@@ -150,17 +150,14 @@ class TwitterEnhancer {
     }
 
     private async removeRemark(username: string): Promise<void> {
-        console.log('removeRemark', username);
         this.userRemarks = this.userRemarks.filter((r) => r.username !== username);
         await this.saveRemarks();
-        console.log('Remark removed');
         this.updateUsernames();
         this.restoreRemarkToUsername(username);
         this.updateButtonText(username, false);
     }
 
     private restoreRemarkToUsername(username: string): void {
-        console.log('restoreRemarkToUsername', username);
         const userElements = document.body.querySelectorAll(
             `a[href="/${username}"]:not([data-testid="UserName-container"])`
         );
@@ -206,8 +203,6 @@ class TwitterEnhancer {
 
     private updateUsernames(container: Element = document.body): void {
         if (!this.remarkFeatureEnabled) return;
-
-        console.log('updateUsernames with this.userRemarks', this.userRemarks);
 
         this.userRemarks.forEach(({ username, remark }) => {
             const userElements = container.querySelectorAll(
@@ -288,7 +283,6 @@ class TwitterEnhancer {
                 this.userRemarks.push({ username, remark });
             }
             await this.saveRemarks();
-            console.log('Remark saved');
             this.updateUsernames();
             this.updateButtonText(username, true);
         } else {
@@ -378,7 +372,6 @@ class TwitterEnhancer {
             const gifContainer = tweet.querySelector('[data-testid="tweetPhoto"] img[src*=".gif"]');
 
             if (videoContainer || gifContainer) {
-                console.log('Video or GIF container found:', videoContainer || gifContainer);
                 const actionBar = tweet.querySelector('[role="group"]');
                 if (actionBar && !actionBar.querySelector('.video-download-btn')) {
                     const downloadButton = document.createElement('div');
@@ -403,7 +396,6 @@ class TwitterEnhancer {
                         this.handleVideoDownload(tweet, downloadButton);
                     });
                     actionBar.appendChild(downloadButton);
-                    console.log('Download button added to tweet');
                 }
                 tweet.classList.add('video-download-added');
             }
@@ -481,7 +473,6 @@ class TwitterEnhancer {
     }
 
     private handleAlreadyDownloaded(response: any, tweetId: string): void {
-        console.log('Tweet already downloaded:', response);
         this.showConfirmDialog(
             this.getI18nMessage('tweetAlreadyDownloaded'),
             () => {
@@ -549,7 +540,6 @@ class TwitterEnhancer {
             },
             (response) => {
                 if (response.success) {
-                    console.log('Download initiated:', response);
                     Logger.logEvent('video_download_initiated', { tweet_id: tweetId });
                 } else {
                     console.error('Download failed:', response.error);
