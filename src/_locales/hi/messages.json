@@ -1,0 +1,260 @@
+{
+  "extensionName": {
+    "message": "ट्विटर बढ़ाया गया",
+    "description": "एक्सटेंशन का नाम"
+  },
+  "extensionDescription": {
+    "message": "एक क्रोम एक्सटेंशन जो ट्विटर और X को बढ़ाता है, जिसमें वीडियो जानकारी पुनर्प्राप्त करने और दोनों डोमेन का समर्थन करता है",
+    "description": "एक्सटेंशन का विवरण"
+  },
+  "addRemark": {
+    "message": "टिप्पणी जोड़ें",
+    "description": "टिप्पणी जोड़ें बटन टेक्स्ट"
+  },
+  "editRemark": {
+    "message": "टिप्पणी संपादित करें",
+    "description": "टिप्पणी संपादित करें बटन टेक्स्ट"
+  },
+  "enterRemark": {
+    "message": "टिप्पणी दर्ज करें",
+    "description": "टिप्पणी इनपुट का अंग्रेजी अभिव्यक्ति"
+  },
+  "cancel": {
+    "message": "रद्द करें",
+    "description": "बटन टेक्स्ट"
+  },
+  "save": {
+    "message": "सहेजें",
+    "description": "बटन टेक्स्ट"
+  },
+  "downloadMedia": {
+    "message": "मीडिया डाउनलोड करें",
+    "description": "डाउनलोड बटन का अंग्रेजी अभिव्यक्ति"
+  },
+  "tweetIdError": {
+    "message": "क्षमा करें, डाउनलोड के लिए ट्वीट ID नहीं मिल सका।",
+    "description": "ट्वीट ID नहीं मिल सका है डाउनलोड करते समय त्रुटि संदेश"
+  },
+  "downloadError": {
+    "message": "डाउनलोड करते समय एक त्रुटि हुई।",
+    "description": "डाउनलोड फेल होने पर त्रुटि संदेश"
+  },
+  "unableToDownload": {
+    "message": "क्षमा करें, वीडियो डाउनलोड नहीं कर सका: $ERROR$",
+    "description": "वीडियो डाउनलोड नहीं कर सका है त्रुटि संदेश",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "नेटवर्क त्रुटि"
+      }
+    }
+  },
+  "popupTitle": {
+    "message": "ट्विटर बढ़ाया गया",
+    "description": "टाइटल डिफॉल्ट टाइटल"
+  },
+  "customizeExperience": {
+    "message": "अपने ट्विटर अनुभव को अनुकूलित करें:",
+    "description": "उपशीर्षक डिफॉल्ट उपशीर्षक"
+  },
+  "enableUserRemarks": {
+    "message": "उपयोगकर्ता टिप्पणियाँ सक्षम करें",
+    "description": "उपयोगकर्ता टिप्पणियाँ टॉगल का लेबल"
+  },
+  "enableVideoDownload": {
+    "message": "वीडियो डाउनलोड सक्षम करें",
+    "description": "वीडियो डाउनलोड टॉगल का लेबल"
+  },
+  "downloadDirectory": {
+    "message": "डाउनलोड निर्देशिका:",
+    "description": "डाउनलोड निर्देशिका इनपुट का लेबल"
+  },
+  "saveSettings": {
+    "message": "सेटिंग्स सहेजें",
+    "description": "सेटिंग्स सहेजें बटन का अंग्रेजी अभिव्यक्ति"
+  },
+  "settingsSaved": {
+    "message": "सेटिंग्स सहेजें सफलतापूर्वक!",
+    "description": "सेटिंग्स सहेजें सफलतापूर्वक संदेश"
+  },
+  "manageRemarks": {
+    "message": "टिप्पणियाँ प्रबंधित करें",
+    "description": "विकल्प पृष्ठ का शीर्षक"
+  },
+  "editRemarkInOptions": {
+    "message": "संपादित करें",
+    "description": "संपादित करें बटन टेक्स्ट"
+  },
+  "deleteRemarkInOptions": {
+    "message": "हटाएं",
+    "description": "हटाएं बटन टेक्स्ट"
+  },
+  "previousPage": {
+    "message": "पिछला",
+    "description": "पिछला पेज बटन टेक्स्ट"
+  },
+  "nextPage": {
+    "message": "अगला",
+    "description": "अगला पेज बटन टेक्स्ट"
+  },
+  "pageOf": {
+    "message": "पेज $CURRENT$ of $TOTAL$",
+    "description": "पेज नंबर इंडिकेटर",
+    "placeholders": {
+      "current": {
+        "content": "$1",
+        "example": "1"
+      },
+      "total": {
+        "content": "$2",
+        "example": "5"
+      }
+    }
+  },
+  "exportRemarks": {
+    "message": "टिप्पणियाँ निर्यात करें",
+    "description": "टिप्पणियाँ निर्यात करें बटन टेक्स्ट"
+  },
+  "importRemarks": {
+    "message": "टिप्पणियाँ आयात करें",
+    "description": "टिप्पणियाँ आयात करें बटन टेक्स्ट"
+  },
+  "editRemarkPrompt": {
+    "message": "टिप्पणी का संपादन @$USERNAME$:",
+    "description": "टिप्पणी संपादित करते समय प्रोम्प्ट",
+    "placeholders": {
+      "username": {
+        "content": "$1",
+        "example": "johndoe"
+      }
+    }
+  },
+  "deleteRemarkConfirm": {
+    "message": "क्या आप वाकई टिप्पणी को हटाना चाहते हैं?",
+    "description": "टिप्पणी हटाने के लिए प्रोम्प्ट"
+  },
+  "importSuccessful": {
+    "message": "टिप्पणियाँ सफलतापूर्वक आयात हो गई!",
+    "description": "टिप्पणियाँ सफलतापूर्वक आयात हो गई संदेश"
+  },
+  "importError": {
+    "message": "टिप्पणियाँ आयात करते समय त्रुटि। कृपया यह सुनिश्चित करें कि फ़ाइल सही प्रारूप में है।",
+    "description": "टिप्पणियाँ आयात करते समय त्रुटि संदेश"
+  },
+  "manageDownloads": {
+    "message": "डाउनलोड सुनिश्चित करें",
+    "description": "डाउनलोड रिकॉर्ड पृष्ठ खोलने के लिए बटन टेक्स्ट"
+  },
+  "downloadRecords": {
+    "message": "डाउनलोड रिकॉर्ड",
+    "description": "डाउनलोड रिकॉर्ड पृष्ठ का शीर्षक"
+  },
+  "locateFile": {
+    "message": "फ़ाइल सुनिश्चित करें",
+    "description": "डाउनलोड फ़ाइल सुनिश्चित करने के लिए बटन टेक्स्ट"
+  },
+  "fileNotFound": {
+    "message": "फ़ाइल डाउनलोड में नहीं मिली।",
+    "description": "फ़ाइल नहीं मिली है संदेश"
+  },
+  "confirmDelete": {
+    "message": "सुनिश्चित करें हटाएं",
+    "description": "हटाएं सुनिश्चित करने के लिए डायलॉग का शीर्षक"
+  },
+  "deleteRecordConfirmation": {
+    "message": "क्या आप वाकई यह रिकॉर्ड हटाना चाहते हैं?",
+    "description": "हटाएं सुनिश्चित करने के लिए डायलॉग का शीर्षक"
+  },
+  "delete": {
+    "message": "हटाएं",
+    "description": "हटाएं बटन टेक्स्ट"
+  },
+  "openOriginTweet": {
+    "message": "उत्पादन ट्वीट खोलें",
+    "description": "उत्पादन ट्वीट खोलें बटन टेक्स्ट"
+  },
+  "tweetId": {
+    "message": "ट्वीट ID",
+    "description": "ट्वीट ID कॉलम शीर्षक"
+  },
+  "originTweet": {
+    "message": "उत्पादन ट्वीट",
+    "description": "उत्पादन ट्वीट कॉलम शीर्षक"
+  },
+  "downloadDate": {
+    "message": "डाउनलोड दिनांक",
+    "description": "डाउनलोड दिनांक कॉलम शीर्षक"
+  },
+  "tweetText": {
+    "message": "ट्वीट टेक्स्ट",
+    "description": "ट्वीट टेक्स्ट कॉलम शीर्षक"
+  },
+  "actions": {
+    "message": "कार्य",
+    "description": "कार्य कॉलम शीर्षक"
+  },
+  "tweetAlreadyDownloaded": {
+    "message": "यह ट्वीट पहले से डाउनलोड हो चुकी है। क्या आप डाउनलोड रिकॉर्ड पृष्ठ खोलना चाहते हैं?",
+    "description": "संदेश जब ट्वीट पहले से डाउनलोड हो चुकी है"
+  },
+  "clearAllRecords": {
+    "message": "सभी रिकॉर्ड साफ करें",
+    "description": "बटन टेक्स्ट सभी रिकॉर्ड साफ करें"
+  },
+  "confirmClearAll": {
+    "message": "सभी रिकॉर्ड साफ करें",
+    "description": "सभी रिकॉर्ड साफ करें सुनिश्चित करने के लिए डायलॉग का शीर्षक"
+  },
+  "clearAllRecordsConfirmation": {
+    "message": "क्या आप वाकई सभी डाउनलोड रिकॉर्ड हटाना चाहते हैं?",
+    "description": "सभी रिकॉर्ड साफ करें सुनिश्चित करने के लिए डायलॉग का शीर्षक"
+  },
+  "clearAllWarning": {
+    "message": "चेतावनी: यह सभी आपके डाउनलोड रिकॉर्ड को स्थायी रूप से हटाएगा।",
+    "description": "सभी रिकॉर्ड साफ करें सुनिश्चित करने के लिए डायलॉग का शीर्षक"
+  },
+  "clearAll": {
+    "message": "साफ करें",
+    "description": "सभी रिकॉर्ड साफ करें बटन टेक्स्ट"
+  },
+  "ok": {
+    "message": "ठीक है",
+    "description": "ठीक है बटन टेक्स्ट"
+  },
+  "yes": {
+    "message": "हाँ",
+    "description": "हाँ बटन टेक्स्ट"
+  },
+  "no": {
+    "message": "नहीं",
+    "description": "नहीं बटन टेक्स्ट"
+  },
+  "searchRecordsAndTweets": {
+    "message": "रिकॉर्ड और ट्वीट खोजें",
+    "description": "खोज इनपुट का अंग्रेजी अभिव्यक्ति"
+  },
+  "selectVideo": {
+    "message": "वीडियो चुनें",
+    "description": "वीडियो चुनें बटन टेक्स्ट"
+  },
+  "downloadVideo": {
+    "message": "वीडियो डाउनलोड करें",
+    "description": "वीडियो डाउनलोड करें बटन टेक्स्ट"
+  },
+  "downloadSelected": {
+    "message": "चुने गए डाउनलोड करें",
+    "description": "चुने गए डाउनलोड करें बटन टेक्स्ट"
+  },
+  "downloadAll": {
+    "message": "सभी डाउनलोड करें",
+    "description": "सभी डाउनलोड करें बटन टेक्स्ट"
+  },
+  "video": {
+    "message": "वीडियो",
+    "description": "वीडियो टेक्स्ट"
+  },
+  "recordNotFound": {
+    "message": "आईडी $1 के साथ रिकॉर्ड नहीं मिला। यह हटा दिया गया हो सकता है।",
+    "description": "रिकॉर्ड नहीं मिला टेक्स्ट"
+  }
+}
