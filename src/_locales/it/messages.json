@@ -1,0 +1,260 @@
+{
+  "extensionName": {
+    "message": "Twitter migliorato",
+    "description": "Il nome dell'estensione"
+  },
+  "extensionDescription": {
+    "message": "Un'estensione Chrome per migliorare Twitter e X, con la funzione di recupero delle informazioni sul video e il supporto per entrambi i domini",
+    "description": "La descrizione dell'estensione"
+  },
+  "addRemark": {
+    "message": "Aggiungi nota",
+    "description": "Testo del pulsante per aggiungere una nota"
+  },
+  "editRemark": {
+    "message": "Modifica nota",
+    "description": "Testo del pulsante per modificare una nota"
+  },
+  "enterRemark": {
+    "message": "Inserisci nota",
+    "description": "Testo del placeholder per l'input della nota"
+  },
+  "cancel": {
+    "message": "Annulla",
+    "description": "Testo del pulsante per annullare"
+  },
+  "save": {
+    "message": "Salva",
+    "description": "Testo del pulsante per salvare"
+  },
+  "downloadMedia": {
+    "message": "Scarica media",
+    "description": "Etichetta aria per il pulsante di download"
+  },
+  "tweetIdError": {
+    "message": "Spiacente, non è stato possibile trovare l'ID del tweet per il download.",
+    "description": "Messaggio di errore quando l'ID del tweet non viene trovato"
+  },
+  "downloadError": {
+    "message": "Si è verificato un errore durante il tentativo di scaricare il video.",
+    "description": "Messaggio di errore quando il download fallisce"
+  },
+  "unableToDownload": {
+    "message": "Spiacente, non è stato possibile scaricare il video: $ERROR$",
+    "description": "Messaggio di errore con dettagli quando non è possibile scaricare",
+    "placeholders": {
+      "error": {
+        "content": "$ERROR$",
+        "example": "Network error"
+      }
+    }
+  },
+  "popupTitle": {
+    "message": "Twitter migliorato",
+    "description": "Titolo della finestra popup"
+  },
+  "customizeExperience": {
+    "message": "Personalizza la tua esperienza di Twitter:",
+    "description": "Sottotitolo nella finestra popup"
+  },
+  "enableUserRemarks": {
+    "message": "Abilita le note degli utenti",
+    "description": "Etichetta per il pulsante di abilitazione delle note degli utenti"
+  },
+  "enableVideoDownload": {
+    "message": "Abilita il download dei video",
+    "description": "Etichetta per il pulsante di abilitazione del download dei video"
+  },
+  "downloadDirectory": {
+    "message": "Directory di download:",
+    "description": "Etichetta per l'input della directory di download"
+  },
+  "saveSettings": {
+    "message": "Salva impostazioni",
+    "description": "Testo per il pulsante di salvataggio delle impostazioni"
+  },
+  "settingsSaved": {
+    "message": "Impostazioni salvate con successo!",
+    "description": "Messaggio mostrato quando le impostazioni vengono salvate"
+  },
+  "manageRemarks": {
+    "message": "Gestisci note",
+    "description": "Titolo per la pagina delle opzioni"
+  },
+  "editRemarkInOptions": {
+    "message": "Modifica",
+    "description": "Testo del pulsante per modificare una nota"
+  },
+  "deleteRemarkInOptions": {
+    "message": "Elimina",
+    "description": "Testo del pulsante per eliminare una nota"
+  },
+  "previousPage": {
+    "message": "Precedente",
+    "description": "Testo del pulsante per la pagina precedente"
+  },
+  "nextPage": {
+    "message": "Successiva",
+    "description": "Testo del pulsante per la pagina successiva"
+  },
+  "pageOf": {
+    "message": "Pagina $CURRENT$ di $TOTAL$",
+    "description": "Indicatore del numero di pagina",
+    "placeholders": {
+      "current": {
+        "content": "$1",
+        "example": "1"
+      },
+      "total": {
+        "content": "$2",
+        "example": "5"
+      }
+    }
+  },
+  "exportRemarks": {
+    "message": "Esporta note",
+    "description": "Testo del pulsante per esportare le note"
+  },
+  "importRemarks": {
+    "message": "Importa note",
+    "description": "Testo del pulsante per importare le note"
+  },
+  "editRemarkPrompt": {
+    "message": "Modifica nota per @$USERNAME$:",
+    "description": "Prompt quando si modifica una nota",
+    "placeholders": {
+      "username": {
+        "content": "$1",
+        "example": "johndoe"
+      }
+    }
+  },
+  "deleteRemarkConfirm": {
+    "message": "Sei sicuro di voler eliminare questa nota?",
+    "description": "Messaggio di conferma quando si elimina una nota"
+  },
+  "importSuccessful": {
+    "message": "Note importate con successo!",
+    "description": "Messaggio mostrato quando le note vengono importate con successo"
+  },
+  "importError": {
+    "message": "Errore nell'importazione delle note. Assicurati che il file sia nel formato corretto.",
+    "description": "Messaggio di errore quando l'importazione delle note fallisce"
+  },
+  "manageDownloads": {
+    "message": "Gestisci download",
+    "description": "Testo del pulsante per aprire la pagina delle note scaricate"
+  },
+  "downloadRecords": {
+    "message": "Note scaricate",
+    "description": "Titolo per la pagina delle note scaricate"
+  },
+  "locateFile": {
+    "message": "Trova file",
+    "description": "Testo del pulsante per trovare il file scaricato"
+  },
+  "fileNotFound": {
+    "message": "File non trovato nel download.",
+    "description": "Messaggio mostrato quando un file non può essere trovato"
+  },
+  "confirmDelete": {
+    "message": "Conferma eliminazione",
+    "description": "Titolo per la finestra di conferma dell'eliminazione"
+  },
+  "deleteRecordConfirmation": {
+    "message": "Sei sicuro di voler eliminare questo record?",
+    "description": "Messaggio di conferma quando si elimina un record"
+  },
+  "delete": {
+    "message": "Elimina",
+    "description": "Testo del pulsante per eliminare"
+  },
+  "openOriginTweet": {
+    "message": "Apri tweet originale",
+    "description": "Testo del pulsante per aprire il tweet originale"
+  },
+  "tweetId": {
+    "message": "ID Tweet",
+    "description": "Titolo della colonna ID Tweet"
+  },
+  "originTweet": {
+    "message": "Tweet originale",
+    "description": "Titolo della colonna Tweet originale"
+  },
+  "downloadDate": {
+    "message": "Data Download",
+    "description": "Titolo della colonna Data Download"
+  },
+  "tweetText": {
+    "message": "Testo Tweet",
+    "description": "Titolo della colonna Testo Tweet"
+  },
+  "actions": {
+    "message": "Azioni",
+    "description": "Titolo della colonna Azioni"
+  },
+  "tweetAlreadyDownloaded": {
+    "message": "Questo tweet è già stato scaricato. Vuoi aprire la pagina delle note scaricate?",
+    "description": "Messaggio mostrato quando un tweet è già stato scaricato"
+  },
+  "clearAllRecords": {
+    "message": "Cancella tutti i record",
+    "description": "Testo del pulsante per cancellare tutti i record"
+  },
+  "confirmClearAll": {
+    "message": "Conferma cancellazione di tutti i record",
+    "description": "Titolo per la finestra di conferma della cancellazione di tutti i record"
+  },
+  "clearAllRecordsConfirmation": {
+    "message": "Sei sicuro di voler eliminare tutti i record scaricati? Questa azione non può essere annullata.",
+    "description": "Messaggio di conferma quando si elimina un record"
+  },
+  "clearAllWarning": {
+    "message": "Attenzione: questa azione eliminerà permanentemente tutti i tuoi record scaricati.",
+    "description": "Messaggio di avviso quando si elimina un record"
+  },
+  "clearAll": {
+    "message": "Cancella tutti",
+    "description": "Testo del pulsante per cancellare tutti i record"
+  },
+  "ok": {
+    "message": "OK",
+    "description": "Testo del pulsante per OK"
+  },
+  "yes": {
+    "message": "Sì",
+    "description": "Testo del pulsante per Sì"
+  },
+  "no": {
+    "message": "No",
+    "description": "Testo del pulsante per No"
+  },
+  "searchRecordsAndTweets": {
+    "message": "Cerca record e tweet",
+    "description": "Placeholder per l'input di ricerca"
+  },
+  "selectVideo": {
+    "message": "Seleziona video",
+    "description": "Testo del pulsante per selezionare un video"
+  },
+  "downloadVideo": {
+    "message": "Scarica video",
+    "description": "Testo del pulsante per scaricare un video"
+  },
+  "downloadSelected": {
+    "message": "Scarica selezionato",
+    "description": "Testo del pulsante per scaricare selezionato"
+  },
+  "downloadAll": {
+    "message": "Scarica tutti",
+    "description": "Testo del pulsante per scaricare tutti"
+  },
+  "video": {
+    "message": "Video",
+    "description": "Testo per il video"
+  },
+  "recordNotFound": {
+    "message": "Record con ID $1 non trovato. Potrebbe essere stato eliminato.",
+    "description": "Testo per il record non trovato"
+  }
+}
