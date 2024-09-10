@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "O registro com ID $1 não foi encontrado. Pode ter sido eliminado.",
     "description": "Texto quando um registro não é encontrado"
+  },
+  "feedbackTitle": {
+    "message": "Feedback",
+    "description": "Title for the feedback page"
+  },
+  "feedbackLabel": {
+    "message": "Seu feedback",
+    "description": "Label for the feedback input"
+  },
+  "feedbackPlaceholder": {
+    "message": "Compartilhe suas ideias, sugestões ou problemas com a extensão.",
+    "description": "Placeholder text for feedback input"
+  },
+  "sendFeedback": {
+    "message": "Enviar feedback",
+    "description": "Send feedback button text"
+  },
+  "provideFeedback": {
+    "message": "Fornecer feedback",
+    "description": "Provide feedback button text"
+  },
+  "submitFeedback": {
+    "message": "Enviar feedback",
+    "description": "Submit feedback button text"
+  },
+  "feedbackEmailSubject": {
+    "message": "Twitter Enha",
+    "description": "Subject for feedback email"
   }
 }

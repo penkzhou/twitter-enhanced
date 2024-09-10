@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "记录 ID $1 未找到。可能已被删除。",
     "description": "记录未找到时的文本"
+  },
+  "feedbackTitle": {
+    "message": "反馈",
+    "description": "反馈页面的标题"
+  },
+  "feedbackLabel": {
+    "message": "您的反馈",
+    "description": "反馈输入的标签"
+  },
+  "feedbackPlaceholder": {
+    "message": "分享您的想法、建议或问题。",
+    "description": "反馈输入的占位符"
+  },
+  "sendFeedback": {
+    "message": "发送反馈",
+    "description": "发送反馈按钮的文本"
+  },
+  "provideFeedback": {
+    "message": "提供反馈",
+    "description": "提供反馈按钮的文本"
+  },
+  "submitFeedback": {
+    "message": "提交反馈",
+    "description": "提交反馈按钮的文本"
+  },
+  "feedbackEmailSubject": {
+    "message": "Twitter 增强反馈",
+    "description": "反馈邮件的标题"
   }
 }

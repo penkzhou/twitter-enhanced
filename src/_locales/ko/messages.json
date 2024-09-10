@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "ID $1의 레코드를 찾을 수 없습니다. 삭제되었을 수 있습니다.",
     "description": "레코드를 찾을 수 없을 때 표시되는 메시지"
+  },
+  "feedbackTitle": {
+    "message": "피드백",
+    "description": "피드백 페이지의 제목"
+  },
+  "feedbackLabel": {
+    "message": "당신의 피드백",
+    "description": "피드백 입력의 라벨"
+  },
+  "feedbackPlaceholder": {
+    "message": "확장 기능에 대한 당신의 생각, 제안 또는 문제를 공유하세요.",
+    "description": "피드백 입력의 플레이스홀더 텍스트"
+  },
+  "sendFeedback": {
+    "message": "피드백 보내기",
+    "description": "피드백 보내기 버튼 텍스트"
+  },
+  "provideFeedback": {
+    "message": "피드백 제공",
+    "description": "피드백 제공 버튼 텍스트"
+  },
+  "submitFeedback": {
+    "message": "피드백 제출",
+    "description": "피드백 제출 버튼 텍스트"
+  },
+  "feedbackEmailSubject": {
+    "message": "트위터 인핸서 피드백",
+    "description": "피드백 이메일의 제목"
   }
 }

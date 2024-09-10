@@ -4,10 +4,10 @@ import { Logger } from '../../utils/logger';
 
 const Popup = () => {
   const [remarkFeatureEnabled, setRemarkFeatureEnabled] = useState(true);
-  const [videoDownloadFeatureEnabled, setVideoDownloadFeatureEnabled] =
-    useState(true);
+  const [videoDownloadFeatureEnabled, setVideoDownloadFeatureEnabled] = useState(true);
   const [downloadDirectory, setDownloadDirectory] = useState('TwitterVideos');
   const [saveMessage, setSaveMessage] = useState('');
+  const [feedback, setFeedback] = useState('');
 
   useEffect(() => {
     Logger.logPageView('Popup', 'popup', { page: 'popup' });
@@ -65,6 +65,22 @@ const Popup = () => {
 
   const openDownloadRecords = () => {
     chrome.tabs.create({ url: 'downloadRecords.html' });
+  };
+
+  const sendFeedback = () => {
+    if (feedback.trim()) {
+      // Here you would typically send the feedback to your server or a designated email address
+      // For this example, we'll just log it and show a thank you message
+      console.log('Feedback:', feedback);
+      Logger.logEvent('send_feedback', { feedbackContent: feedback });
+      setSaveMessage(chrome.i18n.getMessage('feedbackThankYou'));
+      setFeedback('');
+      setTimeout(() => setSaveMessage(''), 3000);
+    }
+  };
+
+  const openFeedbackPage = () => {
+    chrome.tabs.create({ url: 'feedback.html' });
   };
 
   return (
@@ -138,18 +154,25 @@ const Popup = () => {
           <div className="flex space-x-4">
             <button
               onClick={openRemarksManager}
-              className="flex-1 flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="flex-1 flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               {chrome.i18n.getMessage('manageRemarks')}
             </button>
             <button
               onClick={openDownloadRecords}
-              className="flex-1 flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="flex-1 flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               {chrome.i18n.getMessage('manageDownloads')}
             </button>
           </div>
         </div>
+
+        <button
+          onClick={openFeedbackPage}
+          className="mt-6 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        >
+          {chrome.i18n.getMessage('provideFeedback')}
+        </button>
       </div>
     </div>
   );

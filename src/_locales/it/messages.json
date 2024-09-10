@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "Record con ID $1 non trovato. Potrebbe essere stato eliminato.",
     "description": "Testo per il record non trovato"
+  },
+  "feedbackTitle": {
+    "message": "Feedback",
+    "description": "Title for the feedback page"
+  },
+  "feedbackLabel": {
+    "message": "Il tuo feedback",
+    "description": "Label for the feedback input"
+  },
+  "feedbackPlaceholder": {
+    "message": "Condividi i tuoi pensieri, suggerimenti o problemi con l'estensione.",
+    "description": "Placeholder text for feedback input"
+  },
+  "sendFeedback": {
+    "message": "Invia feedback",
+    "description": "Send feedback button text"
+  },
+  "provideFeedback": {
+    "message": "Fornire feedback",
+    "description": "Provide feedback button text"
+  },
+  "submitFeedback": {
+    "message": "Invia feedback",
+    "description": "Submit feedback button text"
+  },
+  "feedbackEmailSubject": {
+    "message": "Feedback Twitter migliorato",
+    "description": "Subject for feedback email"
   }
 }

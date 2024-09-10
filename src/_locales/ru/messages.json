@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "Запись с ID $1 не найдена. Возможно, она была удалена.",
     "description": "Текст, когда запись не найдена"
+  },
+  "feedbackTitle": {
+    "message": "Отзыв",
+    "description": "Title for the feedback page"
+  },
+  "feedbackLabel": {
+    "message": "Ваш отзыв",
+    "description": "Label for the feedback input"
+  },
+  "feedbackPlaceholder": {
+    "message": "Поделитесь своими идеями, предложениями или проблемами с расширением.",
+    "description": "Placeholder text for feedback input"
+  },
+  "sendFeedback": {
+    "message": "Отправить отзыв",
+    "description": "Send feedback button text"
+  },
+  "provideFeedback": {
+    "message": "Предоставить отзыв",
+    "description": "Provide feedback button text"
+  },
+  "submitFeedback": {
+    "message": "Отправить отзыв",
+    "description": "Submit feedback button text"
+  },
+  "feedbackEmailSubject": {
+    "message": "Twitter Улучшенный Отзыв",
+    "description": "Subject for feedback email"
   }
 }

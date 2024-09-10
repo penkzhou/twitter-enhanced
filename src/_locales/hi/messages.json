@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "आईडी $1 के साथ रिकॉर्ड नहीं मिला। यह हटा दिया गया हो सकता है।",
     "description": "रिकॉर्ड नहीं मिला टेक्स्ट"
+  },
+  "feedbackTitle": {
+    "message": "ट्विटर बढ़ाया गया फ़ीडबैक",
+    "description": "फ़ीडबैक पृष्ठ का शीर्षक"
+  },
+  "feedbackLabel": {
+    "message": "आपका फ़ीडबैक",
+    "description": "फ़ीडबैक इनपुट का लेबल"
+  },
+  "feedbackPlaceholder": {
+    "message": "अपने विचार, सुझाव या समस्याओं को एक्सटेंशन के साथ साझा करें।",
+    "description": "फ़ीडबैक इनपुट का प्लेसहोल्डर टेक्स्ट"
+  },
+  "sendFeedback": {
+    "message": "फ़ीडबैक भेजें",
+    "description": "फ़ीडबैक भेजें बटन टेक्स्ट"
+  },
+  "provideFeedback": {
+    "message": "फ़ीडबैक प्रदान करें",
+    "description": "फ़ीडबैक प्रदान करें बटन टेक्स्ट"
+  },
+  "submitFeedback": {
+    "message": "फ़ीडबैक जमा करें",
+    "description": "फ़ीडबैक जमा करें बटन टेक्स्ट"
+  },
+  "feedbackEmailSubject": {
+    "message": "ट्विटर बढ़ाया गया फ़ीडबैक",
+    "description": "फ़ीडबैक ईमेल का उपशीर्षक"
   }
 }

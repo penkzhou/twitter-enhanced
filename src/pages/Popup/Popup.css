@@ -61,6 +61,24 @@ button:hover {
 }
 
 /* Adjust spacing for the last button group */
-.popup-content > div:last-child {
+.popup-content>div:last-child {
   margin-bottom: 0;
+}
+
+.btn-text-tiny {
+  font-size: 0.65rem;
+  /* Adjust this value as needed */
+}
+
+.feedback-section {
+  margin-top: 1rem;
+}
+
+.feedback-section textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.feedback-section button {
+  margin-top: 0.5rem;
 }

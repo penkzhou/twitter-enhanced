@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "記錄 ID $1 未找到。可能已被刪除。",
     "description": "記錄未找到時的文本"
+  },
+  "feedbackTitle": {
+    "message": "回饋",
+    "description": "回饋頁面的標題"
+  },
+  "feedbackLabel": {
+    "message": "您的回饋",
+    "description": "回饋輸入的標籤"
+  },
+  "feedbackPlaceholder": {
+    "message": "分享您的想法、建議或問題。",
+    "description": "回饋輸入的佔位符"
+  },
+  "sendFeedback": {
+    "message": "發送回饋",
+    "description": "發送回饋按鈕的文本"
+  },
+  "provideFeedback": {
+    "message": "提供回饋",
+    "description": "提供回饋按鈕的文本"
+  },
+  "submitFeedback": {
+    "message": "提交回饋",
+    "description": "提交回饋按鈕的文本"
+  },
+  "feedbackEmailSubject": {
+    "message": "Twitter 增強回饋",
+    "description": "回饋郵件的標題"
   }
 }

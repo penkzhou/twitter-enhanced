@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "L'enregistrement avec l'ID $1 n'a pas été trouvé. Il a peut-être été supprimé.",
     "description": "Record not found text"
+  },
+  "feedbackTitle": {
+    "message": "Feedback",
+    "description": "Title for the feedback page"
+  },
+  "feedbackLabel": {
+    "message": "Votre feedback",
+    "description": "Label for the feedback input"
+  },
+  "feedbackPlaceholder": {
+    "message": "Partagez vos idées, suggestions ou problèmes avec l'extension.",
+    "description": "Placeholder text for feedback input"
+  },
+  "sendFeedback": {
+    "message": "Envoyer le feedback",
+    "description": "Send feedback button text"
+  },
+  "provideFeedback": {
+    "message": "Fournir un feedback",
+    "description": "Provide feedback button text"
+  },
+  "submitFeedback": {
+    "message": "Envoyer le feedback",
+    "description": "Submit feedback button text"
+  },
+  "feedbackEmailSubject": {
+    "message": "Twitter Amélioré Feedback",
+    "description": "Subject for feedback email"
   }
 }

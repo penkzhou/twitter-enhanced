@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "Record with ID $1 was not found. It may have been deleted.",
     "description": "Record not found text"
+  },
+  "feedbackTitle": {
+    "message": "Provide Feedback",
+    "description": "Title for the feedback page"
+  },
+  "feedbackLabel": {
+    "message": "Your Feedback",
+    "description": "Label for the feedback input"
+  },
+  "feedbackPlaceholder": {
+    "message": "Share your thoughts, suggestions, or issues with the extension.",
+    "description": "Placeholder text for feedback input"
+  },
+  "sendFeedback": {
+    "message": "Send Feedback",
+    "description": "Send feedback button text"
+  },
+  "provideFeedback": {
+    "message": "Provide Feedback",
+    "description": "Provide feedback button text"
+  },
+  "submitFeedback": {
+    "message": "Submit Feedback",
+    "description": "Submit feedback button text"
+  },
+  "feedbackEmailSubject": {
+    "message": "Twitter Enhanced Feedback",
+    "description": "Subject for feedback email"
   }
 }

@@ -256,5 +256,33 @@
   "recordNotFound": {
     "message": "ID $1 のレコードが見つかりません。削除された可能性があります。",
     "description": "レコードが見つからない場合のテキスト"
+  },
+  "feedbackTitle": {
+    "message": "フィードバック",
+    "description": "フィードバックページのタイトル"
+  },
+  "feedbackLabel": {
+    "message": "あなたのフィードバック",
+    "description": "フィードバック入力のラベル"
+  },
+  "feedbackPlaceholder": {
+    "message": "拡張機能についてのあなたの考え、提案、または問題を共有してください。",
+    "description": "フィードバック入力のプレースホルダーテキスト"
+  },
+  "sendFeedback": {
+    "message": "フィードバックを送信",
+    "description": "フィードバック送信ボタンのテキスト"
+  },
+  "provideFeedback": {
+    "message": "フィードバックを提供",
+    "description": "フィードバック提供ボタンのテキスト"
+  },
+  "submitFeedback": {
+    "message": "フィードバックを提出",
+    "description": "フィードバック提出ボタンのテキスト"
+  },
+  "feedbackEmailSubject": {
+    "message": "Twitter エンハンサー フィードバック",
+    "description": "フィードバックメールのサブジェクト"
   }
 }
