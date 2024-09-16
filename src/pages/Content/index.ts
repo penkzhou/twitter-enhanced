@@ -7,6 +7,8 @@ import { Logger } from '../../utils/logger';
 import { VideoInfo } from '../../lib/types';
 import VideoSelectionDialog, { VideoSelectionDialogProps } from '../../components/VideoSelectionDialog';
 import ReactDOM from 'react-dom';
+import html2canvas from 'html2canvas';
+import QRCode from 'qrcode';
 
 
 interface UserRemark {
@@ -56,6 +58,7 @@ class TwitterEnhancer {
             this.setupObserver();
             this.setupEventListeners();
             this.injectStyles();
+            this.addScreenshotButtons();
         } catch (error) {
             console.error('Error initializing TwitterEnhancer:', error);
         }
@@ -319,6 +322,7 @@ class TwitterEnhancer {
                         this.updateUsernames(node);
                         this.addRemarkButton();
                         this.addVideoDownloadButtons();
+                        this.addScreenshotButtons();
                     }
                 });
             } else if (
@@ -338,6 +342,7 @@ class TwitterEnhancer {
             this.updateUsernames();
             this.addRemarkButton();
             this.addVideoDownloadButtons();
+            this.addScreenshotButtons();
         }, 1000);
     }
 
@@ -673,6 +678,160 @@ class TwitterEnhancer {
         substitutions?: string | string[]
     ): string {
         return chrome.i18n.getMessage(messageName, substitutions);
+    }
+
+    // Function to add a screenshot button below each tweet
+    private addScreenshotButtons(): void {
+        const tweets = document.querySelectorAll('article[data-testid="tweet"]');
+
+        tweets.forEach((tweet) => {
+            if (tweet.querySelector('.screenshot-button')) {
+                return;
+            }
+
+            const actionBar = tweet.querySelector('[role="group"]');
+            if (actionBar) {
+                const screenshotButton = document.createElement('div');
+                screenshotButton.className = 'screenshot-button';
+                screenshotButton.setAttribute('aria-label', 'Generate Screenshot');
+                screenshotButton.innerHTML = `
+                    <div role="button" tabindex="0" style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9999px; transition: background-color 0.2s;">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z"></path>
+                        </svg>
+                    </div>
+                `;
+
+                const buttonStyles = `
+                    .screenshot-button {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 36px;
+                        height: 36px;
+                        border-radius: 9999px;
+                        transition: background-color 0.2s;
+                        color: rgb(139, 152, 165);
+                    }
+                    .screenshot-button:hover {
+                        background-color: rgba(29, 155, 240, 0.1);
+                        color: rgb(29, 155, 240);
+                    }
+                    @media (prefers-color-scheme: dark) {
+                        .screenshot-button {
+                            color: rgb(139, 152, 165);
+                        }
+                        .screenshot-button:hover {
+                            background-color: rgba(239, 243, 244, 0.1);
+                            color: rgb(239, 243, 244);
+                        }
+                    }
+                `;
+
+                const styleElement = document.createElement('style');
+                styleElement.textContent = buttonStyles;
+                document.head.appendChild(styleElement);
+
+                screenshotButton.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Generate screenshot of the tweet
+                    const canvas = await html2canvas(tweet as HTMLElement);
+                    const screenshotDataUrl = canvas.toDataURL('image/png');
+
+                    // Get the tweet URL
+                    const tweetLink = tweet.querySelector('a[href*="/status/"]') as HTMLAnchorElement;
+                    const tweetUrl = tweetLink ? tweetLink.href : window.location.href;
+
+                    // Generate QR code of the tweet URL
+                    const qrCodeCanvas = document.createElement('canvas');
+                    await QRCode.toCanvas(qrCodeCanvas, tweetUrl);
+
+                    // Combine the screenshot and QR code
+                    const combinedCanvas = document.createElement('canvas');
+                    combinedCanvas.width = canvas.width;
+                    combinedCanvas.height = canvas.height + qrCodeCanvas.height;
+                    const ctx = combinedCanvas.getContext('2d')!;
+                    ctx.drawImage(canvas, 0, 0);
+                    ctx.drawImage(qrCodeCanvas, 0, canvas.height);
+
+                    const combinedDataUrl = combinedCanvas.toDataURL('image/png');
+
+                    // Show the dialog with the combined image
+                    this.showScreenshotDialog(combinedDataUrl);
+                });
+
+                actionBar.appendChild(screenshotButton);
+            }
+        });
+    }
+
+    // Function to display the dialog with the screenshot
+    private showScreenshotDialog(imageSrc: string): void {
+        // Create the overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'screenshot-dialog-overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        overlay.style.display = 'flex';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.style.zIndex = '10000';
+
+        // Create the dialog container
+        const dialog = document.createElement('div');
+        dialog.className = 'screenshot-dialog';
+        dialog.style.backgroundColor = '#fff';
+        dialog.style.padding = '20px';
+        dialog.style.borderRadius = '8px';
+        dialog.style.maxWidth = '80%';
+        dialog.style.textAlign = 'center';
+
+        // Create the image element
+        const image = document.createElement('img');
+        image.src = imageSrc;
+        image.style.maxWidth = '100%';
+
+        // Create the save button
+        const saveButton = document.createElement('button');
+        saveButton.textContent = 'Save Image';
+        saveButton.style.marginTop = '10px';
+        saveButton.style.cursor = 'pointer';
+
+        // Add click event to save the image
+        saveButton.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = imageSrc;
+            link.download = 'tweet_screenshot.png';
+            link.click();
+        });
+
+        // Create the close button
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.style.marginLeft = '10px';
+        closeButton.style.cursor = 'pointer';
+
+        // Add click event to close the dialog
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(overlay);
+        });
+
+        // Append elements to the dialog
+        dialog.appendChild(image);
+        dialog.appendChild(saveButton);
+        dialog.appendChild(closeButton);
+
+        // Append dialog to the overlay
+        overlay.appendChild(dialog);
+
+        // Append overlay to the body
+        document.body.appendChild(overlay);
     }
 }
 
