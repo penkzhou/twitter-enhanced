@@ -28,7 +28,7 @@
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "twitter-openapi-typescript": "^0.0.40"
+    "twitter-openapi-typescript": "^0.0.42"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
