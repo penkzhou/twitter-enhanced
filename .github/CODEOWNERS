@@ -1,0 +1,29 @@
+# Global owners
+* @penkzhou
+
+# Core configuration files
+package.json @penkzhou
+package-lock.json @penkzhou
+tsconfig.json @penkzhou
+webpack.config.js @penkzhou
+jest.config.js @penkzhou
+
+# Manifest and build
+src/manifest.json @penkzhou
+utils/ @penkzhou
+
+# GitHub workflows
+.github/ @penkzhou
+
+# Documentation
+README.md @penkzhou
+CLAUDE.md @penkzhou
+TDD_SETUP_SUMMARY.md @penkzhou
+
+# Security sensitive files
+src/pages/Background/ @penkzhou
+src/pages/Content/ @penkzhou
+
+# Test configuration
+src/test/ @penkzhou
+jest.config.js @penkzhou

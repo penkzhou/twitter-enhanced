@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  test:
+    name: Pre-release Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run full test suite
+      run: |
+        npm run lint
+        npm run test:ci
+        
+    - name: Build extension
+      run: npm run build
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build extension for release
+      run: npm run build
+      
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Twitter Enhanced ${{ github.ref }}
+        body: |
+          ## What's Changed
+          
+          - Bug fixes and improvements
+          - Updated dependencies
+          
+          ## Installation
+          
+          1. Download the extension zip file from the assets below
+          2. Extract the zip file
+          3. Open Chrome and go to `chrome://extensions/`
+          4. Enable "Developer mode"
+          5. Click "Load unpacked" and select the extracted folder
+          
+        draft: false
+        prerelease: false
+        
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./zip/twitter-enhanced-extension-${{ github.ref_name }}.zip
+        asset_name: twitter-enhanced-extension-${{ github.ref_name }}.zip
+        asset_content_type: application/zip
