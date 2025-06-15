@@ -267,7 +267,7 @@ describe('Database Operations', () => {
       });
       const { id, ...recordWithoutId } = record;
 
-      const addedId = await db.add(recordWithoutId);
+      await db.add(recordWithoutId);
       const retrievedRecord = await db.getByTweetId(record.tweetId);
 
       expect(retrievedRecord).toBeDefined();

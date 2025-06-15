@@ -1,4 +1,6 @@
 // Mock the Analytics module before importing the file under test
+import { Analytics } from '../../../lib/ga';
+
 jest.mock('../../../lib/ga', () => ({
   Analytics: {
     fireEvent: jest.fn(),
@@ -6,8 +8,6 @@ jest.mock('../../../lib/ga', () => ({
     firePageViewEvent: jest.fn(),
   },
 }));
-
-import { Analytics } from '../../../lib/ga';
 
 // Get typed mocks
 const mockAnalytics = Analytics as jest.Mocked<typeof Analytics>;
