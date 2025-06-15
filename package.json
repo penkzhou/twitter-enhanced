@@ -1,6 +1,6 @@
 {
   "name": "twitter-enhanced-extension",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A Chrome extension to enhance Twitter and X, featuring video information retrieval and support for both domains",
   "license": "MIT",
   "repository": {
@@ -41,7 +41,6 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
-    "@tailwindcss/postcss": "^4.1.10",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -81,7 +80,7 @@
     "sass-loader": "^16.0.0",
     "source-map-loader": "^5.0.0",
     "style-loader": "^4.0.0",
-    "tailwindcss": "^4.0.0",
+    "tailwindcss": "^3.4.17",
     "terser-webpack-plugin": "^5.3.6",
     "ts-jest": "^29.4.0",
     "ts-loader": "^9.4.2",
