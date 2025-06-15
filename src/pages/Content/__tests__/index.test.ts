@@ -90,7 +90,7 @@ describe('TwitterEnhancer', () => {
     });
 
     // Setup default storage response
-    mockChromeStorage.sync.get.mockImplementation((keys, callback) => {
+    mockChromeStorage.sync.get.mockImplementation((_keys, callback) => {
       callback({
         userRemarks: [],
         remarkFeatureEnabled: true,
@@ -98,7 +98,7 @@ describe('TwitterEnhancer', () => {
       });
     });
 
-    mockChromeStorage.sync.set.mockImplementation((data, callback) => {
+    mockChromeStorage.sync.set.mockImplementation((_data, callback) => {
       if (callback) callback();
     });
 
@@ -125,7 +125,7 @@ describe('TwitterEnhancer', () => {
     jest.resetModules();
 
     // Reset storage mock
-    mockChromeStorage.sync.get.mockImplementation((keys, callback) => {
+    mockChromeStorage.sync.get.mockImplementation((_keys, callback) => {
       callback({
         userRemarks: [],
         remarkFeatureEnabled: true,
@@ -222,7 +222,7 @@ describe('TwitterEnhancer', () => {
     });
 
     it('should not add remark buttons when feature is disabled', async () => {
-      mockChromeStorage.sync.get.mockImplementation((keys, callback) => {
+      mockChromeStorage.sync.get.mockImplementation((_keys, callback) => {
         callback({
           userRemarks: [],
           remarkFeatureEnabled: false,
@@ -240,7 +240,7 @@ describe('TwitterEnhancer', () => {
     });
 
     it('should update button text for existing remarks', async () => {
-      mockChromeStorage.sync.get.mockImplementation((keys, callback) => {
+      mockChromeStorage.sync.get.mockImplementation((_keys, callback) => {
         callback({
           userRemarks: [{ username: 'testuser', remark: 'existing remark' }],
           remarkFeatureEnabled: true,
@@ -284,7 +284,7 @@ describe('TwitterEnhancer', () => {
     });
 
     it('should not add video download buttons when feature is disabled', async () => {
-      mockChromeStorage.sync.get.mockImplementation((keys, callback) => {
+      mockChromeStorage.sync.get.mockImplementation((_keys, callback) => {
         callback({
           userRemarks: [],
           remarkFeatureEnabled: true,
@@ -400,7 +400,7 @@ describe('TwitterEnhancer', () => {
 
   describe('Username Replacement', () => {
     it('should replace usernames with remarks', async () => {
-      mockChromeStorage.sync.get.mockImplementation((keys, callback) => {
+      mockChromeStorage.sync.get.mockImplementation((_keys, callback) => {
         callback({
           userRemarks: [{ username: 'testuser', remark: 'Test Remark' }],
           remarkFeatureEnabled: true,
