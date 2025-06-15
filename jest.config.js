@@ -55,6 +55,9 @@ module.exports = {
     // Include new service layer
     'src/services/**/*.ts', // Service layer for business logic
     
+    // Include DOM management layer
+    'src/dom/**/*.ts', // DOM operations and parsing
+    
     // Exclude lower priority items for now
     '!src/components/ui/**/*', // Basic UI components 
     '!src/pages/**/*.tsx', // Page components (except main logic)
