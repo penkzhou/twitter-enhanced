@@ -22,6 +22,26 @@ config.plugins = (config.plugins || []).concat(
   })
 );
 
-webpack(config, function (err) {
-  if (err) throw err;
+webpack(config, function (err, stats) {
+  if (err) {
+    console.error('Webpack error:', err);
+    throw err;
+  }
+  
+  if (stats.hasErrors()) {
+    console.error('Webpack compilation errors:', stats.toJson().errors);
+    throw new Error('Webpack compilation failed');
+  }
+  
+  console.log('Build completed successfully!');
+  console.log('Package info:', packageInfo.name, packageInfo.version);
+  console.log('Zip should be at:', path.join(__dirname, '../', 'zip', `${packageInfo.name}-${packageInfo.version}.zip`));
+  
+  // Check if zip file was created
+  const zipPath = path.join(__dirname, '../', 'zip', `${packageInfo.name}-${packageInfo.version}.zip`);
+  if (fs.existsSync(zipPath)) {
+    console.log('✅ ZIP file created successfully at:', zipPath);
+  } else {
+    console.error('❌ ZIP file was not created at:', zipPath);
+  }
 });
