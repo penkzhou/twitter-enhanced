@@ -9,6 +9,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Lint**: `npm run lint` - Runs ESLint on TypeScript files in src/
 - **Format**: `npm run prettier` - Formats code using Prettier
 - **Test Server**: `npm run start` - Starts development web server for testing
+- **Test**: `npm test` - Runs all tests once
+- **Test Watch**: `npm run test:watch` - Runs tests in watch mode for development
+- **Test Coverage**: `npm run test:coverage` - Runs tests with coverage report
 
 ## Extension Architecture
 
@@ -64,6 +67,16 @@ Supports both `twitter.com` and `x.com` domains with identical functionality.
 ### Internationalization
 
 Supports 12 languages with locale files in `src/_locales/`. Uses Chrome extension i18n API with `__MSG_*__` message format.
+
+### Testing Framework
+
+- **Jest** with jsdom environment for unit and component testing
+- **React Testing Library** for component interaction testing
+- **Chrome Extension Mocks** for browser API testing (jest-webextension-mock)
+- **FakeIndexedDB** for database testing
+- Test files located in `__tests__/` directories or `.test.ts/.test.tsx` files
+- Test utilities and helpers in `src/test/utils/testHelpers.ts`
+- Run `npm test` before committing changes
 
 ### Security Notes
 
