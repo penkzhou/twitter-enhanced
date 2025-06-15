@@ -1,5 +1,9 @@
 # Twitter Enhanced: Elevate Your Twitter Experience
 
+[![Build](https://github.com/penkzhou/twitter-enhanced/actions/workflows/test.yml/badge.svg)](https://github.com/penkzhou/twitter-enhanced/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/penkzhou/twitter-enhanced/graph/badge.svg?token=499MIIOX0N)](https://codecov.io/gh/penkzhou/twitter-enhanced)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Overview
 
 Enhance your Twitter browsing with four powerful features:

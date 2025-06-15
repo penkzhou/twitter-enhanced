@@ -7,7 +7,6 @@ const Popup = () => {
   const [videoDownloadFeatureEnabled, setVideoDownloadFeatureEnabled] = useState(true);
   const [downloadDirectory, setDownloadDirectory] = useState('TwitterVideos');
   const [saveMessage, setSaveMessage] = useState('');
-  const [feedback, setFeedback] = useState('');
 
   useEffect(() => {
     Logger.logPageView('Popup', 'popup', { page: 'popup' });
@@ -67,17 +66,6 @@ const Popup = () => {
     chrome.tabs.create({ url: 'downloadRecords.html' });
   };
 
-  const sendFeedback = () => {
-    if (feedback.trim()) {
-      // Here you would typically send the feedback to your server or a designated email address
-      // For this example, we'll just log it and show a thank you message
-      console.log('Feedback:', feedback);
-      Logger.logEvent('send_feedback', { feedbackContent: feedback });
-      setSaveMessage(chrome.i18n.getMessage('feedbackThankYou'));
-      setFeedback('');
-      setTimeout(() => setSaveMessage(''), 3000);
-    }
-  };
 
   const openFeedbackPage = () => {
     chrome.tabs.create({ url: 'feedback.html' });

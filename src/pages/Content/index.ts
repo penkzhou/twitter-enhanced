@@ -6,7 +6,6 @@ import RemarkDialog, { RemarkDialogProps } from '../../components/RemarkDialog';
 import { Logger } from '../../utils/logger';
 import { VideoInfo } from '../../lib/types';
 import VideoSelectionDialog, { VideoSelectionDialogProps } from '../../components/VideoSelectionDialog';
-import ReactDOM from 'react-dom';
 
 
 interface UserRemark {
@@ -32,11 +31,13 @@ class TwitterEnhancer {
     private remarkDialogOpen: boolean = false;
     private currentUsername: string = '';
     private currentRemark: string | undefined;
+    private remarkDialogReactRoot: any;
 
     private constructor() {
         this.observer = new MutationObserver(this.handleMutations.bind(this));
         this.remarkDialogRoot = document.createElement('div');
         document.body.appendChild(this.remarkDialogRoot);
+        this.remarkDialogReactRoot = createRoot(this.remarkDialogRoot);
         this.init();
     }
 
@@ -299,15 +300,14 @@ class TwitterEnhancer {
     }
 
     private renderRemarkDialog(): void {
-        ReactDOM.render(
+        this.remarkDialogReactRoot.render(
             React.createElement<RemarkDialogProps>(RemarkDialog, {
                 onSave: this.handleSaveRemark.bind(this),
                 onCancel: this.closeRemarkDialog.bind(this),
                 username: this.currentUsername,
                 existingRemark: this.currentRemark,
                 isOpen: this.remarkDialogOpen,
-            }),
-            this.remarkDialogRoot
+            })
         );
     }
 

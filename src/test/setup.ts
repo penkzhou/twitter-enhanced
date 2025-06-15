@@ -60,6 +60,11 @@ global.chrome = {
 // Mock window.gtag for Google Analytics
 (global as any).gtag = jest.fn();
 
+// Polyfill structuredClone for Node.js environments that don't have it
+if (!global.structuredClone) {
+  global.structuredClone = (obj: any) => JSON.parse(JSON.stringify(obj));
+}
+
 // Mock DOM methods that might not be available in jsdom
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

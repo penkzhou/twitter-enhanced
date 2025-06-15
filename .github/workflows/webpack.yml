@@ -1,14 +1,21 @@
-name: NodeJS with Webpack
+# This workflow is merged into test.yml to avoid duplication
+# Keeping this file for reference but workflow is disabled
+name: NodeJS with Webpack (DISABLED)
 
+# Disabled to avoid duplication with test.yml
+# All functionality moved to test.yml
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch: # Only manual trigger
+    inputs:
+      reason:
+        description: 'Reason for manual run'
+        required: false
+        default: 'Manual test of webpack workflow'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
 
     strategy:
       matrix:
@@ -21,15 +28,13 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
-    - name: Build
-      run: |
-        npm install
+    - name: Install dependencies
+      run: npm ci
         
-    - name: CI
-      run: |
-        npm ci
-        
-    - name: lint
-      run: |
-        npm run lint
+    - name: Run linting
+      run: npm run lint
+      
+    - name: Build extension
+      run: npm run build

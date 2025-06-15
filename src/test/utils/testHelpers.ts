@@ -34,7 +34,7 @@ export const setupChromeStorageMock = (data: any = mockChromeStorage) => {
       const result = {};
       keys.forEach(key => {
         if (data.sync[key] !== undefined) {
-          result[key] = data.sync[key];
+          (result as any)[key] = data.sync[key];
         }
       });
       callback(result);
@@ -43,7 +43,7 @@ export const setupChromeStorageMock = (data: any = mockChromeStorage) => {
     } else if (typeof keys === 'object') {
       const result = {};
       Object.keys(keys).forEach(key => {
-        result[key] = data.sync[key] !== undefined ? data.sync[key] : keys[key];
+        (result as any)[key] = data.sync[key] !== undefined ? data.sync[key] : (keys as any)[key];
       });
       callback(result);
     }
@@ -109,8 +109,18 @@ export const simulateRuntimeMessage = (
 };
 
 // Helper to create mock download records
-export const createMockDownloadRecord = (overrides: Partial<any> = {}) => ({
-  id: 'test-id-123',
+interface MockDownloadRecord {
+  id: number;
+  tweetId: string;
+  filename: string;
+  downloadDate: string;
+  downloadId: number;
+  tweetUrl: string;
+  tweetText: string;
+}
+
+export const createMockDownloadRecord = (overrides: Partial<MockDownloadRecord> = {}): MockDownloadRecord => ({
+  id: 123,
   tweetId: '123456789',
   filename: 'test-video.mp4',
   downloadDate: new Date().toISOString(),
@@ -122,7 +132,7 @@ export const createMockDownloadRecord = (overrides: Partial<any> = {}) => ({
 
 // Custom render function with providers
 const AllTheProviders = ({ children }: { children: ReactNode }) => {
-  return <>{children}</>;
+  return children as ReactElement;
 };
 
 const customRender = (

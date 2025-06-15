@@ -12,6 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Test**: `npm test` - Runs all tests once
 - **Test Watch**: `npm run test:watch` - Runs tests in watch mode for development
 - **Test Coverage**: `npm run test:coverage` - Runs tests with coverage report
+- **Test CI**: `npm run test:ci` - Runs tests in CI mode (no watch, with coverage)
 
 ## Extension Architecture
 
@@ -77,6 +78,24 @@ Supports 12 languages with locale files in `src/_locales/`. Uses Chrome extensio
 - Test files located in `__tests__/` directories or `.test.ts/.test.tsx` files
 - Test utilities and helpers in `src/test/utils/testHelpers.ts`
 - Run `npm test` before committing changes
+
+### CI/CD Pipeline
+
+GitHub Actions workflows provide automated testing and deployment:
+
+- **Test Workflow** (`.github/workflows/test.yml`) - Runs on push/PR to main/develop
+  - Tests on Node.js 18.x and 20.x
+  - Runs lint, prettier, and test suite with coverage
+  - Validates build process
+  - Simplified and reliable execution
+
+- **Release Workflow** (`.github/workflows/release.yml`) - Automated releases
+  - Triggered on version tags (v*)
+  - Full test suite execution
+  - Automated GitHub release creation
+  - Extension ZIP artifact upload
+
+All PRs require passing CI checks before merge. Use PR template for consistent reviews.
 
 ### Security Notes
 
