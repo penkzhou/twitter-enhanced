@@ -300,4 +300,88 @@ describe('Database Operations', () => {
       expect(allRecords).toHaveLength(10);
     });
   });
+
+  describe('Edge cases and error scenarios', () => {
+    it('should handle empty search results gracefully', async () => {
+      const result = await db.getByTweetId('nonexistent-tweet-id');
+      expect(result).toBeUndefined();
+    });
+
+    it('should handle database operations with large datasets', async () => {
+      // Add a large number of records to test performance and reliability
+      const records = Array.from({ length: 50 }, (_, i) =>
+        createMockDownloadRecord({ 
+          tweetId: `large-dataset-${i}`, 
+          downloadDate: new Date(2023, 0, i + 1).toISOString() 
+        })
+      );
+
+      const addPromises = records.map(async (record) => {
+        const { id, ...recordWithoutId } = record;
+        return db.add(recordWithoutId);
+      });
+
+      const addedIds = await Promise.all(addPromises);
+      expect(addedIds).toHaveLength(50);
+
+      const allRecords = await db.getAll();
+      expect(allRecords.length).toBeGreaterThanOrEqual(50);
+
+      // Test searching in large dataset
+      const searchResult = await db.getByTweetId('large-dataset-25');
+      expect(searchResult).toBeDefined();
+      expect(searchResult!.tweetId).toBe('large-dataset-25');
+    });
+
+    it('should handle records with edge case data values', async () => {
+      const edgeCaseRecord = createMockDownloadRecord({
+        tweetId: '',  // Empty tweet ID
+        filename: '',  // Empty filename
+        tweetText: '',  // Empty text
+        tweetUrl: '',  // Empty URL
+        downloadDate: '',  // Empty date
+      });
+      const { id, ...recordWithoutId } = edgeCaseRecord;
+
+      await db.add(recordWithoutId);
+      const retrievedRecord = await db.getByTweetId('');
+
+      expect(retrievedRecord).toBeDefined();
+      expect(retrievedRecord!.filename).toBe('');
+      expect(retrievedRecord!.tweetText).toBe('');
+      expect(retrievedRecord!.tweetUrl).toBe('');
+    });
+
+    it('should maintain data integrity across multiple operations', async () => {
+      // Test complex sequence of operations
+      const record1 = createMockDownloadRecord({ tweetId: 'integrity-1' });
+      const record2 = createMockDownloadRecord({ tweetId: 'integrity-2' });
+      const { id: id1, ...record1WithoutId } = record1;
+      const { id: id2, ...record2WithoutId } = record2;
+
+      // Add records
+      const addedId1 = await db.add(record1WithoutId);
+      const addedId2 = await db.add(record2WithoutId);
+
+      // Update first record
+      const updatedRecord1 = { ...record1, id: addedId1, filename: 'updated.mp4' };
+      await db.update(updatedRecord1);
+
+      // Verify updates
+      const retrieved1 = await db.getByTweetId('integrity-1');
+      expect(retrieved1!.filename).toBe('updated.mp4');
+
+      // Remove second record
+      await db.remove(addedId2);
+
+      // Verify removal
+      const retrieved2 = await db.getByTweetId('integrity-2');
+      expect(retrieved2).toBeUndefined();
+
+      // Verify first record still exists
+      const stillExists = await db.getByTweetId('integrity-1');
+      expect(stillExists).toBeDefined();
+      expect(stillExists!.filename).toBe('updated.mp4');
+    });
+  });
 });
