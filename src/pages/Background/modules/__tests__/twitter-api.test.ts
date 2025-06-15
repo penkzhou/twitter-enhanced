@@ -1,4 +1,6 @@
 // Mock global fetch API
+import { TwitterAPI } from '../twitter-api';
+
 global.fetch = jest.fn();
 
 // Mock chrome cookies API
@@ -29,8 +31,6 @@ global.console = {
   error: jest.fn(),
   warn: jest.fn(),
 };
-
-import { TwitterAPI } from '../twitter-api';
 
 describe('TwitterAPI', () => {
   let mockFetch: jest.MockedFunction<typeof fetch>;
@@ -69,7 +69,7 @@ describe('TwitterAPI', () => {
         if (callback) callback(mockCookie);
       });
 
-      const instance = await TwitterAPI.getInstance();
+      await TwitterAPI.getInstance();
       
       // Should have called chrome.cookies.get for both domains and token types
       expect(mockChromeCookies.get).toHaveBeenCalledTimes(4);
