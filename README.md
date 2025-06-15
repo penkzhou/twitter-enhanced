@@ -1,7 +1,6 @@
 # Twitter Enhanced: Elevate Your Twitter Experience
 
 [![Build](https://github.com/penkzhou/twitter-enhanced/actions/workflows/test.yml/badge.svg)](https://github.com/penkzhou/twitter-enhanced/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/penkzhou/twitter-enhanced/graph/badge.svg?token=499MIIOX0N)](https://codecov.io/gh/penkzhou/twitter-enhanced)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.0+-61DAFB.svg)](https://reactjs.org/)
