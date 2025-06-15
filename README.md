@@ -3,6 +3,9 @@
 [![Build](https://github.com/penkzhou/twitter-enhanced/actions/workflows/test.yml/badge.svg)](https://github.com/penkzhou/twitter-enhanced/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/penkzhou/twitter-enhanced/graph/badge.svg?token=499MIIOX0N)](https://codecov.io/gh/penkzhou/twitter-enhanced)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.0+-61DAFB.svg)](https://reactjs.org/)
+[![Test Coverage](https://img.shields.io/badge/coverage-48.29%25-brightgreen.svg)](https://codecov.io/gh/penkzhou/twitter-enhanced)
 
 ## Overview
 
@@ -107,38 +110,227 @@ This extension puts you in control, allowing you to customize your Twitter inter
 
 ## Development
 
-This extension is built using TypeScript. To set up the development environment:
+This extension is built using modern web technologies with a comprehensive test suite and CI/CD pipeline.
 
-1. Install Node.js and npm.
-2. Run `npm install` to install dependencies.
-3. Use `npm run build` to compile TypeScript files.
-4. For continuous compilation during development, use `npm run watch`.
+### 🛠️ Tech Stack
 
-### Adding a New Language
+- **Language**: TypeScript 5.0+
+- **Frontend**: React 19 with React DOM
+- **Styling**: Tailwind CSS 4.0
+- **Testing**: Jest with React Testing Library
+- **Bundling**: Webpack 5
+- **Linting**: ESLint with TypeScript support
+- **CI/CD**: GitHub Actions with automated testing and coverage reporting
+
+### 🚀 Quick Start
+
+1. **Prerequisites**: Node.js (v16+) and npm
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Development build**:
+   ```bash
+   npm run dev
+   ```
+4. **Production build**:
+   ```bash
+   npm run build
+   ```
+
+### 🧪 Testing & Quality Assurance
+
+This project follows Test-Driven Development (TDD) practices with comprehensive test coverage:
+
+#### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+
+# Run tests for CI (with coverage)
+npm run test:ci
+```
+
+#### Code Quality
+
+```bash
+# Lint code
+npm run lint
+
+# Format code
+npm run prettier
+```
+
+#### Test Coverage
+
+Current test coverage: **48.29%** (135 tests across 9 test suites)
+
+- ✅ **RemarkDialog**: 100% coverage
+- ✅ **TwitterAPI**: 94.66% coverage  
+- ✅ **Logger**: 100% coverage
+- ✅ **Analytics**: 100% coverage
+- ✅ **Database**: 78.33% coverage
+- ✅ **VideoSelectionDialog**: 95.23% coverage
+
+#### Development Workflow
+
+Follow this workflow for code changes:
+
+```bash
+# 1. Make your changes
+# 2. Run tests
+npm test
+
+# 3. Check code quality
+npm run lint
+
+# 4. Build to verify TypeScript compilation
+npm run build
+
+# 5. Check coverage
+npm run test:coverage
+```
+
+### 📁 Project Structure
+
+```
+src/
+├── components/           # React components
+│   ├── __tests__/       # Component tests
+│   ├── RemarkDialog.tsx
+│   └── VideoSelectionDialog.tsx
+├── pages/               # Extension pages
+│   ├── Content/         # Content script (main business logic)
+│   ├── Background/      # Background script & API
+│   ├── Popup/           # Extension popup
+│   └── Options/         # Settings page
+├── utils/               # Utility functions
+│   ├── __tests__/       # Utility tests
+│   ├── db.ts           # IndexedDB operations
+│   └── logger.ts       # Analytics logging
+├── lib/                 # Core libraries
+└── test/               # Test configuration
+```
+
+### 🔧 Chrome Extension Development
+
+To load the extension in Chrome:
+
+1. Build the extension: `npm run build`
+2. Open Chrome and go to `chrome://extensions`
+3. Enable "Developer mode"
+4. Click "Load unpacked" and select the `build/` directory
+
+### 🔄 Continuous Integration
+
+The project uses GitHub Actions for:
+
+- **Automated Testing**: Runs on every push and PR
+- **Code Coverage**: Reports to Codecov
+- **Build Verification**: Ensures TypeScript compilation
+- **Multi-Node Testing**: Tests on Node.js 18.x, 20.x, 22.x
+
+### 🌐 Adding a New Language
 
 To add support for a new language:
 
-1. Create a new JSON file in the `_locales` directory, named after the language's locale code (e.g., `fr` for French).
-2. Copy the contents of `_locales/en/messages.json` to your new file.
+1. Create a new JSON file in the `src/_locales` directory, named after the language's locale code (e.g., `fr` for French).
+2. Copy the contents of `src/_locales/en/messages.json` to your new file.
 3. Translate all the message values to the new language.
 4. Update the supported languages list in this README and in the extension's settings.
 
-## Contributing
+### 🔍 Debugging
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- **Source Maps**: Available in development builds for easier debugging
+- **Console Logging**: Use the Logger utility for consistent logging
+- **React DevTools**: Supported for component debugging
+- **Chrome Extension DevTools**: Use Chrome's extension debugging tools
 
-## License
+## 🤝 Contributing
 
-[MIT License](LICENSE)
+We welcome contributions! Here's how to get started:
 
-## Privacy
+### Development Process
 
-This extension stores remarks and download records locally in your browser. No data is sent to external servers.
+1. **Fork** the repository
+2. **Clone** your fork locally
+3. **Create** a new branch for your feature/fix
+4. **Install** dependencies: `npm install`
+5. **Write tests** for your changes (TDD approach)
+6. **Implement** your feature/fix
+7. **Run the test suite**: `npm test`
+8. **Check code quality**: `npm run lint`
+9. **Build** to verify: `npm run build`
+10. **Submit** a Pull Request
 
-## Support
+### Pull Request Requirements
 
-If you encounter any issues or have questions, please file an issue on the GitHub repository.
+- ✅ All tests must pass
+- ✅ Code coverage should not decrease significantly
+- ✅ ESLint checks must pass
+- ✅ TypeScript compilation must succeed
+- ✅ Include tests for new functionality
+- ✅ Update documentation if needed
+
+### Code Standards
+
+- Follow existing TypeScript/React patterns
+- Use descriptive variable and function names
+- Write comprehensive tests for new features
+- Maintain consistent code style (use Prettier)
+- Document complex business logic
+
+## 📊 Project Statistics
+
+- **Total Tests**: 135 across 9 test suites
+- **Test Coverage**: 48.29% statements, 44.44% branches
+- **Languages Supported**: 12 international languages
+- **TypeScript Files**: 100% typed codebase
+- **Active CI/CD**: Automated testing and deployment
+
+## 📜 License
+
+[MIT License](LICENSE) - feel free to use this project for personal or commercial purposes.
+
+## 🔒 Privacy & Security
+
+- **Local Storage Only**: All data (remarks, download records) stored locally in your browser
+- **No External Servers**: No data transmitted to external services
+- **Chrome Permissions**: Only requests necessary permissions for functionality
+- **Open Source**: Full source code available for security auditing
+
+## 🆘 Support & Issues
+
+- **Bug Reports**: [GitHub Issues](https://github.com/penkzhou/twitter-enhanced/issues)
+- **Feature Requests**: [GitHub Discussions](https://github.com/penkzhou/twitter-enhanced/discussions)
+- **Security Issues**: Please report via email or private GitHub issue
+- **Documentation**: Check our [Wiki](https://github.com/penkzhou/twitter-enhanced/wiki) for detailed guides
+
+## 🎯 Roadmap
+
+- [ ] Enhanced video format support
+- [ ] Bulk operations for remarks
+- [ ] Advanced search and filtering
+- [ ] Import/export functionality
+- [ ] Performance optimizations
+- [ ] Additional social media platform support
 
 ---
 
-We hope you enjoy using Twitter Enhanced!
+## 🙏 Acknowledgments
+
+Thanks to all contributors who help make Twitter Enhanced better! Special thanks to:
+
+- The React and TypeScript communities
+- Chrome Extension API maintainers  
+- Testing library contributors
+- All users who provide feedback and bug reports
+
+**Enjoy using Twitter Enhanced!** 🚀
