@@ -109,7 +109,17 @@ export const simulateRuntimeMessage = (
 };
 
 // Helper to create mock download records
-export const createMockDownloadRecord = (overrides: Partial<any> = {}) => ({
+interface MockDownloadRecord {
+  id: string;
+  tweetId: string;
+  filename: string;
+  downloadDate: string;
+  downloadId: number;
+  tweetUrl: string;
+  tweetText: string;
+}
+
+export const createMockDownloadRecord = (overrides: Partial<MockDownloadRecord> = {}): MockDownloadRecord => ({
   id: 'test-id-123',
   tweetId: '123456789',
   filename: 'test-video.mp4',
@@ -122,7 +132,7 @@ export const createMockDownloadRecord = (overrides: Partial<any> = {}) => ({
 
 // Custom render function with providers
 const AllTheProviders = ({ children }: { children: ReactNode }) => {
-  return <>{children}</>;
+  return children as ReactElement;
 };
 
 const customRender = (
