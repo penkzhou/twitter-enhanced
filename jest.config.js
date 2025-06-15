@@ -47,9 +47,12 @@ module.exports = {
     '!src/components/VideoSelectionDialog.tsx',
     // Exclude pages initially (add back as we test them)
     '!src/pages/**/*.tsx',
+    // Include utilities that now have tests
+    // '!src/utils/db.ts', // Removed - now has tests
+    // '!src/utils/logger.ts', // Removed - now has tests
+    // '!src/pages/Background/analytics.ts', // Removed - now has tests
     // Exclude complex modules initially
     '!src/pages/Background/modules/twitter-api.ts',
-    '!src/utils/db.ts',
     '!src/lib/ga.ts',
   ],
   
