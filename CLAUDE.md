@@ -83,18 +83,11 @@ Supports 12 languages with locale files in `src/_locales/`. Uses Chrome extensio
 
 GitHub Actions workflows provide automated testing and deployment:
 
-- **CI Workflow** (`.github/workflows/ci.yml`) - Runs on push/PR to main/develop
+- **Test Workflow** (`.github/workflows/test.yml`) - Runs on push/PR to main/develop
   - Tests on Node.js 18.x and 20.x
-  - Runs lint, prettier, and test suite
-  - Uploads coverage reports to Codecov
+  - Runs lint, prettier, and test suite with coverage
   - Validates build process
-  - Security audit and dependency check
-
-- **PR Checks** (`.github/workflows/pr-checks.yml`) - Enhanced PR validation
-  - Code formatting and lint verification
-  - Test coverage validation
-  - Build verification
-  - Dependency review for security
+  - Simplified and reliable execution
 
 - **Release Workflow** (`.github/workflows/release.yml`) - Automated releases
   - Triggered on version tags (v*)
