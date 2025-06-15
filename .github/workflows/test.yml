@@ -37,6 +37,16 @@ jobs:
     - name: Run tests
       run: npm run test:ci
       
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        verbose: true
+      
     - name: Build extension
       run: npm run build
       
@@ -44,4 +54,4 @@ jobs:
       if: always()
       run: |
         echo "🧪 Test execution completed"
-        echo "📊 Check the job details above for coverage information"
+        echo "📊 Coverage report uploaded to Codecov"

@@ -85,4 +85,10 @@ module.exports = {
   
   // Restore mocks after each test
   restoreMocks: true,
+  
+  // Coverage reporters
+  coverageReporters: ['text', 'lcov', 'html', 'json'],
+  
+  // Coverage output directory
+  coverageDirectory: 'coverage',
 };
