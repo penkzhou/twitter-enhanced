@@ -52,6 +52,9 @@ module.exports = {
     'src/components/RemarkDialog.tsx', // Main user dialog
     'src/components/VideoSelectionDialog.tsx', // Download dialog
     
+    // Include new service layer
+    'src/services/**/*.ts', // Service layer for business logic
+    
     // Exclude lower priority items for now
     '!src/components/ui/**/*', // Basic UI components 
     '!src/pages/**/*.tsx', // Page components (except main logic)
