@@ -11,4 +11,3 @@ export interface VideoInfo {
   tweetText: string;
   mediaId: string;
 }
-

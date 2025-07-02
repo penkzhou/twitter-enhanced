@@ -23,15 +23,17 @@ describe('SettingsService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockLoggerLogEvent = Logger.logEvent as jest.MockedFunction<typeof Logger.logEvent>;
-    
+    mockLoggerLogEvent = Logger.logEvent as jest.MockedFunction<
+      typeof Logger.logEvent
+    >;
+
     mockChromeStorage.sync.get.mockImplementation((keys, callback) => {
       callback({});
     });
     mockChromeStorage.sync.set.mockImplementation((data, callback) => {
       if (callback) callback();
     });
-    
+
     settingsService = new SettingsService();
   });
 
@@ -140,7 +142,7 @@ describe('SettingsService', () => {
 
     it('should update cache after updating settings', async () => {
       await settingsService.updateSettings({ remarkFeatureEnabled: false });
-      
+
       // This should use cached settings
       const settings = await settingsService.getSettings();
 
@@ -177,7 +179,10 @@ describe('SettingsService', () => {
         expect.objectContaining({ remarkFeatureEnabled: true }),
         expect.any(Function)
       );
-      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith('remark_feature_enabled', {});
+      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith(
+        'remark_feature_enabled',
+        {}
+      );
     });
 
     it('should disable remark feature', async () => {
@@ -187,7 +192,10 @@ describe('SettingsService', () => {
         expect.objectContaining({ remarkFeatureEnabled: false }),
         expect.any(Function)
       );
-      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith('remark_feature_disabled', {});
+      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith(
+        'remark_feature_disabled',
+        {}
+      );
     });
 
     it('should enable video download feature', async () => {
@@ -197,7 +205,10 @@ describe('SettingsService', () => {
         expect.objectContaining({ videoDownloadFeatureEnabled: true }),
         expect.any(Function)
       );
-      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith('video_download_feature_enabled', {});
+      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith(
+        'video_download_feature_enabled',
+        {}
+      );
     });
 
     it('should disable video download feature', async () => {
@@ -207,7 +218,10 @@ describe('SettingsService', () => {
         expect.objectContaining({ videoDownloadFeatureEnabled: false }),
         expect.any(Function)
       );
-      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith('video_download_feature_disabled', {});
+      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith(
+        'video_download_feature_disabled',
+        {}
+      );
     });
   });
 
@@ -229,13 +243,16 @@ describe('SettingsService', () => {
         },
         expect.any(Function)
       );
-      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith('settings_reset_to_defaults', {});
+      expect(mockLoggerLogEvent).toHaveBeenLastCalledWith(
+        'settings_reset_to_defaults',
+        {}
+      );
     });
 
     it('should invalidate cache when resetting to defaults', async () => {
       await settingsService.updateSettings({ remarkFeatureEnabled: false });
       await settingsService.resetToDefaults();
-      
+
       // This should fetch from storage again
       await settingsService.getSettings();
 
@@ -288,7 +305,9 @@ describe('SettingsService', () => {
         throw new Error('Storage get error');
       });
 
-      await expect(settingsService.getSettings()).rejects.toThrow('Storage get error');
+      await expect(settingsService.getSettings()).rejects.toThrow(
+        'Storage get error'
+      );
     });
 
     it('should handle chrome storage set errors', async () => {
@@ -296,8 +315,9 @@ describe('SettingsService', () => {
         throw new Error('Storage set error');
       });
 
-      await expect(settingsService.updateSettings({ remarkFeatureEnabled: false }))
-        .rejects.toThrow('Storage set error');
+      await expect(
+        settingsService.updateSettings({ remarkFeatureEnabled: false })
+      ).rejects.toThrow('Storage set error');
     });
   });
 });

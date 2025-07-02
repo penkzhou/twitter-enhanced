@@ -17,7 +17,9 @@ const mockAddListener = jest.fn();
 const mockSendResponse = jest.fn();
 
 // Create a reference to store the actual message listener
-let messageListener: ((request: any, sender: any, sendResponse: any) => boolean) | null = null;
+let messageListener:
+  | ((request: any, sender: any, sendResponse: any) => boolean)
+  | null = null;
 
 Object.defineProperty(global, 'chrome', {
   value: {
@@ -44,7 +46,7 @@ describe('Background Analytics Message Handler', () => {
   beforeEach(() => {
     // Clear all mocks before each test
     jest.clearAllMocks();
-    
+
     // Set up mock functions
     mockSendResponse.mockClear();
     mockSender = {
@@ -78,10 +80,10 @@ describe('Background Analytics Message Handler', () => {
 
       const result = messageListener!(request, mockSender, mockSendResponse);
 
-      expect(mockAnalytics.fireEvent).toHaveBeenCalledWith(
-        'button_click',
-        { buttonName: 'download', position: 'header' }
-      );
+      expect(mockAnalytics.fireEvent).toHaveBeenCalledWith('button_click', {
+        buttonName: 'download',
+        position: 'header',
+      });
       expect(mockSendResponse).toHaveBeenCalledWith({ success: true });
       expect(result).toBe(true);
     });
@@ -112,7 +114,10 @@ describe('Background Analytics Message Handler', () => {
 
       messageListener!(request, mockSender, mockSendResponse);
 
-      expect(mockAnalytics.fireEvent).toHaveBeenCalledWith('complex_event', request.params);
+      expect(mockAnalytics.fireEvent).toHaveBeenCalledWith(
+        'complex_event',
+        request.params
+      );
       expect(mockSendResponse).toHaveBeenCalledWith({ success: true });
     });
   });
@@ -126,7 +131,9 @@ describe('Background Analytics Message Handler', () => {
 
       const result = messageListener!(request, mockSender, mockSendResponse);
 
-      expect(mockAnalytics.fireErrorEvent).toHaveBeenCalledWith('Network request failed');
+      expect(mockAnalytics.fireErrorEvent).toHaveBeenCalledWith(
+        'Network request failed'
+      );
       expect(mockSendResponse).toHaveBeenCalledWith({ success: true });
       expect(result).toBe(true);
     });
@@ -146,7 +153,7 @@ describe('Background Analytics Message Handler', () => {
     it('should handle error messages with special characters', () => {
       const request = {
         action: 'fireAnalyticsErrorEvent',
-        error: 'Error: Cannot read property \'x\' of undefined at line 42',
+        error: "Error: Cannot read property 'x' of undefined at line 42",
       };
 
       messageListener!(request, mockSender, mockSendResponse);
@@ -260,7 +267,6 @@ describe('Background Analytics Message Handler', () => {
     });
   });
 
-
   describe('Message sender validation', () => {
     it('should work with different sender configurations', () => {
       const differentSenders = [
@@ -280,9 +286,9 @@ describe('Background Analytics Message Handler', () => {
         // Reset analytics mock before each test to prevent error propagation
         jest.clearAllMocks();
         mockAnalytics.fireEvent.mockClear();
-        
+
         const mockResponse = jest.fn();
-        
+
         messageListener!(request, sender, mockResponse);
 
         expect(mockResponse).toHaveBeenCalledWith({ success: true });

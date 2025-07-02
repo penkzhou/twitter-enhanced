@@ -2,37 +2,52 @@ export interface IDOMManager {
   // Dialog operations
   showAlert(message: string): Promise<void>;
   showConfirmDialog(message: string): Promise<boolean>;
-  
+
   // Button creation and management
-  createRemarkButton(username: string, hasRemark: boolean, onClick: () => void): HTMLElement;
-  createVideoDownloadButton(onClick: (button: HTMLElement) => void): HTMLElement;
-  
+  createRemarkButton(
+    username: string,
+    hasRemark: boolean,
+    onClick: () => void
+  ): HTMLElement;
+  createVideoDownloadButton(
+    onClick: (button: HTMLElement) => void
+  ): HTMLElement;
+
   // Element finding and manipulation
   findTweetHeaders(): Element[];
   findVideoTweets(): Element[];
   findUsernameElements(container: Element): Element[];
-  
+
   // Button state management
   updateRemarkButtonText(username: string, hasRemark: boolean): void;
   removeAllRemarkButtons(): void;
   removeAllVideoDownloadButtons(): void;
-  
+
   // CSS and styling
   injectStyles(): void;
-  
+
   // Username replacement
-  replaceUsernameInElement(element: Element, username: string, remark: string | null): void;
+  replaceUsernameInElement(
+    element: Element,
+    username: string,
+    remark: string | null
+  ): void;
   restoreUsernameInElement(element: Element, username: string): void;
-  
+
   // Cleanup
   cleanup(): void;
 }
 
 export class DOMManager implements IDOMManager {
-  private readonly i18nGetter: (key: string, substitutions?: string | string[]) => string;
+  private readonly i18nGetter: (
+    key: string,
+    substitutions?: string | string[]
+  ) => string;
   private activeDialogs: Set<HTMLElement> = new Set();
 
-  constructor(i18nGetter: (key: string, substitutions?: string | string[]) => string) {
+  constructor(
+    i18nGetter: (key: string, substitutions?: string | string[]) => string
+  ) {
     this.i18nGetter = i18nGetter;
   }
 
@@ -49,7 +64,7 @@ export class DOMManager implements IDOMManager {
           </button>
         </div>
       `;
-      
+
       document.body.appendChild(alertDialog);
       this.activeDialogs.add(alertDialog);
 
@@ -79,7 +94,7 @@ export class DOMManager implements IDOMManager {
           </div>
         </div>
       `;
-      
+
       document.body.appendChild(confirmDialog);
       this.activeDialogs.add(confirmDialog);
 
@@ -98,13 +113,17 @@ export class DOMManager implements IDOMManager {
     });
   }
 
-  createRemarkButton(username: string, hasRemark: boolean, onClick: () => void): HTMLElement {
+  createRemarkButton(
+    username: string,
+    hasRemark: boolean,
+    onClick: () => void
+  ): HTMLElement {
     const button = document.createElement('button');
     button.className = 'add-remark-btn';
     button.textContent = hasRemark
       ? this.i18nGetter('editRemark')
       : this.i18nGetter('addRemark');
-    
+
     button.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -114,13 +133,12 @@ export class DOMManager implements IDOMManager {
     return button;
   }
 
-  createVideoDownloadButton(onClick: (button: HTMLElement) => void): HTMLElement {
+  createVideoDownloadButton(
+    onClick: (button: HTMLElement) => void
+  ): HTMLElement {
     const downloadButton = document.createElement('div');
     downloadButton.className = 'video-download-btn';
-    downloadButton.setAttribute(
-      'aria-label',
-      this.i18nGetter('downloadMedia')
-    );
+    downloadButton.setAttribute('aria-label', this.i18nGetter('downloadMedia'));
     downloadButton.innerHTML = `
       <div role="button" tabindex="0">
         <div class="download-icon">
@@ -142,20 +160,25 @@ export class DOMManager implements IDOMManager {
   }
 
   findTweetHeaders(): Element[] {
-    return Array.from(document.querySelectorAll(
-      '[data-testid="User-Name"]:not(.remark-button-added)'
-    ));
+    return Array.from(
+      document.querySelectorAll(
+        '[data-testid="User-Name"]:not(.remark-button-added)'
+      )
+    );
   }
 
   findVideoTweets(): Element[] {
-    return Array.from(document.querySelectorAll(
-      'article[data-testid="tweet"]:not(.video-download-added)'
-    ));
+    return Array.from(
+      document.querySelectorAll(
+        'article[data-testid="tweet"]:not(.video-download-added)'
+      )
+    );
   }
 
   findUsernameElements(container: Element): Element[] {
-    return Array.from(container.querySelectorAll('a[href^="/"] span'))
-      .filter((el) => el.textContent?.trim().startsWith('@'));
+    return Array.from(container.querySelectorAll('a[href^="/"] span')).filter(
+      (el) => el.textContent?.trim().startsWith('@')
+    );
   }
 
   updateRemarkButtonText(username: string, hasRemark: boolean): void {
@@ -164,8 +187,8 @@ export class DOMManager implements IDOMManager {
       const header = button.closest('[data-testid="User-Name"]');
       if (header) {
         const usernameElements = this.findUsernameElements(header);
-        const usernameElement = usernameElements.find((el) =>
-          el.textContent?.trim().slice(1) === username
+        const usernameElement = usernameElements.find(
+          (el) => el.textContent?.trim().slice(1) === username
         );
         if (usernameElement) {
           button.textContent = hasRemark
@@ -186,11 +209,11 @@ export class DOMManager implements IDOMManager {
         element.classList.remove('username-replaced');
       }
     });
-    
+
     document
       .querySelectorAll('.add-remark-btn')
       .forEach((button) => button.remove());
-    
+
     document
       .querySelectorAll('.remark-button-added')
       .forEach((element) => element.classList.remove('remark-button-added'));
@@ -200,7 +223,7 @@ export class DOMManager implements IDOMManager {
     document
       .querySelectorAll('.video-download-btn')
       .forEach((button) => button.remove());
-    
+
     document
       .querySelectorAll('.video-download-added')
       .forEach((element) => element.classList.remove('video-download-added'));
@@ -214,7 +237,11 @@ export class DOMManager implements IDOMManager {
     document.head.appendChild(link);
   }
 
-  replaceUsernameInElement(element: Element, username: string, remark: string | null): void {
+  replaceUsernameInElement(
+    element: Element,
+    username: string,
+    remark: string | null
+  ): void {
     const displayNameElement = element.querySelector('span');
     if (displayNameElement) {
       if (remark) {
@@ -235,7 +262,7 @@ export class DOMManager implements IDOMManager {
 
   cleanup(): void {
     // Remove all active dialogs
-    this.activeDialogs.forEach(dialog => {
+    this.activeDialogs.forEach((dialog) => {
       if (dialog.parentNode) {
         dialog.parentNode.removeChild(dialog);
       }

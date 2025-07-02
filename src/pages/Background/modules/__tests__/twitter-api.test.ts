@@ -34,15 +34,15 @@ global.console = {
 
 describe('TwitterAPI', () => {
   let mockFetch: jest.MockedFunction<typeof fetch>;
-  
+
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     mockFetch = fetch as jest.MockedFunction<typeof fetch>;
-    
+
     // Reset TwitterAPI instance
     (TwitterAPI as any).instance = undefined;
-    
+
     // Default mock responses
     mockChromeCookies.get.mockImplementation((details, callback) => {
       const defaultCookie = { value: 'test-token' };
@@ -54,7 +54,7 @@ describe('TwitterAPI', () => {
     it('should implement singleton pattern correctly', async () => {
       const instance1 = await TwitterAPI.getInstance();
       const instance2 = await TwitterAPI.getInstance();
-      
+
       expect(instance1).toBe(instance2);
     });
 
@@ -70,17 +70,35 @@ describe('TwitterAPI', () => {
       });
 
       await TwitterAPI.getInstance();
-      
+
       // Should have called chrome.cookies.get for both domains and token types
       expect(mockChromeCookies.get).toHaveBeenCalledTimes(4);
-      
+
       // Verify calls for ct0 and gt tokens on both domains (with trailing slash)
       // Just check that all 4 calls were made, order may vary
       const calls = mockChromeCookies.get.mock.calls;
-      expect(calls.some(call => call[0].name === 'ct0' && call[0].url === 'https://twitter.com/')).toBe(true);
-      expect(calls.some(call => call[0].name === 'gt' && call[0].url === 'https://twitter.com/')).toBe(true);
-      expect(calls.some(call => call[0].name === 'ct0' && call[0].url === 'https://x.com/')).toBe(true);
-      expect(calls.some(call => call[0].name === 'gt' && call[0].url === 'https://x.com/')).toBe(true);
+      expect(
+        calls.some(
+          (call) =>
+            call[0].name === 'ct0' && call[0].url === 'https://twitter.com/'
+        )
+      ).toBe(true);
+      expect(
+        calls.some(
+          (call) =>
+            call[0].name === 'gt' && call[0].url === 'https://twitter.com/'
+        )
+      ).toBe(true);
+      expect(
+        calls.some(
+          (call) => call[0].name === 'ct0' && call[0].url === 'https://x.com/'
+        )
+      ).toBe(true);
+      expect(
+        calls.some(
+          (call) => call[0].name === 'gt' && call[0].url === 'https://x.com/'
+        )
+      ).toBe(true);
     });
   });
 
@@ -91,13 +109,20 @@ describe('TwitterAPI', () => {
       const bearerToken = 'test-bearer-token';
       const csrfToken = 'test-csrf-token';
       const guestToken = 'test-guest-token';
-      
-      const headers = instance.initHeaders(tweetId, bearerToken, csrfToken, guestToken);
-      
+
+      const headers = instance.initHeaders(
+        tweetId,
+        bearerToken,
+        csrfToken,
+        guestToken
+      );
+
       expect(headers.get('Content-Type')).toBe('application/json');
       expect(headers.get('Authorization')).toBe(`Bearer ${bearerToken}`);
       expect(headers.get('User-Agent')).toBe(navigator.userAgent);
-      expect(headers.get('Referer')).toBe(`https://x.com/i/web/status/${tweetId}`);
+      expect(headers.get('Referer')).toBe(
+        `https://x.com/i/web/status/${tweetId}`
+      );
       expect(headers.get('x-twitter-active-user')).toBe('yes');
       expect(headers.get('x-csrf-token')).toBe(csrfToken);
       expect(headers.get('x-guest-token')).toBe(guestToken);
@@ -108,9 +133,9 @@ describe('TwitterAPI', () => {
       const tweetId = '1234567890';
       const bearerToken = 'test-bearer-token';
       const csrfToken = 'test-csrf-token';
-      
+
       const headers = instance.initHeaders(tweetId, bearerToken, csrfToken);
-      
+
       expect(headers.get('x-twitter-auth-type')).toBe('OAuth2Session');
       expect(headers.get('x-guest-token')).toBeNull();
     });
@@ -120,9 +145,12 @@ describe('TwitterAPI', () => {
     it('should generate correct API endpoint for Twitter domain', async () => {
       const instance = await TwitterAPI.getInstance();
       const tweetId = '1234567890';
-      
-      const endpoint = (instance as any).makeLatestEndpoint('twitter.com', tweetId);
-      
+
+      const endpoint = (instance as any).makeLatestEndpoint(
+        'twitter.com',
+        tweetId
+      );
+
       expect(endpoint).toContain('twitter.com');
       expect(endpoint).toContain(tweetId);
       expect(endpoint).toContain('TweetDetail');
@@ -131,9 +159,9 @@ describe('TwitterAPI', () => {
     it('should generate correct API endpoint for X domain', async () => {
       const instance = await TwitterAPI.getInstance();
       const tweetId = '1234567890';
-      
+
       const endpoint = (instance as any).makeLatestEndpoint('x.com', tweetId);
-      
+
       expect(endpoint).toContain('x.com');
       expect(endpoint).toContain(tweetId);
       expect(endpoint).toContain('TweetDetail');
@@ -145,46 +173,55 @@ describe('TwitterAPI', () => {
       const mockTweetData = {
         data: {
           threaded_conversation_with_injections_v2: {
-            instructions: [{
-              entries: [{
-                content: {
-                  itemContent: {
-                    tweet_results: {
-                      result: {
-                        legacy: {
-                          full_text: 'Test tweet with video',
-                          entities: {
-                            media: [{
-                              type: 'video',
-                              video_info: {
-                                variants: [{
-                                  bitrate: 2176000,
-                                  content_type: 'video/mp4',
-                                  url: 'https://example.com/video.mp4'
-                                }]
+            instructions: [
+              {
+                entries: [
+                  {
+                    content: {
+                      itemContent: {
+                        tweet_results: {
+                          result: {
+                            legacy: {
+                              full_text: 'Test tweet with video',
+                              entities: {
+                                media: [
+                                  {
+                                    type: 'video',
+                                    video_info: {
+                                      variants: [
+                                        {
+                                          bitrate: 2176000,
+                                          content_type: 'video/mp4',
+                                          url: 'https://example.com/video.mp4',
+                                        },
+                                      ],
+                                    },
+                                    media_url_https:
+                                      'https://example.com/thumbnail.jpg',
+                                    id_str: '12345',
+                                  },
+                                ],
                               },
-                              media_url_https: 'https://example.com/thumbnail.jpg',
-                              id_str: '12345'
-                            }]
-                          }
+                            },
+                            core: {
+                              user_results: {
+                                result: {
+                                  legacy: {
+                                    screen_name: 'testuser',
+                                  },
+                                },
+                              },
+                            },
+                          },
                         },
-                        core: {
-                          user_results: {
-                            result: {
-                              legacy: {
-                                screen_name: 'testuser'
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }]
-            }]
-          }
-        }
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
       };
 
       mockFetch.mockResolvedValueOnce({
@@ -216,19 +253,23 @@ describe('TwitterAPI', () => {
       const mockEmptyData = {
         data: {
           threaded_conversation_with_injections_v2: {
-            instructions: [{
-              entries: [{
-                content: {
-                  itemContent: {
-                    tweet_results: {
-                      result: null
-                    }
-                  }
-                }
-              }]
-            }]
-          }
-        }
+            instructions: [
+              {
+                entries: [
+                  {
+                    content: {
+                      itemContent: {
+                        tweet_results: {
+                          result: null,
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
       };
 
       mockFetch.mockResolvedValueOnce({
@@ -238,7 +279,7 @@ describe('TwitterAPI', () => {
 
       const instance = await TwitterAPI.getInstance();
       const result = await instance.getVideoInfo('invalid-id', true);
-      
+
       // API catches errors and returns null instead of throwing
       expect(result).toBeNull();
     });
@@ -248,7 +289,7 @@ describe('TwitterAPI', () => {
 
       const instance = await TwitterAPI.getInstance();
       const result = await instance.getVideoInfo('1234567890', true);
-      
+
       // API catches network errors and returns null
       expect(result).toBeNull();
     });
@@ -259,51 +300,58 @@ describe('TwitterAPI', () => {
       const mockTweetData = {
         data: {
           threaded_conversation_with_injections_v2: {
-            instructions: [{
-              entries: [{
-                content: {
-                  itemContent: {
-                    tweet_results: {
-                      result: {
-                        legacy: {
-                          full_text: 'Video tweet',
-                          entities: {
-                            media: [{
-                              type: 'video',
-                              video_info: {
-                                variants: [
+            instructions: [
+              {
+                entries: [
+                  {
+                    content: {
+                      itemContent: {
+                        tweet_results: {
+                          result: {
+                            legacy: {
+                              full_text: 'Video tweet',
+                              entities: {
+                                media: [
                                   {
-                                    bitrate: 832000,
-                                    content_type: 'video/mp4',
-                                    url: 'https://example.com/video-low.mp4'
+                                    type: 'video',
+                                    video_info: {
+                                      variants: [
+                                        {
+                                          bitrate: 832000,
+                                          content_type: 'video/mp4',
+                                          url: 'https://example.com/video-low.mp4',
+                                        },
+                                        {
+                                          bitrate: 2176000,
+                                          content_type: 'video/mp4',
+                                          url: 'https://example.com/video-high.mp4',
+                                        },
+                                      ],
+                                    },
+                                    media_url_https:
+                                      'https://example.com/thumb.jpg',
+                                    id_str: '67890',
                                   },
-                                  {
-                                    bitrate: 2176000,
-                                    content_type: 'video/mp4',
-                                    url: 'https://example.com/video-high.mp4'
-                                  }
-                                ]
+                                ],
                               },
-                              media_url_https: 'https://example.com/thumb.jpg',
-                              id_str: '67890'
-                            }]
-                          }
+                            },
+                            core: {
+                              user_results: {
+                                result: {
+                                  legacy: { screen_name: 'testuser' },
+                                },
+                              },
+                            },
+                          },
                         },
-                        core: {
-                          user_results: {
-                            result: {
-                              legacy: { screen_name: 'testuser' }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }]
-            }]
-          }
-        }
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
       };
 
       mockFetch.mockResolvedValueOnce({
@@ -322,43 +370,52 @@ describe('TwitterAPI', () => {
       const mockTweetData = {
         data: {
           threaded_conversation_with_injections_v2: {
-            instructions: [{
-              entries: [{
-                content: {
-                  itemContent: {
-                    tweet_results: {
-                      result: {
-                        legacy: {
-                          full_text: 'GIF tweet',
-                          entities: {
-                            media: [{
-                              type: 'animated_gif',
-                              video_info: {
-                                variants: [{
-                                  content_type: 'video/mp4',
-                                  url: 'https://example.com/animated.mp4'
-                                }]
+            instructions: [
+              {
+                entries: [
+                  {
+                    content: {
+                      itemContent: {
+                        tweet_results: {
+                          result: {
+                            legacy: {
+                              full_text: 'GIF tweet',
+                              entities: {
+                                media: [
+                                  {
+                                    type: 'animated_gif',
+                                    video_info: {
+                                      variants: [
+                                        {
+                                          content_type: 'video/mp4',
+                                          url: 'https://example.com/animated.mp4',
+                                        },
+                                      ],
+                                    },
+                                    media_url_https:
+                                      'https://example.com/gif-thumb.jpg',
+                                    id_str: '99999',
+                                  },
+                                ],
                               },
-                              media_url_https: 'https://example.com/gif-thumb.jpg',
-                              id_str: '99999'
-                            }]
-                          }
+                            },
+                            core: {
+                              user_results: {
+                                result: {
+                                  legacy: { screen_name: 'testuser' },
+                                },
+                              },
+                            },
+                          },
                         },
-                        core: {
-                          user_results: {
-                            result: {
-                              legacy: { screen_name: 'testuser' }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }]
-            }]
-          }
-        }
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
       };
 
       mockFetch.mockResolvedValueOnce({
@@ -377,30 +434,34 @@ describe('TwitterAPI', () => {
       const mockTweetData = {
         data: {
           threaded_conversation_with_injections_v2: {
-            instructions: [{
-              entries: [{
-                content: {
-                  itemContent: {
-                    tweet_results: {
-                      result: {
-                        legacy: {
-                          full_text: 'Text only tweet'
+            instructions: [
+              {
+                entries: [
+                  {
+                    content: {
+                      itemContent: {
+                        tweet_results: {
+                          result: {
+                            legacy: {
+                              full_text: 'Text only tweet',
+                            },
+                            core: {
+                              user_results: {
+                                result: {
+                                  legacy: { screen_name: 'testuser' },
+                                },
+                              },
+                            },
+                          },
                         },
-                        core: {
-                          user_results: {
-                            result: {
-                              legacy: { screen_name: 'testuser' }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }]
-            }]
-          }
-        }
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
       };
 
       mockFetch.mockResolvedValueOnce({
@@ -418,11 +479,17 @@ describe('TwitterAPI', () => {
   describe('Domain-specific Behavior', () => {
     it('should use correct tokens for Twitter domain', async () => {
       const instance = await TwitterAPI.getInstance();
-      
+
       // Mock fetch to capture the request
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: async () => ({ data: { threaded_conversation_with_injections_v2: { instructions: [{ entries: [] }] } } }),
+        json: async () => ({
+          data: {
+            threaded_conversation_with_injections_v2: {
+              instructions: [{ entries: [] }],
+            },
+          },
+        }),
       } as Response);
 
       const result = await instance.getVideoInfo('1234567890', true);
@@ -440,10 +507,16 @@ describe('TwitterAPI', () => {
 
     it('should use correct tokens for X domain', async () => {
       const instance = await TwitterAPI.getInstance();
-      
+
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: async () => ({ data: { threaded_conversation_with_injections_v2: { instructions: [{ entries: [] }] } } }),
+        json: async () => ({
+          data: {
+            threaded_conversation_with_injections_v2: {
+              instructions: [{ entries: [] }],
+            },
+          },
+        }),
       } as Response);
 
       const result = await instance.getVideoInfo('1234567890', false);

@@ -11,17 +11,22 @@ export interface DownloadResponse {
 
 export interface IVideoDownloadService {
   getVideoInfo(tweetId: string): Promise<DownloadResponse>;
-  downloadVideo(videoInfo: VideoInfo, tweetId: string): Promise<DownloadResponse>;
-  downloadMultipleVideos(videos: VideoInfo[], tweetId: string): Promise<DownloadResponse[]>;
+  downloadVideo(
+    videoInfo: VideoInfo,
+    tweetId: string
+  ): Promise<DownloadResponse>;
+  downloadMultipleVideos(
+    videos: VideoInfo[],
+    tweetId: string
+  ): Promise<DownloadResponse[]>;
   openDownloadRecords(recordId?: string): void;
 }
 
 export class VideoDownloadService implements IVideoDownloadService {
-
   async getVideoInfo(tweetId: string): Promise<DownloadResponse> {
     return new Promise((resolve) => {
       const currentDomain = window.location.hostname;
-      
+
       chrome.runtime.sendMessage(
         {
           action: 'getVideoInfo',
@@ -30,12 +35,15 @@ export class VideoDownloadService implements IVideoDownloadService {
         },
         (response) => {
           if (chrome.runtime.lastError) {
-            Logger.logError(chrome.runtime.lastError.message ?? 'Unknown error', {
-              tweet_id: tweetId,
-              domain: currentDomain,
-              error_type: 'get_video_info_error',
-            });
-            
+            Logger.logError(
+              chrome.runtime.lastError.message ?? 'Unknown error',
+              {
+                tweet_id: tweetId,
+                domain: currentDomain,
+                error_type: 'get_video_info_error',
+              }
+            );
+
             resolve({
               success: false,
               error: chrome.runtime.lastError.message ?? 'Unknown error',
@@ -46,7 +54,7 @@ export class VideoDownloadService implements IVideoDownloadService {
               video_count: response.videoInfo?.length || 0,
               already_downloaded: response.alreadyDownloaded || false,
             });
-            
+
             resolve(response);
           }
         }
@@ -54,7 +62,10 @@ export class VideoDownloadService implements IVideoDownloadService {
     });
   }
 
-  async downloadVideo(videoInfo: VideoInfo, tweetId: string): Promise<DownloadResponse> {
+  async downloadVideo(
+    videoInfo: VideoInfo,
+    tweetId: string
+  ): Promise<DownloadResponse> {
     return new Promise((resolve) => {
       chrome.runtime.sendMessage(
         {
@@ -70,7 +81,7 @@ export class VideoDownloadService implements IVideoDownloadService {
               video_url: videoInfo.videoUrl,
               error_type: 'download_video_error',
             });
-            
+
             resolve({
               success: false,
               error: error,
@@ -81,7 +92,7 @@ export class VideoDownloadService implements IVideoDownloadService {
               video_url: videoInfo.videoUrl,
               media_id: videoInfo.mediaId,
             });
-            
+
             resolve(response);
           } else {
             Logger.logError(response.error, {
@@ -89,7 +100,7 @@ export class VideoDownloadService implements IVideoDownloadService {
               video_url: videoInfo.videoUrl,
               error_type: 'download_failure',
             });
-            
+
             resolve(response);
           }
         }
@@ -97,13 +108,16 @@ export class VideoDownloadService implements IVideoDownloadService {
     });
   }
 
-  async downloadMultipleVideos(videos: VideoInfo[], tweetId: string): Promise<DownloadResponse[]> {
+  async downloadMultipleVideos(
+    videos: VideoInfo[],
+    tweetId: string
+  ): Promise<DownloadResponse[]> {
     Logger.logEvent('multiple_video_download_initiated', {
       tweet_id: tweetId,
       video_count: videos.length,
     });
 
-    const downloadPromises = videos.map((video) => 
+    const downloadPromises = videos.map((video) =>
       this.downloadVideo(video, tweetId)
     );
 
@@ -135,8 +149,10 @@ export class VideoDownloadService implements IVideoDownloadService {
     const videoContainer = tweetElement.querySelector(
       '[data-testid="videoComponent"], [data-testid="videoPlayer"], [data-testid="previewInterstitial"]'
     );
-    const gifContainer = tweetElement.querySelector('[data-testid="tweetPhoto"] img[src*=".gif"]');
-    
+    const gifContainer = tweetElement.querySelector(
+      '[data-testid="tweetPhoto"] img[src*=".gif"]'
+    );
+
     return !!(videoContainer || gifContainer);
   }
 

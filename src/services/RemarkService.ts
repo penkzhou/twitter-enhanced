@@ -29,7 +29,7 @@ export class RemarkService implements IRemarkService {
 
   async saveRemark(username: string, remark: string): Promise<void> {
     const trimmedRemark = remark.trim();
-    
+
     if (trimmedRemark === '') {
       await this.removeRemark(username);
       return;
@@ -56,7 +56,7 @@ export class RemarkService implements IRemarkService {
   async removeRemark(username: string): Promise<void> {
     const initialLength = this.userRemarks.length;
     this.userRemarks = this.userRemarks.filter((r) => r.username !== username);
-    
+
     if (this.userRemarks.length < initialLength) {
       await this.persistRemarks();
       Logger.logEvent('remark_removed', {

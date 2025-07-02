@@ -4,7 +4,8 @@ import { Logger } from '../../utils/logger';
 
 const Popup = () => {
   const [remarkFeatureEnabled, setRemarkFeatureEnabled] = useState(true);
-  const [videoDownloadFeatureEnabled, setVideoDownloadFeatureEnabled] = useState(true);
+  const [videoDownloadFeatureEnabled, setVideoDownloadFeatureEnabled] =
+    useState(true);
   const [downloadDirectory, setDownloadDirectory] = useState('TwitterVideos');
   const [saveMessage, setSaveMessage] = useState('');
 
@@ -65,7 +66,6 @@ const Popup = () => {
   const openDownloadRecords = () => {
     chrome.tabs.create({ url: 'downloadRecords.html' });
   };
-
 
   const openFeedbackPage = () => {
     chrome.tabs.create({ url: 'feedback.html' });

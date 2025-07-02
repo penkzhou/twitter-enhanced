@@ -150,11 +150,11 @@ describe('TwitterEnhancer Module', () => {
     it('should create DOM elements during initialization', () => {
       // Clear previous calls
       jest.clearAllMocks();
-      
+
       // Fresh import
       jest.resetModules();
       require('../index.ts');
-      
+
       // Verify DOM manipulation
       expect(document.createElement).toHaveBeenCalled();
       expect(document.body.appendChild).toHaveBeenCalled();
@@ -163,9 +163,9 @@ describe('TwitterEnhancer Module', () => {
     it('should set up MutationObserver', () => {
       jest.clearAllMocks();
       jest.resetModules();
-      
+
       require('../index.ts');
-      
+
       expect(MutationObserver).toHaveBeenCalled();
     });
   });
@@ -174,13 +174,17 @@ describe('TwitterEnhancer Module', () => {
     it('should call chrome storage API', (done) => {
       jest.clearAllMocks();
       jest.resetModules();
-      
+
       require('../index.ts');
-      
+
       // Give async operations time to complete
       setTimeout(() => {
         expect(mockChromeStorage.sync.get).toHaveBeenCalledWith(
-          ['userRemarks', 'remarkFeatureEnabled', 'videoDownloadFeatureEnabled'],
+          [
+            'userRemarks',
+            'remarkFeatureEnabled',
+            'videoDownloadFeatureEnabled',
+          ],
           expect.any(Function)
         );
         done();
@@ -190,7 +194,7 @@ describe('TwitterEnhancer Module', () => {
     it('should attempt to register chrome runtime listeners', () => {
       jest.clearAllMocks();
       jest.resetModules();
-      
+
       // Import should not throw
       expect(() => require('../index.ts')).not.toThrow();
     });
@@ -199,7 +203,7 @@ describe('TwitterEnhancer Module', () => {
   describe('Module Integration', () => {
     it('should integrate with Logger for analytics', () => {
       const { Logger } = require('../../../utils/logger');
-      
+
       // Logger should be available for use
       expect(Logger.logEvent).toBeDefined();
       expect(Logger.logError).toBeDefined();
@@ -208,7 +212,7 @@ describe('TwitterEnhancer Module', () => {
     it('should initialize without throwing errors', () => {
       jest.clearAllMocks();
       jest.resetModules();
-      
+
       expect(() => require('../index.ts')).not.toThrow();
     });
   });

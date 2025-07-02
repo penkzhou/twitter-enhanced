@@ -40,6 +40,7 @@
 ## 🔗 Related Issues
 
 <!-- Link to related issues -->
+
 Fixes #(issue)
 
 ## 📊 Test Coverage

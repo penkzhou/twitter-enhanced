@@ -22,7 +22,9 @@ describe('TwitterEnhancerFactory', () => {
 
       expect(dependencies).toBeDefined();
       expect(dependencies.remarkService).toBeInstanceOf(RemarkService);
-      expect(dependencies.videoDownloadService).toBeInstanceOf(VideoDownloadService);
+      expect(dependencies.videoDownloadService).toBeInstanceOf(
+        VideoDownloadService
+      );
       expect(dependencies.settingsService).toBeInstanceOf(SettingsService);
       expect(dependencies.domManager).toBeInstanceOf(DOMManager);
       expect(dependencies.tweetParser).toBeInstanceOf(TweetParser);
@@ -32,29 +34,35 @@ describe('TwitterEnhancerFactory', () => {
       TwitterEnhancerFactory.createDependencies();
 
       expect(DOMManager).toHaveBeenCalledWith(expect.any(Function));
-      
-      const mockGetMessage = (DOMManager as jest.MockedClass<typeof DOMManager>).mock.calls[0][0];
+
+      const mockGetMessage = (DOMManager as jest.MockedClass<typeof DOMManager>)
+        .mock.calls[0][0];
       const mockChromeI18n = {
-        getMessage: jest.fn().mockReturnValue('translated text')
+        getMessage: jest.fn().mockReturnValue('translated text'),
       };
       (global as any).chrome = { i18n: mockChromeI18n };
 
       const result = mockGetMessage('test_key', ['sub1', 'sub2']);
 
-      expect(mockChromeI18n.getMessage).toHaveBeenCalledWith('test_key', ['sub1', 'sub2']);
+      expect(mockChromeI18n.getMessage).toHaveBeenCalledWith('test_key', [
+        'sub1',
+        'sub2',
+      ]);
       expect(result).toBe('translated text');
     });
 
     it('should return an object with all required dependency properties', () => {
       const dependencies = TwitterEnhancerFactory.createDependencies();
 
-      expect(Object.keys(dependencies).sort()).toEqual([
-        'domManager',
-        'remarkService',
-        'settingsService',
-        'tweetParser',
-        'videoDownloadService'
-      ].sort());
+      expect(Object.keys(dependencies).sort()).toEqual(
+        [
+          'domManager',
+          'remarkService',
+          'settingsService',
+          'tweetParser',
+          'videoDownloadService',
+        ].sort()
+      );
     });
 
     it('should create new instances for each call', () => {
@@ -63,8 +71,12 @@ describe('TwitterEnhancerFactory', () => {
 
       expect(dependencies1).not.toBe(dependencies2);
       expect(dependencies1.remarkService).not.toBe(dependencies2.remarkService);
-      expect(dependencies1.videoDownloadService).not.toBe(dependencies2.videoDownloadService);
-      expect(dependencies1.settingsService).not.toBe(dependencies2.settingsService);
+      expect(dependencies1.videoDownloadService).not.toBe(
+        dependencies2.videoDownloadService
+      );
+      expect(dependencies1.settingsService).not.toBe(
+        dependencies2.settingsService
+      );
       expect(dependencies1.domManager).not.toBe(dependencies2.domManager);
       expect(dependencies1.tweetParser).not.toBe(dependencies2.tweetParser);
     });
@@ -86,15 +98,15 @@ describe('TwitterEnhancerFactory', () => {
       const mockRemarkService = {
         getRemark: jest.fn(),
         setRemark: jest.fn(),
-        deleteRemark: jest.fn()
+        deleteRemark: jest.fn(),
       };
       const mockVideoDownloadService = {
-        downloadVideo: jest.fn()
+        downloadVideo: jest.fn(),
       };
 
       const dependencies = TwitterEnhancerFactory.createTestDependencies({
         remarkService: mockRemarkService as any,
-        videoDownloadService: mockVideoDownloadService as any
+        videoDownloadService: mockVideoDownloadService as any,
       });
 
       expect(dependencies.remarkService).toBe(mockRemarkService);
@@ -107,11 +119,11 @@ describe('TwitterEnhancerFactory', () => {
     it('should preserve default dependencies not overridden', () => {
       const mockDomManager = {
         createButton: jest.fn(),
-        createRemarkElement: jest.fn()
+        createRemarkElement: jest.fn(),
       };
 
       const dependencies = TwitterEnhancerFactory.createTestDependencies({
-        domManager: mockDomManager as any
+        domManager: mockDomManager as any,
       });
 
       expect(dependencies.domManager).toBe(mockDomManager);
@@ -127,10 +139,12 @@ describe('TwitterEnhancerFactory', () => {
         videoDownloadService: { mock: 'videoDownloadService' },
         settingsService: { mock: 'settingsService' },
         domManager: { mock: 'domManager' },
-        tweetParser: { mock: 'tweetParser' }
+        tweetParser: { mock: 'tweetParser' },
       };
 
-      const dependencies = TwitterEnhancerFactory.createTestDependencies(mockDeps as any);
+      const dependencies = TwitterEnhancerFactory.createTestDependencies(
+        mockDeps as any
+      );
 
       expect(dependencies).toEqual(mockDeps);
     });
@@ -138,13 +152,15 @@ describe('TwitterEnhancerFactory', () => {
     it('should return an object with all required dependency properties', () => {
       const dependencies = TwitterEnhancerFactory.createTestDependencies();
 
-      expect(Object.keys(dependencies).sort()).toEqual([
-        'domManager',
-        'remarkService',
-        'settingsService',
-        'tweetParser',
-        'videoDownloadService'
-      ].sort());
+      expect(Object.keys(dependencies).sort()).toEqual(
+        [
+          'domManager',
+          'remarkService',
+          'settingsService',
+          'tweetParser',
+          'videoDownloadService',
+        ].sort()
+      );
     });
   });
 });

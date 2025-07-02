@@ -1,4 +1,7 @@
-import { VideoDownloadService, DownloadResponse } from '../VideoDownloadService';
+import {
+  VideoDownloadService,
+  DownloadResponse,
+} from '../VideoDownloadService';
 import { VideoInfo } from '../../lib/types';
 import { Logger } from '../../utils/logger';
 
@@ -30,10 +33,14 @@ describe('VideoDownloadService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockLoggerLogEvent = Logger.logEvent as jest.MockedFunction<typeof Logger.logEvent>;
-    mockLoggerLogError = Logger.logError as jest.MockedFunction<typeof Logger.logError>;
+    mockLoggerLogEvent = Logger.logEvent as jest.MockedFunction<
+      typeof Logger.logEvent
+    >;
+    mockLoggerLogError = Logger.logError as jest.MockedFunction<
+      typeof Logger.logError
+    >;
     mockChromeRuntime.lastError = undefined;
-    
+
     videoDownloadService = new VideoDownloadService();
   });
 
@@ -43,14 +50,14 @@ describe('VideoDownloadService', () => {
       const mockResponse: DownloadResponse = {
         success: true,
         videoInfo: [
-          { 
-            videoUrl: 'https://example.com/video.mp4', 
+          {
+            videoUrl: 'https://example.com/video.mp4',
             thumbnailUrl: 'https://example.com/thumb.jpg',
             tweetUrl: 'https://twitter.com/user/status/123',
             tweetText: 'Test tweet',
-            mediaId: 'media123'
-          }
-        ]
+            mediaId: 'media123',
+          },
+        ],
       };
 
       mockChromeRuntime.sendMessage.mockImplementation((message, callback) => {
@@ -81,7 +88,7 @@ describe('VideoDownloadService', () => {
         success: true,
         alreadyDownloaded: true,
         recordId: 'record123',
-        videoInfo: []
+        videoInfo: [],
       };
 
       mockChromeRuntime.sendMessage.mockImplementation((message, callback) => {
@@ -101,7 +108,7 @@ describe('VideoDownloadService', () => {
     it('should handle chrome runtime errors', async () => {
       const tweetId = '123456789';
       const errorMessage = 'Runtime error';
-      
+
       mockChromeRuntime.lastError = { message: errorMessage };
       mockChromeRuntime.sendMessage.mockImplementation((message, callback) => {
         callback(null);
@@ -122,7 +129,7 @@ describe('VideoDownloadService', () => {
 
     it('should handle chrome runtime errors without message', async () => {
       const tweetId = '123456789';
-      
+
       mockChromeRuntime.lastError = {} as chrome.runtime.LastError;
       mockChromeRuntime.sendMessage.mockImplementation((message, callback) => {
         callback(null);
@@ -143,7 +150,7 @@ describe('VideoDownloadService', () => {
       thumbnailUrl: 'https://example.com/thumb.jpg',
       tweetUrl: 'https://twitter.com/user/status/123',
       tweetText: 'Test tweet',
-      mediaId: 'media123'
+      mediaId: 'media123',
     };
     const tweetId = '123456789';
 
@@ -154,7 +161,10 @@ describe('VideoDownloadService', () => {
         callback(mockResponse);
       });
 
-      const result = await videoDownloadService.downloadVideo(mockVideoInfo, tweetId);
+      const result = await videoDownloadService.downloadVideo(
+        mockVideoInfo,
+        tweetId
+      );
 
       expect(mockChromeRuntime.sendMessage).toHaveBeenCalledWith(
         {
@@ -165,24 +175,30 @@ describe('VideoDownloadService', () => {
         expect.any(Function)
       );
       expect(result).toEqual(mockResponse);
-      expect(mockLoggerLogEvent).toHaveBeenCalledWith('video_download_initiated', {
-        tweet_id: tweetId,
-        video_url: mockVideoInfo.videoUrl,
-        media_id: mockVideoInfo.mediaId,
-      });
+      expect(mockLoggerLogEvent).toHaveBeenCalledWith(
+        'video_download_initiated',
+        {
+          tweet_id: tweetId,
+          video_url: mockVideoInfo.videoUrl,
+          media_id: mockVideoInfo.mediaId,
+        }
+      );
     });
 
     it('should handle download failure from response', async () => {
       const mockResponse: DownloadResponse = {
         success: false,
-        error: 'Download failed'
+        error: 'Download failed',
       };
 
       mockChromeRuntime.sendMessage.mockImplementation((message, callback) => {
         callback(mockResponse);
       });
 
-      const result = await videoDownloadService.downloadVideo(mockVideoInfo, tweetId);
+      const result = await videoDownloadService.downloadVideo(
+        mockVideoInfo,
+        tweetId
+      );
 
       expect(result).toEqual(mockResponse);
       expect(mockLoggerLogError).toHaveBeenCalledWith('Download failed', {
@@ -194,13 +210,16 @@ describe('VideoDownloadService', () => {
 
     it('should handle chrome runtime errors during download', async () => {
       const errorMessage = 'Runtime error during download';
-      
+
       mockChromeRuntime.lastError = { message: errorMessage };
       mockChromeRuntime.sendMessage.mockImplementation((message, callback) => {
         callback(null);
       });
 
-      const result = await videoDownloadService.downloadVideo(mockVideoInfo, tweetId);
+      const result = await videoDownloadService.downloadVideo(
+        mockVideoInfo,
+        tweetId
+      );
 
       expect(result).toEqual({
         success: false,
@@ -216,20 +235,20 @@ describe('VideoDownloadService', () => {
 
   describe('downloadMultipleVideos', () => {
     const mockVideos: VideoInfo[] = [
-      { 
+      {
         videoUrl: 'https://example.com/video1.mp4',
         thumbnailUrl: 'https://example.com/thumb1.jpg',
         tweetUrl: 'https://twitter.com/user/status/123',
         tweetText: 'Test tweet 1',
-        mediaId: 'media123'
+        mediaId: 'media123',
       },
-      { 
+      {
         videoUrl: 'https://example.com/video2.mp4',
         thumbnailUrl: 'https://example.com/thumb2.jpg',
         tweetUrl: 'https://twitter.com/user/status/123',
         tweetText: 'Test tweet 2',
-        mediaId: 'media456'
-      }
+        mediaId: 'media456',
+      },
     ];
     const tweetId = '123456789';
 
@@ -240,27 +259,39 @@ describe('VideoDownloadService', () => {
         callback(mockResponse);
       });
 
-      const results = await videoDownloadService.downloadMultipleVideos(mockVideos, tweetId);
+      const results = await videoDownloadService.downloadMultipleVideos(
+        mockVideos,
+        tweetId
+      );
 
       expect(results).toHaveLength(2);
-      expect(results.every(result => result.success)).toBe(true);
-      expect(mockLoggerLogEvent).toHaveBeenCalledWith('multiple_video_download_initiated', {
-        tweet_id: tweetId,
-        video_count: 2,
-      });
+      expect(results.every((result) => result.success)).toBe(true);
+      expect(mockLoggerLogEvent).toHaveBeenCalledWith(
+        'multiple_video_download_initiated',
+        {
+          tweet_id: tweetId,
+          video_count: 2,
+        }
+      );
       expect(mockChromeRuntime.sendMessage).toHaveBeenCalledTimes(2);
     });
 
     it('should handle mixed success and failure results', async () => {
       mockChromeRuntime.sendMessage.mockImplementation((message, callback) => {
-        if (message.videoInfo && message.videoInfo.videoUrl.includes('video1')) {
+        if (
+          message.videoInfo &&
+          message.videoInfo.videoUrl.includes('video1')
+        ) {
           callback({ success: true });
         } else {
           callback({ success: false, error: 'Download failed' });
         }
       });
 
-      const results = await videoDownloadService.downloadMultipleVideos(mockVideos, tweetId);
+      const results = await videoDownloadService.downloadMultipleVideos(
+        mockVideos,
+        tweetId
+      );
 
       expect(results).toHaveLength(2);
       expect(results[0].success).toBe(true);
@@ -283,23 +314,29 @@ describe('VideoDownloadService', () => {
         action: 'openDownloadRecords',
         recordId: undefined,
       });
-      expect(mockLoggerLogEvent).toHaveBeenCalledWith('download_records_opened', {
-        record_id: undefined,
-      });
+      expect(mockLoggerLogEvent).toHaveBeenCalledWith(
+        'download_records_opened',
+        {
+          record_id: undefined,
+        }
+      );
     });
 
     it('should open download records with specific record ID', () => {
       const recordId = 'record123';
-      
+
       videoDownloadService.openDownloadRecords(recordId);
 
       expect(mockChromeRuntime.sendMessage).toHaveBeenCalledWith({
         action: 'openDownloadRecords',
         recordId: recordId,
       });
-      expect(mockLoggerLogEvent).toHaveBeenCalledWith('download_records_opened', {
-        record_id: recordId,
-      });
+      expect(mockLoggerLogEvent).toHaveBeenCalledWith(
+        'download_records_opened',
+        {
+          record_id: recordId,
+        }
+      );
     });
   });
 
@@ -386,14 +423,16 @@ describe('VideoDownloadService', () => {
       const mockElement = document.createElement('div');
       mockElement.classList.add('video-download-added');
 
-      expect(videoDownloadService.isDownloadButtonAdded(mockElement)).toBe(true);
+      expect(videoDownloadService.isDownloadButtonAdded(mockElement)).toBe(
+        true
+      );
     });
 
     it('should mark element as having download button added', () => {
       const mockElement = document.createElement('div');
-      
+
       videoDownloadService.markAsDownloadButtonAdded(mockElement);
-      
+
       expect(mockElement.classList.contains('video-download-added')).toBe(true);
     });
 
@@ -414,7 +453,8 @@ describe('VideoDownloadService', () => {
       downloadButton.className = 'video-download-btn';
       actionBar.appendChild(downloadButton);
 
-      const hasButton = videoDownloadService.hasExistingDownloadButton(actionBar);
+      const hasButton =
+        videoDownloadService.hasExistingDownloadButton(actionBar);
 
       expect(hasButton).toBe(true);
     });

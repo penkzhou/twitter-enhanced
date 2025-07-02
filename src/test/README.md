@@ -37,9 +37,11 @@ npm run test:ci
 ## Test Types
 
 ### 1. Unit Tests
+
 Test individual functions and utilities in isolation.
 
 **Example**: `src/lib/__tests__/utils.test.ts`
+
 ```typescript
 import { cn } from '../utils';
 
@@ -51,9 +53,11 @@ describe('cn utility', () => {
 ```
 
 ### 2. Component Tests
+
 Test React components with user interactions.
 
 **Example**: `src/components/__tests__/RemarkDialog.test.tsx`
+
 ```typescript
 import { render, screen, fireEvent } from '../../test/utils/testHelpers';
 import { RemarkDialog } from '../RemarkDialog';
@@ -62,27 +66,29 @@ describe('RemarkDialog', () => {
   it('should save remark when save button is clicked', async () => {
     const onSave = jest.fn();
     render(<RemarkDialog onSave={onSave} username="test" isOpen />);
-    
-    fireEvent.change(screen.getByRole('textbox'), { 
-      target: { value: 'New remark' } 
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'New remark' }
     });
     fireEvent.click(screen.getByText('Save'));
-    
+
     expect(onSave).toHaveBeenCalledWith('test', 'New remark');
   });
 });
 ```
 
 ### 3. Integration Tests
+
 Test interaction between Chrome extension APIs and application logic.
 
 **Example**: `src/pages/Background/__tests__/twitter-api.test.ts`
+
 ```typescript
 describe('TwitterAPI', () => {
   it('should fetch video info successfully', async () => {
     const api = TwitterAPI.getInstance();
     const result = await api.getVideoInfo('123456789');
-    
+
     expect(result.success).toBe(true);
     expect(result.videos).toBeDefined();
   });
@@ -92,6 +98,7 @@ describe('TwitterAPI', () => {
 ## Testing Chrome Extension APIs
 
 ### Mock Chrome APIs
+
 Chrome extension APIs are automatically mocked in `src/test/setup.ts`:
 
 ```typescript
@@ -99,7 +106,7 @@ Chrome extension APIs are automatically mocked in `src/test/setup.ts`:
 describe('Storage operations', () => {
   beforeEach(() => {
     setupChromeStorageMock({
-      sync: { userRemarks: [] }
+      sync: { userRemarks: [] },
     });
   });
 
@@ -110,6 +117,7 @@ describe('Storage operations', () => {
 ```
 
 ### Mock Runtime Messages
+
 ```typescript
 import { simulateRuntimeMessage } from '../test/utils/testHelpers';
 
@@ -117,9 +125,9 @@ describe('Message handling', () => {
   it('should handle getVideoInfo message', () => {
     const response = simulateRuntimeMessage({
       action: 'getVideoInfo',
-      tweetId: '123456789'
+      tweetId: '123456789',
     });
-    
+
     expect(response).toBeDefined();
   });
 });
@@ -128,6 +136,7 @@ describe('Message handling', () => {
 ## Testing Patterns
 
 ### 1. Database Testing
+
 IndexedDB operations are tested using `fake-indexeddb`:
 
 ```typescript
@@ -136,20 +145,20 @@ import { createMockDownloadRecord } from '../../test/utils/testHelpers';
 
 describe('Database operations', () => {
   let db;
-  
+
   beforeEach(async () => {
     db = await openDB();
   });
-  
+
   afterEach(async () => {
     if (db) db.close();
     // Clear database between tests
   });
-  
+
   it('should add download record', async () => {
     const record = createMockDownloadRecord();
     await db.add('records', record);
-    
+
     const retrieved = await db.get('records', record.id);
     expect(retrieved).toEqual(record);
   });
@@ -157,6 +166,7 @@ describe('Database operations', () => {
 ```
 
 ### 2. DOM Manipulation Testing
+
 For content script DOM manipulation:
 
 ```typescript
@@ -166,11 +176,11 @@ describe('Content script', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
   });
-  
+
   it('should inject remark button', () => {
     const tweetElement = createMockTweetElement({ username: 'testuser' });
     document.body.appendChild(tweetElement);
-    
+
     // Test DOM manipulation logic
     const button = document.querySelector('[data-testid="remark-button"]');
     expect(button).toBeInTheDocument();
@@ -179,6 +189,7 @@ describe('Content script', () => {
 ```
 
 ### 3. Async Testing
+
 Handle asynchronous operations:
 
 ```typescript
@@ -187,11 +198,11 @@ describe('Async operations', () => {
     const result = await someAsyncFunction();
     expect(result).toBeDefined();
   });
-  
+
   it('should handle promise rejection', async () => {
     await expect(someFailingFunction()).rejects.toThrow('Error message');
   });
-  
+
   it('should wait for condition', async () => {
     await waitForCondition(() => someCondition === true);
     expect(someCondition).toBe(true);
@@ -202,6 +213,7 @@ describe('Async operations', () => {
 ## Test Utilities
 
 ### Custom Render Function
+
 Use the custom render function for React components:
 
 ```typescript
@@ -212,6 +224,7 @@ render(<YourComponent />);
 ```
 
 ### Mock Helpers
+
 Available mock helpers:
 
 - `setupChromeStorageMock(data)` - Mock Chrome storage APIs
@@ -222,12 +235,14 @@ Available mock helpers:
 ## Coverage Goals
 
 The project aims for:
+
 - **70%** overall code coverage
 - **70%** function coverage
 - **70%** line coverage
 - **70%** branch coverage
 
 Focus on testing:
+
 1. Business logic and utilities (highest priority)
 2. User interaction flows
 3. Chrome extension API integrations

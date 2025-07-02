@@ -23,15 +23,17 @@ describe('RemarkService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockLoggerLogEvent = Logger.logEvent as jest.MockedFunction<typeof Logger.logEvent>;
-    
+    mockLoggerLogEvent = Logger.logEvent as jest.MockedFunction<
+      typeof Logger.logEvent
+    >;
+
     mockChromeStorage.sync.get.mockImplementation((keys, callback) => {
       callback({});
     });
     mockChromeStorage.sync.set.mockImplementation((data, callback) => {
       if (callback) callback();
     });
-    
+
     remarkService = new RemarkService();
   });
 
@@ -42,9 +44,12 @@ describe('RemarkService', () => {
       });
 
       const remarks = await remarkService.getRemarks();
-      
+
       expect(remarks).toEqual([]);
-      expect(mockChromeStorage.sync.get).toHaveBeenCalledWith(['userRemarks'], expect.any(Function));
+      expect(mockChromeStorage.sync.get).toHaveBeenCalledWith(
+        ['userRemarks'],
+        expect.any(Function)
+      );
     });
 
     it('should return existing remarks from storage', async () => {
@@ -58,7 +63,7 @@ describe('RemarkService', () => {
       });
 
       const remarks = await remarkService.getRemarks();
-      
+
       expect(remarks).toEqual(existingRemarks);
     });
 
@@ -73,7 +78,7 @@ describe('RemarkService', () => {
 
       await remarkService.getRemarks();
       await remarkService.getRemarks();
-      
+
       expect(mockChromeStorage.sync.get).toHaveBeenCalledTimes(2);
     });
   });
@@ -130,7 +135,7 @@ describe('RemarkService', () => {
 
     it('should remove remark when saving empty string', async () => {
       const username = 'testuser';
-      
+
       await remarkService.saveRemark(username, 'Initial remark');
       await remarkService.saveRemark(username, '');
 
@@ -146,7 +151,7 @@ describe('RemarkService', () => {
 
     it('should remove remark when saving whitespace-only string', async () => {
       const username = 'testuser';
-      
+
       await remarkService.saveRemark(username, 'Initial remark');
       await remarkService.saveRemark(username, '   ');
 
@@ -161,7 +166,7 @@ describe('RemarkService', () => {
     it('should remove existing remark', async () => {
       const username1 = 'user1';
       const username2 = 'user2';
-      
+
       await remarkService.saveRemark(username1, 'Remark 1');
       await remarkService.saveRemark(username2, 'Remark 2');
       await remarkService.removeRemark(username1);
@@ -178,16 +183,19 @@ describe('RemarkService', () => {
 
     it('should handle removing non-existent remark gracefully', async () => {
       const username = 'nonexistent';
-      
+
       await remarkService.removeRemark(username);
 
-      expect(mockLoggerLogEvent).not.toHaveBeenCalledWith('remark_removed', expect.any(Object));
+      expect(mockLoggerLogEvent).not.toHaveBeenCalledWith(
+        'remark_removed',
+        expect.any(Object)
+      );
     });
 
     it('should remove all remarks when called on each user', async () => {
       await remarkService.saveRemark('user1', 'Remark 1');
       await remarkService.saveRemark('user2', 'Remark 2');
-      
+
       await remarkService.removeRemark('user1');
       await remarkService.removeRemark('user2');
 
@@ -202,7 +210,7 @@ describe('RemarkService', () => {
     it('should find existing remark', async () => {
       const username = 'testuser';
       const remark = 'Test remark';
-      
+
       await remarkService.saveRemark(username, remark);
       const foundRemark = remarkService.findRemark(username);
 
@@ -211,7 +219,7 @@ describe('RemarkService', () => {
 
     it('should return undefined for non-existent remark', () => {
       const foundRemark = remarkService.findRemark('nonexistent');
-      
+
       expect(foundRemark).toBeUndefined();
     });
 
@@ -219,7 +227,7 @@ describe('RemarkService', () => {
       await remarkService.saveRemark('user1', 'Remark 1');
       await remarkService.saveRemark('user2', 'Remark 2');
       await remarkService.saveRemark('user3', 'Remark 3');
-      
+
       const foundRemark = remarkService.findRemark('user2');
 
       expect(foundRemark).toEqual({ username: 'user2', remark: 'Remark 2' });
@@ -229,7 +237,7 @@ describe('RemarkService', () => {
   describe('hasRemark', () => {
     it('should return true for existing remark', async () => {
       const username = 'testuser';
-      
+
       await remarkService.saveRemark(username, 'Test remark');
       const hasRemark = remarkService.hasRemark(username);
 
@@ -238,13 +246,13 @@ describe('RemarkService', () => {
 
     it('should return false for non-existent remark', () => {
       const hasRemark = remarkService.hasRemark('nonexistent');
-      
+
       expect(hasRemark).toBe(false);
     });
 
     it('should return false after remark is removed', async () => {
       const username = 'testuser';
-      
+
       await remarkService.saveRemark(username, 'Test remark');
       await remarkService.removeRemark(username);
       const hasRemark = remarkService.hasRemark(username);
@@ -267,7 +275,9 @@ describe('RemarkService', () => {
         throw new Error('Storage set error');
       });
 
-      await expect(remarkService.saveRemark('user', 'remark')).rejects.toThrow('Storage set error');
+      await expect(remarkService.saveRemark('user', 'remark')).rejects.toThrow(
+        'Storage set error'
+      );
     });
   });
 });

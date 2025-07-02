@@ -98,8 +98,11 @@ const DownloadRecords: React.FC = () => {
     return allRecords;
   };
 
-  const findAndNavigateToRecord = (records: DownloadRecord[], recordId: number) => {
-    const recordIndex = records.findIndex(record => record.id === recordId);
+  const findAndNavigateToRecord = (
+    records: DownloadRecord[],
+    recordId: number
+  ) => {
+    const recordIndex = records.findIndex((record) => record.id === recordId);
     if (recordIndex === -1) {
       setNotFoundRecordId(recordId);
       return;
@@ -136,10 +139,11 @@ const DownloadRecords: React.FC = () => {
     return filteredRecords.slice(startIndex, endIndex).map((record) => (
       <TableRow
         key={record.id}
-        className={`hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors ${record.id === highlightedRecordId
-          ? 'bg-blue-100 dark:bg-blue-900'
-          : ''
-          }`}
+        className={`hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors ${
+          record.id === highlightedRecordId
+            ? 'bg-blue-100 dark:bg-blue-900'
+            : ''
+        }`}
         ref={record.id === highlightedRecordId ? highlightedRowRef : null}
       >
         <TableCell className="py-4">
@@ -217,8 +221,11 @@ const DownloadRecords: React.FC = () => {
       closeDeleteDialog();
 
       // Check if we need to adjust the current page
-      if (updatedRecords.length <= (currentPage - 1) * recordsPerPage && currentPage > 1) {
-        setCurrentPage(prevPage => prevPage - 1);
+      if (
+        updatedRecords.length <= (currentPage - 1) * recordsPerPage &&
+        currentPage > 1
+      ) {
+        setCurrentPage((prevPage) => prevPage - 1);
       }
     }
   };
@@ -256,7 +263,11 @@ const DownloadRecords: React.FC = () => {
         <CardContent className="p-6 flex flex-col items-center">
           {notFoundRecordId && (
             <div className="w-full mb-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
-              <p>{chrome.i18n.getMessage('recordNotFound', [notFoundRecordId.toString()])}</p>
+              <p>
+                {chrome.i18n.getMessage('recordNotFound', [
+                  notFoundRecordId.toString(),
+                ])}
+              </p>
             </div>
           )}
           <div className="w-full max-w-md mb-6">

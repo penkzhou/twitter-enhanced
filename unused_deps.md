@@ -3,9 +3,11 @@
 ## Definitely Unused (Safe to Remove)
 
 ### Dependencies
+
 1. **twitter-openapi-typescript** - Not imported anywhere in the codebase. The extension uses hardcoded Twitter GraphQL endpoints instead.
 
 ### DevDependencies
+
 1. **file-loader** - Commented out in webpack.config.js (line 92). Webpack 5 uses asset modules instead.
 2. **babel-preset-react-app** - Not used in .babelrc or webpack config. Only @babel/preset-react is active.
 3. **@babel/plugin-proposal-class-properties** - Commented out in .babelrc (line 8).
@@ -17,6 +19,7 @@
 ## Possibly Unused (Need Further Verification)
 
 ### DevDependencies
+
 1. **@babel/eslint-parser** - May be used by eslint-config-react-app internally
 2. **eslint-plugin-flowtype** - Part of eslint-config-react-app, but project uses TypeScript not Flow
 3. **babel-loader** - Used in webpack.config.js for JS/JSX files, but the project is primarily TypeScript
@@ -25,6 +28,7 @@
 ## Actually Used (Keep)
 
 All other dependencies are actively used:
+
 - **@radix-ui/react-dialog** & **@radix-ui/react-slot** - Used in UI components
 - **class-variance-authority**, **clsx**, **tailwind-merge** - Used for styling utilities
 - **date-fns** - Used for date formatting
