@@ -35,8 +35,12 @@ export class SettingsService implements ISettingsService {
         ['remarkFeatureEnabled', 'videoDownloadFeatureEnabled'],
         (result) => {
           const settings: TwitterEnhancerSettings = {
-            remarkFeatureEnabled: result.remarkFeatureEnabled ?? SettingsService.DEFAULT_SETTINGS.remarkFeatureEnabled,
-            videoDownloadFeatureEnabled: result.videoDownloadFeatureEnabled ?? SettingsService.DEFAULT_SETTINGS.videoDownloadFeatureEnabled,
+            remarkFeatureEnabled:
+              result.remarkFeatureEnabled ??
+              SettingsService.DEFAULT_SETTINGS.remarkFeatureEnabled,
+            videoDownloadFeatureEnabled:
+              result.videoDownloadFeatureEnabled ??
+              SettingsService.DEFAULT_SETTINGS.videoDownloadFeatureEnabled,
           };
 
           this.cachedSettings = settings;
@@ -46,17 +50,20 @@ export class SettingsService implements ISettingsService {
     });
   }
 
-  async updateSettings(settings: Partial<TwitterEnhancerSettings>): Promise<void> {
+  async updateSettings(
+    settings: Partial<TwitterEnhancerSettings>
+  ): Promise<void> {
     const currentSettings = await this.getSettings();
     const updatedSettings = { ...currentSettings, ...settings };
 
     return new Promise((resolve) => {
       chrome.storage.sync.set(updatedSettings, () => {
         this.cachedSettings = updatedSettings;
-        
+
         Logger.logEvent('settings_updated', {
           remark_feature_enabled: updatedSettings.remarkFeatureEnabled,
-          video_download_feature_enabled: updatedSettings.videoDownloadFeatureEnabled,
+          video_download_feature_enabled:
+            updatedSettings.videoDownloadFeatureEnabled,
           changed_fields: Object.keys(settings),
         });
 

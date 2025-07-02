@@ -30,6 +30,7 @@
 ## ✅ 配置验证
 
 ### 本地测试覆盖率生成
+
 ```bash
 # 生成覆盖率报告
 npm run test:coverage
@@ -39,6 +40,7 @@ ls -la coverage/lcov.info
 ```
 
 ### 推送代码触发 CI
+
 ```bash
 git add .
 git commit -m "feat: Add Codecov integration"
@@ -77,7 +79,7 @@ coverage:
   status:
     project:
       default:
-        target: auto  # 自动设置目标
+        target: auto # 自动设置目标
         threshold: 1% # 允许 1% 的波动
 ```
 
@@ -89,7 +91,7 @@ coverage:
 # Phase 1: 基础阶段
 target: 20%
 
-# Phase 2: 成长阶段  
+# Phase 2: 成长阶段
 target: 40%
 
 # Phase 3: 成熟阶段
@@ -123,9 +125,9 @@ Codecov 会自动在 PR 中添加覆盖率报告评论：
 ```yaml
 # codecov.yml
 comment:
-  layout: "reach,diff,flags,files,footer"
+  layout: 'reach,diff,flags,files,footer'
   behavior: default
-  require_changes: false  # 即使没有变化也显示评论
+  require_changes: false # 即使没有变化也显示评论
 ```
 
 ## 📊 覆盖率报告功能
@@ -150,15 +152,19 @@ open coverage/lcov-report/index.html
 ## 🚨 常见问题
 
 ### 1. Token 权限错误
+
 **问题**: `Error: Codecov token not found`
 **解决**: 确保在 GitHub Secrets 中正确添加了 `CODECOV_TOKEN`
 
 ### 2. 覆盖率文件未找到
+
 **问题**: `Error: No coverage files found`
 **解决**: 确保 `npm run test:ci` 生成了 `coverage/lcov.info` 文件
 
 ### 3. PR 没有显示覆盖率评论
-**解决**: 
+
+**解决**:
+
 - 检查 Codecov 是否有仓库访问权限
 - 确保 codecov.yml 中的 comment 配置正确
 - 等待几分钟，评论可能有延迟

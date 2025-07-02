@@ -1,24 +1,24 @@
 export interface ITweetParser {
   // Tweet identification
   getTweetId(tweetElement: Element): string | null;
-  
+
   // User information extraction
   extractUsername(tweetHeader: Element): string | null;
   findUserElements(username: string, container?: Element): Element[];
-  
+
   // Video content detection
   hasVideoContent(tweetElement: Element): boolean;
   hasGifContent(tweetElement: Element): boolean;
   findVideoElements(tweetElement: Element): Element[];
-  
+
   // Tweet structure navigation
   getActionBar(tweetElement: Element): Element | null;
   getVideoContainer(tweetElement: Element): Element | null;
-  
+
   // Button state checking
   hasRemarkButton(tweetHeader: Element): boolean;
   hasVideoDownloadButton(actionBar: Element): boolean;
-  
+
   // Element validation
   isValidTweetElement(element: Element): boolean;
   isValidUserHeader(element: Element): boolean;
@@ -40,26 +40,33 @@ export class TweetParser implements ITweetParser {
     const usernameElement = Array.from(usernameElements).find((el) =>
       el.textContent?.trim().startsWith('@')
     );
-    
+
     if (usernameElement) {
       const username = usernameElement.textContent?.trim().slice(1); // Remove '@' symbol
       return username || null;
     }
-    
+
     return null;
   }
 
-  findUserElements(username: string, container: Element = document.body): Element[] {
+  findUserElements(
+    username: string,
+    container: Element = document.body
+  ): Element[] {
     const selector = `a[href="/${username}"]:not([data-testid="UserName-container"])`;
     return Array.from(container.querySelectorAll(selector));
   }
 
   hasVideoContent(tweetElement: Element): boolean {
-    return this.hasVideoPlayer(tweetElement) || this.hasGifContent(tweetElement);
+    return (
+      this.hasVideoPlayer(tweetElement) || this.hasGifContent(tweetElement)
+    );
   }
 
   hasGifContent(tweetElement: Element): boolean {
-    const gifContainer = tweetElement.querySelector('[data-testid="tweetPhoto"] img[src*=".gif"]');
+    const gifContainer = tweetElement.querySelector(
+      '[data-testid="tweetPhoto"] img[src*=".gif"]'
+    );
     return !!gifContainer;
   }
 
@@ -67,15 +74,15 @@ export class TweetParser implements ITweetParser {
     const videoSelectors = [
       '[data-testid="videoComponent"]',
       '[data-testid="videoPlayer"]',
-      '[data-testid="previewInterstitial"]'
+      '[data-testid="previewInterstitial"]',
     ];
-    
+
     const elements: Element[] = [];
-    videoSelectors.forEach(selector => {
+    videoSelectors.forEach((selector) => {
       const found = tweetElement.querySelectorAll(selector);
       elements.push(...Array.from(found));
     });
-    
+
     return elements;
   }
 
@@ -99,8 +106,10 @@ export class TweetParser implements ITweetParser {
   }
 
   isValidTweetElement(element: Element): boolean {
-    return element.tagName === 'ARTICLE' && 
-           element.getAttribute('data-testid') === 'tweet';
+    return (
+      element.tagName === 'ARTICLE' &&
+      element.getAttribute('data-testid') === 'tweet'
+    );
   }
 
   isValidUserHeader(element: Element): boolean {
@@ -108,7 +117,7 @@ export class TweetParser implements ITweetParser {
   }
 
   // Additional helper methods for advanced parsing
-  
+
   /**
    * Checks if tweet element has video player (excluding GIFs)
    */
@@ -124,7 +133,7 @@ export class TweetParser implements ITweetParser {
    */
   getUserMentions(tweetElement: Element): Element[] {
     const mentionElements = tweetElement.querySelectorAll('a[href^="/"]');
-    return Array.from(mentionElements).filter(element => {
+    return Array.from(mentionElements).filter((element) => {
       const href = element.getAttribute('href');
       return href && href.match(/^\/[^/]+$/) && !href.includes('/status/');
     });
@@ -134,7 +143,9 @@ export class TweetParser implements ITweetParser {
    * Extracts tweet text content
    */
   getTweetText(tweetElement: Element): string {
-    const tweetTextElement = tweetElement.querySelector('[data-testid="tweetText"]');
+    const tweetTextElement = tweetElement.querySelector(
+      '[data-testid="tweetText"]'
+    );
     return tweetTextElement?.textContent?.trim() || '';
   }
 
@@ -142,11 +153,12 @@ export class TweetParser implements ITweetParser {
    * Gets the display name (not username) from a tweet header
    */
   getDisplayName(tweetHeader: Element): string | null {
-    const displayNameElements = tweetHeader.querySelectorAll('a[href^="/"] span');
-    const displayNameElement = Array.from(displayNameElements).find((el) =>
-      !el.textContent?.trim().startsWith('@')
+    const displayNameElements =
+      tweetHeader.querySelectorAll('a[href^="/"] span');
+    const displayNameElement = Array.from(displayNameElements).find(
+      (el) => !el.textContent?.trim().startsWith('@')
     );
-    
+
     return displayNameElement?.textContent?.trim() || null;
   }
 
@@ -179,15 +191,15 @@ export class TweetParser implements ITweetParser {
       '[data-testid="tweetPhoto"]',
       '[data-testid="videoComponent"]',
       '[data-testid="videoPlayer"]',
-      '[data-testid="previewInterstitial"]'
+      '[data-testid="previewInterstitial"]',
     ];
-    
+
     const elements: Element[] = [];
-    mediaSelectors.forEach(selector => {
+    mediaSelectors.forEach((selector) => {
       const found = tweetElement.querySelectorAll(selector);
       elements.push(...Array.from(found));
     });
-    
+
     return elements;
   }
 }

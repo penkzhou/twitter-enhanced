@@ -21,7 +21,7 @@
 
 /* Ensure our button doesn't get hidden */
 [data-testid='User-Name'],
-[data-testid='User-Name']>div {
+[data-testid='User-Name'] > div {
   overflow: visible !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -42,7 +42,7 @@
   color: rgb(29, 155, 240);
 }
 
-.video-download-btn>div {
+.video-download-btn > div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,7 +113,7 @@
   /* 1:1 Aspect Ratio */
 }
 
-.aspect-w-1>img {
+.aspect-w-1 > img {
   position: absolute;
   height: 100%;
   width: 100%;

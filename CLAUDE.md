@@ -21,6 +21,7 @@ This is a Chrome Extension (Manifest V3) that enhances Twitter/X.com with user r
 ### Core Components
 
 **Entry Points:**
+
 - **Background Service Worker**: `src/pages/Background/index.ts` - Handles video downloads and Twitter API calls
 - **Content Script**: `src/pages/Content/index.ts` - Injects UI elements into Twitter/X.com pages
 - **Popup**: `src/pages/Popup/index.tsx` - Extension popup interface
@@ -36,6 +37,7 @@ This is a Chrome Extension (Manifest V3) that enhances Twitter/X.com with user r
 ### Communication Pattern
 
 Uses Chrome's message passing system:
+
 - Content script sends `getVideoInfo` and `downloadVideo` actions to background script
 - Background script responds with video data or download status
 - Settings changes propagate through Chrome storage and message passing
@@ -90,7 +92,7 @@ GitHub Actions workflows provide automated testing and deployment:
   - Simplified and reliable execution
 
 - **Release Workflow** (`.github/workflows/release.yml`) - Automated releases
-  - Triggered on version tags (v*)
+  - Triggered on version tags (v\*)
   - Full test suite execution
   - Automated GitHub release creation
   - Extension ZIP artifact upload

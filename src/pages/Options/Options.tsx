@@ -176,7 +176,10 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
       reader.onload = (e: ProgressEvent<FileReader>) => {
         try {
           const importedRemarks = JSON.parse(e.target?.result as string);
-          if (Array.isArray(importedRemarks) && importedRemarks.every(isValidRemark)) {
+          if (
+            Array.isArray(importedRemarks) &&
+            importedRemarks.every(isValidRemark)
+          ) {
             setUserRemarks(importedRemarks);
             saveRemarks(importedRemarks);
             setCurrentPage(1);

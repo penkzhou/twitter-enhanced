@@ -172,7 +172,7 @@ npm run prettier
 Current test coverage: **48.29%** (135 tests across 9 test suites)
 
 - ✅ **RemarkDialog**: 100% coverage
-- ✅ **TwitterAPI**: 94.66% coverage  
+- ✅ **TwitterAPI**: 94.66% coverage
 - ✅ **Logger**: 100% coverage
 - ✅ **Analytics**: 100% coverage
 - ✅ **Database**: 78.33% coverage
@@ -328,7 +328,7 @@ We welcome contributions! Here's how to get started:
 Thanks to all contributors who help make Twitter Enhanced better! Special thanks to:
 
 - The React and TypeScript communities
-- Chrome Extension API maintainers  
+- Chrome Extension API maintainers
 - Testing library contributors
 - All users who provide feedback and bug reports
 

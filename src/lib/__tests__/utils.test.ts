@@ -10,13 +10,13 @@ describe('Utility Functions', () => {
     it('should handle conditional classes', () => {
       const isActive = true;
       const isDisabled = false;
-      
+
       const result = cn(
         'base-class',
         isActive && 'active-class',
         isDisabled && 'disabled-class'
       );
-      
+
       expect(result).toBe('base-class active-class');
     });
 
@@ -32,7 +32,7 @@ describe('Utility Functions', () => {
         'bg-blue-500': false,
         'text-white': true,
       });
-      
+
       expect(result).toBe('px-4 py-2 text-white');
     });
 
@@ -48,8 +48,10 @@ describe('Utility Functions', () => {
         undefined,
         'final-class'
       );
-      
-      expect(result).toBe('base-class array-class-1 array-class-2 object-class-1 final-class');
+
+      expect(result).toBe(
+        'base-class array-class-1 array-class-2 object-class-1 final-class'
+      );
     });
 
     it('should handle empty input', () => {
@@ -84,7 +86,7 @@ describe('Utility Functions', () => {
         'border border-gray-200 rounded-md',
         'text-sm font-medium text-gray-900'
       );
-      
+
       expect(result).toContain('flex');
       expect(result).toContain('items-center');
       expect(result).toContain('justify-between');
@@ -100,7 +102,7 @@ describe('Utility Functions', () => {
         'hover:bg-blue-500 focus:bg-blue-600',
         'dark:bg-gray-800 dark:text-white'
       );
-      
+
       expect(result).toContain('text-base');
       expect(result).toContain('md:text-lg');
       expect(result).toContain('lg:text-xl');

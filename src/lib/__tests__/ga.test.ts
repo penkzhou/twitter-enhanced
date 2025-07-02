@@ -7,7 +7,7 @@ global.fetch = jest.fn();
 // Mock crypto.randomUUID
 Object.defineProperty(global, 'crypto', {
   value: {
-    randomUUID: jest.fn(() => 'mock-uuid-12345')
+    randomUUID: jest.fn(() => 'mock-uuid-12345'),
   },
   writable: true,
 });
@@ -54,7 +54,7 @@ describe('Analytics', () => {
     mockConsole.log.mockClear();
     mockConsole.error.mockClear();
     mockFetch = fetch as jest.MockedFunction<typeof fetch>;
-    
+
     // Reset environment variables
     process.env = {
       ...originalEnv,
@@ -82,14 +82,14 @@ describe('Analytics', () => {
       expect(clientId).toBe('mock-uuid-12345');
       expect(mockChromeStorage.local.get).toHaveBeenCalledWith('clientId');
       expect(mockChromeStorage.local.set).toHaveBeenCalledWith({
-        clientId: 'mock-uuid-12345'
+        clientId: 'mock-uuid-12345',
       });
     });
 
     it('should reuse existing client ID', async () => {
       const existingClientId = 'existing-client-id';
       mockChromeStorage.local.get.mockResolvedValue({
-        clientId: existingClientId
+        clientId: existingClientId,
       });
 
       const clientId = await Analytics.getOrCreateClientId();
@@ -122,19 +122,19 @@ describe('Analytics', () => {
         sessionData: {
           session_id: mockCurrentTime.toString(),
           timestamp: mockCurrentTime.toString(),
-        }
+        },
       });
     });
 
     it('should extend valid session', async () => {
       const existingSessionId = 'existing-session-123';
-      const recentTimestamp = mockCurrentTime - (10 * 60 * 1000); // 10 minutes ago
-      
+      const recentTimestamp = mockCurrentTime - 10 * 60 * 1000; // 10 minutes ago
+
       mockChromeStorage.session.get.mockResolvedValue({
         sessionData: {
           session_id: existingSessionId,
           timestamp: recentTimestamp,
-        }
+        },
       });
 
       const sessionId = await Analytics.getOrCreateSessionId();
@@ -144,18 +144,18 @@ describe('Analytics', () => {
         sessionData: {
           session_id: existingSessionId,
           timestamp: mockCurrentTime,
-        }
+        },
       });
     });
 
     it('should create new session after expiration', async () => {
-      const expiredTimestamp = mockCurrentTime - (35 * 60 * 1000); // 35 minutes ago (expired)
-      
+      const expiredTimestamp = mockCurrentTime - 35 * 60 * 1000; // 35 minutes ago (expired)
+
       mockChromeStorage.session.get.mockResolvedValue({
         sessionData: {
           session_id: 'old-session-id',
           timestamp: expiredTimestamp,
-        }
+        },
       });
 
       const sessionId = await Analytics.getOrCreateSessionId();
@@ -165,19 +165,19 @@ describe('Analytics', () => {
         sessionData: {
           session_id: mockCurrentTime.toString(),
           timestamp: mockCurrentTime.toString(),
-        }
+        },
       });
     });
 
     it('should handle session data with string timestamp', async () => {
-      const recentTimestamp = mockCurrentTime - (10 * 60 * 1000);
+      const recentTimestamp = mockCurrentTime - 10 * 60 * 1000;
       const existingSessionId = 'existing-session-456';
-      
+
       mockChromeStorage.session.get.mockResolvedValue({
         sessionData: {
           session_id: existingSessionId,
           timestamp: recentTimestamp.toString(), // String timestamp
-        }
+        },
       });
 
       const sessionId = await Analytics.getOrCreateSessionId();
@@ -196,13 +196,13 @@ describe('Analytics', () => {
 
       // Mock storage methods for session/client ID
       mockChromeStorage.local.get.mockResolvedValue({
-        clientId: 'test-client-id'
+        clientId: 'test-client-id',
       });
       mockChromeStorage.session.get.mockResolvedValue({
         sessionData: {
           session_id: 'test-session-id',
           timestamp: Date.now(),
-        }
+        },
       });
     });
 
@@ -218,15 +218,17 @@ describe('Analytics', () => {
           method: 'POST',
           body: JSON.stringify({
             client_id: 'test-client-id',
-            events: [{
-              name: eventName,
-              params: {
-                ...eventParams,
-                session_id: 'test-session-id',
-                engagement_time_msec: 100,
-              }
-            }]
-          })
+            events: [
+              {
+                name: eventName,
+                params: {
+                  ...eventParams,
+                  session_id: 'test-session-id',
+                  engagement_time_msec: 100,
+                },
+              },
+            ],
+          }),
         }
       );
     });
@@ -245,20 +247,22 @@ describe('Analytics', () => {
 
       const call = mockFetch.mock.calls[0];
       const body = JSON.parse(call[1]?.body as string);
-      
+
       expect(body.events[0].params.engagement_time_msec).toBe(100);
     });
 
     it('should not override provided engagement time', async () => {
       const customEngagementTime = 500;
       await Analytics.fireEvent('test_event', {
-        engagement_time_msec: customEngagementTime
+        engagement_time_msec: customEngagementTime,
       });
 
       const call = mockFetch.mock.calls[0];
       const body = JSON.parse(call[1]?.body as string);
-      
-      expect(body.events[0].params.engagement_time_msec).toBe(customEngagementTime);
+
+      expect(body.events[0].params.engagement_time_msec).toBe(
+        customEngagementTime
+      );
     });
 
     it('should handle network errors gracefully', async () => {
@@ -266,7 +270,9 @@ describe('Analytics', () => {
       mockFetch.mockRejectedValue(networkError);
 
       // Spy on console.error directly since setup.ts modifies it
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       await expect(Analytics.fireEvent('test_event')).resolves.not.toThrow();
       expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -283,7 +289,9 @@ describe('Analytics', () => {
       await Analytics.fireEvent('test_event');
 
       expect(mockFetch).toHaveBeenCalledWith(
-        expect.stringContaining('https://www.google-analytics.com/debug/mp/collect'),
+        expect.stringContaining(
+          'https://www.google-analytics.com/debug/mp/collect'
+        ),
         expect.any(Object)
       );
     });
@@ -317,13 +325,13 @@ describe('Analytics', () => {
       } as Response);
 
       mockChromeStorage.local.get.mockResolvedValue({
-        clientId: 'test-client-id'
+        clientId: 'test-client-id',
       });
       mockChromeStorage.session.get.mockResolvedValue({
         sessionData: {
           session_id: 'test-session-id',
           timestamp: Date.now(),
-        }
+        },
       });
     });
 
@@ -332,7 +340,11 @@ describe('Analytics', () => {
       const pageLocation = 'https://example.com/test';
       const additionalParams = { custom_param: 'value' };
 
-      await Analytics.firePageViewEvent(pageTitle, pageLocation, additionalParams);
+      await Analytics.firePageViewEvent(
+        pageTitle,
+        pageLocation,
+        additionalParams
+      );
 
       const call = mockFetch.mock.calls[0];
       const body = JSON.parse(call[1]?.body as string);
@@ -366,20 +378,20 @@ describe('Analytics', () => {
       } as Response);
 
       mockChromeStorage.local.get.mockResolvedValue({
-        clientId: 'test-client-id'
+        clientId: 'test-client-id',
       });
       mockChromeStorage.session.get.mockResolvedValue({
         sessionData: {
           session_id: 'test-session-id',
           timestamp: Date.now(),
-        }
+        },
       });
     });
 
     it('should fire error event with correct parameters', async () => {
       const error: AnalyticsError = {
         message: 'Test error message',
-        stack: 'Error stack trace'
+        stack: 'Error stack trace',
       };
       const additionalParams = { error_code: '500' };
 
@@ -396,7 +408,7 @@ describe('Analytics', () => {
 
     it('should fire error event without additional parameters', async () => {
       const error: AnalyticsError = {
-        message: 'Test error message'
+        message: 'Test error message',
       };
 
       await Analytics.fireErrorEvent(error);
@@ -412,7 +424,7 @@ describe('Analytics', () => {
       const error: AnalyticsError = {
         message: 'Test error',
         customProperty: 'custom_value',
-        errorCode: 404
+        errorCode: 404,
       };
 
       await Analytics.fireErrorEvent(error);
@@ -467,13 +479,19 @@ describe('Analytics', () => {
     it('should handle Chrome storage errors', async () => {
       mockChromeStorage.local.get.mockRejectedValue(new Error('Storage error'));
 
-      await expect(Analytics.getOrCreateClientId()).rejects.toThrow('Storage error');
+      await expect(Analytics.getOrCreateClientId()).rejects.toThrow(
+        'Storage error'
+      );
     });
 
     it('should handle session storage errors', async () => {
-      mockChromeStorage.session.get.mockRejectedValue(new Error('Session storage error'));
+      mockChromeStorage.session.get.mockRejectedValue(
+        new Error('Session storage error')
+      );
 
-      await expect(Analytics.getOrCreateSessionId()).rejects.toThrow('Session storage error');
+      await expect(Analytics.getOrCreateSessionId()).rejects.toThrow(
+        'Session storage error'
+      );
     });
   });
 });

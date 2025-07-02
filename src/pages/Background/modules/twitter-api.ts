@@ -1,7 +1,7 @@
 export class TwitterAPI {
   private static instance: TwitterAPI;
 
-  private constructor() { }
+  private constructor() {}
 
   private bearerToken: string =
     'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
@@ -60,7 +60,15 @@ export class TwitterAPI {
   public async getVideoInfo(
     tweetId: string,
     isTwitter: boolean
-  ): Promise<{ videoUrl: string; thumbnailUrl: string; tweetUrl: string; tweetText: string }[] | null> {
+  ): Promise<
+    | {
+        videoUrl: string;
+        thumbnailUrl: string;
+        tweetUrl: string;
+        tweetText: string;
+      }[]
+    | null
+  > {
     try {
       const domain = isTwitter ? 'twitter.com' : 'x.com';
       const csrfToken = isTwitter ? this.csrfTokenOfTwitter : this.csrfTokenOfX;
@@ -94,25 +102,33 @@ export class TwitterAPI {
       let tweetText = tweet.legacy?.full_text ?? '';
       let tweetUserScreenName =
         tweet.core?.user_results?.result &&
-          'legacy' in tweet.core?.user_results?.result
+        'legacy' in tweet.core?.user_results?.result
           ? tweet.core?.user_results?.result.legacy.screen_name
           : '';
 
       let videoInfoList: any[] = [];
       const processMediaEntities = (entities: any) => {
-        return entities?.media?.filter((media: any) => media.type === 'video' || media.type === 'animated_gif')
-          .map((media: any) => {
-            const variants = media.video_info?.variants ?? [];
-            const highestQualityVideo = variants
-              .filter((v: any) => v.content_type === 'video/mp4')
-              .reduce((prev: any, current: any) => (prev.bitrate > current.bitrate) ? prev : current);
+        return (
+          entities?.media
+            ?.filter(
+              (media: any) =>
+                media.type === 'video' || media.type === 'animated_gif'
+            )
+            .map((media: any) => {
+              const variants = media.video_info?.variants ?? [];
+              const highestQualityVideo = variants
+                .filter((v: any) => v.content_type === 'video/mp4')
+                .reduce((prev: any, current: any) =>
+                  prev.bitrate > current.bitrate ? prev : current
+                );
 
-            return {
-              videoUrl: highestQualityVideo?.url,
-              thumbnailUrl: media.media_url_https,
-              mediaId: media.id_str,
-            };
-          }) ?? [];
+              return {
+                videoUrl: highestQualityVideo?.url,
+                thumbnailUrl: media.media_url_https,
+                mediaId: media.id_str,
+              };
+            }) ?? []
+        );
       };
 
       videoInfoList = processMediaEntities(tweet.legacy?.entities);
@@ -120,23 +136,21 @@ export class TwitterAPI {
       if (videoInfoList.length === 0) {
         const quotedStatus = tweet.tweet?.quoted_status_result?.result;
         if (quotedStatus) {
-          videoInfoList =
-            processMediaEntities(quotedStatus.legacy?.entities);
+          videoInfoList = processMediaEntities(quotedStatus.legacy?.entities);
           tweetText = quotedStatus.legacy?.full_text ?? '';
           tweetUserScreenName =
             quotedStatus.core?.user_results?.result &&
-              'legacy' in quotedStatus.core?.user_results?.result
+            'legacy' in quotedStatus.core?.user_results?.result
               ? quotedStatus.core?.user_results?.result.legacy.screen_name
               : '';
           finalTweetId = quotedStatus?.rest_id ?? tweetId;
         }
-
       }
 
       const tweetUrl = `https://${domain}/${tweetUserScreenName}/status/${finalTweetId}`;
 
       if (videoInfoList.length > 0) {
-        return videoInfoList.map(info => ({
+        return videoInfoList.map((info) => ({
           ...info,
           tweetUrl,
           tweetText,
@@ -165,8 +179,7 @@ export class TwitterAPI {
         verified_phone_label_enabled: false,
         creator_subscriptions_tweet_preview_api_enabled: false,
         responsive_web_graphql_timeline_navigation_enabled: false,
-        responsive_web_graphql_skip_user_profile_image_extensions_enabled:
-          false,
+        responsive_web_graphql_skip_user_profile_image_extensions_enabled: false,
         communities_web_enable_tweet_community_results_fetch: false,
         c9s_tweet_anatomy_moderator_badge_enabled: false,
         articles_preview_enabled: true,
@@ -180,10 +193,8 @@ export class TwitterAPI {
         creator_subscriptions_quote_tweet_preview_enabled: false,
         freedom_of_speech_not_reach_fetch_enabled: false,
         standardized_nudges_misinfo: false,
-        tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled:
-          false,
-        tweet_with_visibility_results_prefer_gql_media_interstitial_enabled:
-          false,
+        tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled: false,
+        tweet_with_visibility_results_prefer_gql_media_interstitial_enabled: false,
         rweb_video_timestamps_enabled: false,
         longform_notetweets_rich_text_read_enabled: false,
         longform_notetweets_inline_media_enabled: false,

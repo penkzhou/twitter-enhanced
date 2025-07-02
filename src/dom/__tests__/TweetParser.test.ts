@@ -118,7 +118,7 @@ describe('TweetParser', () => {
 
       it('should find all user elements excluding UserName-container', () => {
         const elements = tweetParser.findUserElements('testuser');
-        
+
         expect(elements).toHaveLength(3);
         expect(elements[0].textContent).toBe('User Link 1');
         expect(elements[1].textContent).toBe('User Link 2');
@@ -128,7 +128,7 @@ describe('TweetParser', () => {
       it('should find user elements within specific container', () => {
         const container = document.querySelector('.container') as Element;
         const elements = tweetParser.findUserElements('testuser', container);
-        
+
         expect(elements).toHaveLength(1);
         expect(elements[0].textContent).toBe('User Link 3');
       });
@@ -213,11 +213,17 @@ describe('TweetParser', () => {
         `;
 
         const videoElements = tweetParser.findVideoElements(tweetElement);
-        
+
         expect(videoElements).toHaveLength(3);
-        expect(videoElements[0].getAttribute('data-testid')).toBe('videoComponent');
-        expect(videoElements[1].getAttribute('data-testid')).toBe('videoPlayer');
-        expect(videoElements[2].getAttribute('data-testid')).toBe('previewInterstitial');
+        expect(videoElements[0].getAttribute('data-testid')).toBe(
+          'videoComponent'
+        );
+        expect(videoElements[1].getAttribute('data-testid')).toBe(
+          'videoPlayer'
+        );
+        expect(videoElements[2].getAttribute('data-testid')).toBe(
+          'previewInterstitial'
+        );
       });
     });
   });
@@ -356,7 +362,7 @@ describe('TweetParser', () => {
         `;
 
         const mentions = tweetParser.getUserMentions(tweetElement);
-        
+
         expect(mentions).toHaveLength(2);
         expect(mentions[0].getAttribute('href')).toBe('/user1');
         expect(mentions[1].getAttribute('href')).toBe('/user2');
@@ -481,12 +487,18 @@ describe('TweetParser', () => {
         `;
 
         const mediaElements = tweetParser.getMediaElements(tweetElement);
-        
+
         expect(mediaElements).toHaveLength(4);
         expect(mediaElements[0].getAttribute('data-testid')).toBe('tweetPhoto');
-        expect(mediaElements[1].getAttribute('data-testid')).toBe('videoComponent');
-        expect(mediaElements[2].getAttribute('data-testid')).toBe('videoPlayer');
-        expect(mediaElements[3].getAttribute('data-testid')).toBe('previewInterstitial');
+        expect(mediaElements[1].getAttribute('data-testid')).toBe(
+          'videoComponent'
+        );
+        expect(mediaElements[2].getAttribute('data-testid')).toBe(
+          'videoPlayer'
+        );
+        expect(mediaElements[3].getAttribute('data-testid')).toBe(
+          'previewInterstitial'
+        );
       });
 
       it('should return empty array when no media found', () => {

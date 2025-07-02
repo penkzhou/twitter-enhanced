@@ -120,7 +120,9 @@ describe('Database Operations', () => {
     });
 
     it('should return the correct record for existing tweet ID', async () => {
-      const originalRecord = createMockDownloadRecord({ tweetId: 'unique-tweet-123' });
+      const originalRecord = createMockDownloadRecord({
+        tweetId: 'unique-tweet-123',
+      });
       const { id, ...recordWithoutId } = originalRecord;
 
       const addedId = await db.add(recordWithoutId);
@@ -170,11 +172,17 @@ describe('Database Operations', () => {
 
   describe('update()', () => {
     it('should update an existing record', async () => {
-      const originalRecord = createMockDownloadRecord({ filename: 'original.mp4' });
+      const originalRecord = createMockDownloadRecord({
+        filename: 'original.mp4',
+      });
       const { id, ...recordWithoutId } = originalRecord;
 
       const addedId = await db.add(recordWithoutId);
-      const updatedRecord = { ...originalRecord, id: addedId, filename: 'updated.mp4' };
+      const updatedRecord = {
+        ...originalRecord,
+        id: addedId,
+        filename: 'updated.mp4',
+      };
 
       const updateResult = await db.update(updatedRecord);
       const foundRecord = await db.getByTweetId(originalRecord.tweetId);
@@ -310,9 +318,9 @@ describe('Database Operations', () => {
     it('should handle database operations with large datasets', async () => {
       // Add a large number of records to test performance and reliability
       const records = Array.from({ length: 50 }, (_, i) =>
-        createMockDownloadRecord({ 
-          tweetId: `large-dataset-${i}`, 
-          downloadDate: new Date(2023, 0, i + 1).toISOString() 
+        createMockDownloadRecord({
+          tweetId: `large-dataset-${i}`,
+          downloadDate: new Date(2023, 0, i + 1).toISOString(),
         })
       );
 
@@ -335,11 +343,11 @@ describe('Database Operations', () => {
 
     it('should handle records with edge case data values', async () => {
       const edgeCaseRecord = createMockDownloadRecord({
-        tweetId: '',  // Empty tweet ID
-        filename: '',  // Empty filename
-        tweetText: '',  // Empty text
-        tweetUrl: '',  // Empty URL
-        downloadDate: '',  // Empty date
+        tweetId: '', // Empty tweet ID
+        filename: '', // Empty filename
+        tweetText: '', // Empty text
+        tweetUrl: '', // Empty URL
+        downloadDate: '', // Empty date
       });
       const { id, ...recordWithoutId } = edgeCaseRecord;
 
@@ -364,7 +372,11 @@ describe('Database Operations', () => {
       const addedId2 = await db.add(record2WithoutId);
 
       // Update first record
-      const updatedRecord1 = { ...record1, id: addedId1, filename: 'updated.mp4' };
+      const updatedRecord1 = {
+        ...record1,
+        id: addedId1,
+        filename: 'updated.mp4',
+      };
       await db.update(updatedRecord1);
 
       // Verify updates
