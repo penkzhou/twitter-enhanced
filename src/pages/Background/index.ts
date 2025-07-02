@@ -7,9 +7,7 @@ import { VideoInfo } from '../../lib/types';
 // Create a function to set up the event listeners
 function setupEventListeners() {
   // Handle unhandled rejections
-  addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
-    /* eslint-disable-line no-restricted-globals */
-
+  globalThis.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
     console.error('Unhandled rejection:', event.reason);
     Analytics.fireErrorEvent(event.reason);
   });
@@ -18,7 +16,7 @@ function setupEventListeners() {
     Analytics.fireEvent('install');
   });
 
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     console.log('request', request);
     if (request.action === 'getVideoInfo') {
       handleGetVideoInfo(request.tweetId, request.currentDomain, sendResponse);
