@@ -39,6 +39,19 @@ const mockElement = {
   removeAttribute: jest.fn(),
   getAttribute: jest.fn(),
   closest: jest.fn(),
+  // Add node interface properties for jsdom compatibility
+  nodeType: 1,
+  nodeName: 'DIV',
+  parentNode: null,
+  childNodes: [],
+  firstChild: null,
+  lastChild: null,
+  nextSibling: null,
+  previousSibling: null,
+  // Add specific properties for link elements
+  href: '',
+  type: '',
+  rel: '',
 };
 
 // Setup jsdom document for Jest 30 compatibility
@@ -66,11 +79,25 @@ global.document = {
 delete global.window;
 // @ts-ignore
 global.window = {
-  location: {
-    hostname: 'twitter.com',
-  },
   addEventListener: jest.fn(),
+  location: { 
+    hostname: 'twitter.com',
+    href: 'https://twitter.com',
+    hash: '',
+    host: 'twitter.com',
+    origin: 'https://twitter.com',
+    pathname: '/',
+    port: '',
+    protocol: 'https:',
+    search: '',
+    ancestorOrigins: {} as DOMStringList,
+    assign: jest.fn(),
+    reload: jest.fn(),
+    replace: jest.fn(),
+  } as Location,
 };
+
+// Setup jsdom location for Jest 30 compatibility - will be done in beforeEach
 
 // Mock Chrome extension APIs
 const mockChromeStorage = {
@@ -152,16 +179,23 @@ describe('TwitterEnhancer Module', () => {
     });
 
     it('should create DOM elements during initialization', () => {
-      // Clear previous calls
-      jest.clearAllMocks();
+      // Store references to mocked functions before clearing
+      const mockCreateElement = jest.fn(() => mockElement);
+      const mockAppendChild = jest.fn();
+      
+      // Setup fresh mocks
+      // @ts-ignore
+      global.document.createElement = mockCreateElement;
+      // @ts-ignore
+      global.document.body.appendChild = mockAppendChild;
 
       // Fresh import
       jest.resetModules();
       require('../index.ts');
 
       // Verify DOM manipulation
-      expect(document.createElement).toHaveBeenCalled();
-      expect(document.body.appendChild).toHaveBeenCalled();
+      expect(mockCreateElement).toHaveBeenCalled();
+      expect(mockAppendChild).toHaveBeenCalled();
     });
 
     it('should set up MutationObserver', () => {

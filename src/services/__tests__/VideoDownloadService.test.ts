@@ -23,7 +23,21 @@ Object.defineProperty(global, 'chrome', {
 // @ts-ignore
 delete window.location;
 // @ts-ignore
-window.location = { hostname: 'twitter.com' };
+window.location = { 
+  hostname: 'twitter.com',
+  href: 'https://twitter.com',
+  hash: '',
+  host: 'twitter.com',
+  origin: 'https://twitter.com',
+  pathname: '/',
+  port: '',
+  protocol: 'https:',
+  search: '',
+  ancestorOrigins: {} as DOMStringList,
+  assign: jest.fn(),
+  reload: jest.fn(),
+  replace: jest.fn(),
+} as Location;
 
 describe('VideoDownloadService', () => {
   let videoDownloadService: VideoDownloadService;
