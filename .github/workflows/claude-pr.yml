@@ -40,6 +40,7 @@ jobs:
             Bash(npm install)
             Bash(npm ci)
             Bash(npm run build)
+            Bash(npm run test:ci)
             Bash(npm test)
             Bash(npm run test)
             Edit
