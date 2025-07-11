@@ -152,9 +152,9 @@ describe('TwitterEnhancer Module', () => {
       jest.resetModules();
       require('../index.ts');
 
-      // Verify DOM manipulation
-      expect(document.createElement).toHaveBeenCalled();
-      expect(document.body.appendChild).toHaveBeenCalled();
+      // Verify DOM manipulation using the mocked global document
+      expect((global as any).document.createElement).toHaveBeenCalled();
+      expect((global as any).document.body.appendChild).toHaveBeenCalled();
     });
 
     it('should set up MutationObserver', () => {

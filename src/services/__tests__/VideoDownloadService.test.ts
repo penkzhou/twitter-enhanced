@@ -19,10 +19,13 @@ delete (global as any).chrome;
 };
 
 // Mock window.location (Jest v30 compatible)
-delete (window as any).location;
-(window as any).location = {
-  hostname: 'twitter.com',
-};
+Object.defineProperty(window, 'location', {
+  value: {
+    hostname: 'twitter.com',
+  },
+  writable: true,
+  configurable: true,
+});
 
 describe('VideoDownloadService', () => {
   let videoDownloadService: VideoDownloadService;
