@@ -12,19 +12,17 @@ const mockChromeRuntime = {
   lastError: undefined as chrome.runtime.LastError | undefined,
 };
 
-Object.defineProperty(global, 'chrome', {
-  value: {
-    runtime: mockChromeRuntime,
-  },
-  writable: true,
-});
+// Mock global chrome object (Jest v30 compatible)
+delete (global as any).chrome;
+(global as any).chrome = {
+  runtime: mockChromeRuntime,
+};
 
-Object.defineProperty(window, 'location', {
-  value: {
-    hostname: 'twitter.com',
-  },
-  writable: true,
-});
+// Mock window.location (Jest v30 compatible)
+delete (window as any).location;
+(window as any).location = {
+  hostname: 'twitter.com',
+};
 
 describe('VideoDownloadService', () => {
   let videoDownloadService: VideoDownloadService;

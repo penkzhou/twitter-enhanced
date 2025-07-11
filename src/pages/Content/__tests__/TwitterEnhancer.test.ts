@@ -41,32 +41,30 @@ const mockElement = {
   closest: jest.fn(),
 };
 
-Object.defineProperty(global, 'document', {
-  value: {
-    body: {
-      appendChild: jest.fn(),
-      removeChild: jest.fn(),
-      querySelectorAll: jest.fn(() => []),
-    },
-    createElement: jest.fn(() => mockElement),
+// Mock global document object (Jest v30 compatible)
+delete (global as any).document;
+(global as any).document = {
+  body: {
+    appendChild: jest.fn(),
+    removeChild: jest.fn(),
     querySelectorAll: jest.fn(() => []),
-    head: {
-      appendChild: jest.fn(),
-    },
-    addEventListener: jest.fn(),
   },
-  writable: true,
-});
+  createElement: jest.fn(() => mockElement),
+  querySelectorAll: jest.fn(() => []),
+  head: {
+    appendChild: jest.fn(),
+  },
+  addEventListener: jest.fn(),
+};
 
-Object.defineProperty(global, 'window', {
-  value: {
-    location: {
-      hostname: 'twitter.com',
-    },
-    addEventListener: jest.fn(),
+// Mock global window object (Jest v30 compatible)
+delete (global as any).window;
+(global as any).window = {
+  location: {
+    hostname: 'twitter.com',
   },
-  writable: true,
-});
+  addEventListener: jest.fn(),
+};
 
 // Mock Chrome extension APIs
 const mockChromeStorage = {
@@ -112,14 +110,13 @@ const mockChromeI18n = {
   }),
 };
 
-Object.defineProperty(global, 'chrome', {
-  value: {
-    storage: mockChromeStorage,
-    runtime: mockChromeRuntime,
-    i18n: mockChromeI18n,
-  },
-  writable: true,
-});
+// Mock global chrome object (Jest v30 compatible)
+delete (global as any).chrome;
+(global as any).chrome = {
+  storage: mockChromeStorage,
+  runtime: mockChromeRuntime,
+  i18n: mockChromeI18n,
+};
 
 // Mock MutationObserver
 global.MutationObserver = jest.fn().mockImplementation(() => ({
