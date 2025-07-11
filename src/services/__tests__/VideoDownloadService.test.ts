@@ -13,19 +13,17 @@ const mockChromeRuntime = {
 };
 
 // Mock global chrome object (Jest v30 compatible)
-delete (global as any).chrome;
-(global as any).chrome = {
-  runtime: mockChromeRuntime,
-};
-
-// Mock window.location (Jest v30 compatible)
-Object.defineProperty(window, 'location', {
+// Use Object.defineProperty for consistency
+Object.defineProperty(global, 'chrome', {
   value: {
-    hostname: 'twitter.com',
+    runtime: mockChromeRuntime,
   },
   writable: true,
   configurable: true,
 });
+
+// Mock window.location (Jest v30 compatible)
+// Will be set up in beforeEach to ensure proper mock state
 
 describe('VideoDownloadService', () => {
   let videoDownloadService: VideoDownloadService;
@@ -41,6 +39,24 @@ describe('VideoDownloadService', () => {
       typeof Logger.logError
     >;
     mockChromeRuntime.lastError = undefined;
+
+    // Force window.location to be configurable and mock it
+    Object.defineProperty(window, 'location', {
+      value: {
+        hostname: 'twitter.com',
+        host: 'twitter.com',
+        protocol: 'https:',
+        pathname: '/',
+        search: '',
+        hash: '',
+        href: 'https://twitter.com',
+        origin: 'https://twitter.com',
+        port: '',
+        toString: () => 'https://twitter.com',
+      },
+      writable: true,
+      configurable: true,
+    });
 
     videoDownloadService = new VideoDownloadService();
   });

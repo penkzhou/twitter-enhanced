@@ -42,28 +42,28 @@ const mockElement = {
 };
 
 // Mock global document object (Jest v30 compatible)
-delete (global as any).document;
-(global as any).document = {
-  body: {
-    appendChild: jest.fn(),
-    removeChild: jest.fn(),
-    querySelectorAll: jest.fn(() => []),
-  },
-  createElement: jest.fn(() => mockElement),
-  querySelectorAll: jest.fn(() => []),
-  head: {
-    appendChild: jest.fn(),
-  },
-  addEventListener: jest.fn(),
-};
+// Mock only the specific methods we need to override
+Object.defineProperty(document.body, 'appendChild', { value: jest.fn(), writable: true, configurable: true });
+Object.defineProperty(document.body, 'removeChild', { value: jest.fn(), writable: true, configurable: true });
+Object.defineProperty(document.body, 'querySelectorAll', { value: jest.fn(() => []), writable: true, configurable: true });
+Object.defineProperty(document, 'createElement', { value: jest.fn(() => mockElement), writable: true, configurable: true });
+Object.defineProperty(document, 'querySelectorAll', { value: jest.fn(() => []), writable: true, configurable: true });
+Object.defineProperty(document.head, 'appendChild', { value: jest.fn(), writable: true, configurable: true });
+Object.defineProperty(document, 'addEventListener', { value: jest.fn(), writable: true, configurable: true });
 
 // Mock global window object (Jest v30 compatible)
-delete (global as any).window;
-(global as any).window = {
-  location: {
-    hostname: 'twitter.com',
-  },
-  addEventListener: jest.fn(),
+// Mock only the specific properties we need to override
+Object.defineProperty(window, 'addEventListener', { value: jest.fn(), writable: true, configurable: true });
+// Mock location using simple object without triggering navigation
+delete (window as any).location;
+(window as any).location = {
+  hostname: 'twitter.com',
+  host: 'twitter.com',
+  protocol: 'https:',
+  pathname: '/',
+  search: '',
+  hash: '',
+  toString: () => 'https://twitter.com',
 };
 
 // Mock Chrome extension APIs
