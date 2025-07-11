@@ -41,32 +41,36 @@ const mockElement = {
   closest: jest.fn(),
 };
 
-Object.defineProperty(global, 'document', {
-  value: {
-    body: {
-      appendChild: jest.fn(),
-      removeChild: jest.fn(),
-      querySelectorAll: jest.fn(() => []),
-    },
-    createElement: jest.fn(() => mockElement),
-    querySelectorAll: jest.fn(() => []),
-    head: {
-      appendChild: jest.fn(),
-    },
-    addEventListener: jest.fn(),
+// Setup jsdom document for Jest 30 compatibility
+// @ts-ignore
+delete global.document;
+// @ts-ignore
+global.document = {
+  body: {
+    appendChild: jest.fn(),
+    removeChild: jest.fn(),
+    // @ts-ignore
+    querySelectorAll: jest.fn(() => ({ length: 0, item: jest.fn() })),
   },
-  writable: true,
-});
+  // @ts-ignore
+  createElement: jest.fn(() => mockElement),
+  // @ts-ignore  
+  querySelectorAll: jest.fn(() => ({ length: 0, item: jest.fn() })),
+  head: {
+    appendChild: jest.fn(),
+  } as any,
+  addEventListener: jest.fn(),
+};
 
-Object.defineProperty(global, 'window', {
-  value: {
-    location: {
-      hostname: 'twitter.com',
-    },
-    addEventListener: jest.fn(),
+// @ts-ignore
+delete global.window;
+// @ts-ignore
+global.window = {
+  location: {
+    hostname: 'twitter.com',
   },
-  writable: true,
-});
+  addEventListener: jest.fn(),
+};
 
 // Mock Chrome extension APIs
 const mockChromeStorage = {

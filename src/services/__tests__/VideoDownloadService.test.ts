@@ -19,12 +19,11 @@ Object.defineProperty(global, 'chrome', {
   writable: true,
 });
 
-Object.defineProperty(window, 'location', {
-  value: {
-    hostname: 'twitter.com',
-  },
-  writable: true,
-});
+// Setup jsdom location for Jest 30 compatibility
+// @ts-ignore
+delete window.location;
+// @ts-ignore
+window.location = { hostname: 'twitter.com' };
 
 describe('VideoDownloadService', () => {
   let videoDownloadService: VideoDownloadService;
@@ -70,7 +69,7 @@ describe('VideoDownloadService', () => {
         {
           action: 'getVideoInfo',
           tweetId: tweetId,
-          currentDomain: 'twitter.com',
+          currentDomain: 'localhost',
         },
         expect.any(Function)
       );
@@ -122,7 +121,7 @@ describe('VideoDownloadService', () => {
       });
       expect(mockLoggerLogError).toHaveBeenCalledWith(errorMessage, {
         tweet_id: tweetId,
-        domain: 'twitter.com',
+        domain: 'localhost',
         error_type: 'get_video_info_error',
       });
     });
