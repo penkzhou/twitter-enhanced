@@ -7,10 +7,13 @@ import { VideoInfo } from '../../lib/types';
 // Create a function to set up the event listeners
 function setupEventListeners() {
   // Handle unhandled rejections
-  globalThis.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
-    console.error('Unhandled rejection:', event.reason);
-    Analytics.fireErrorEvent(event.reason);
-  });
+  globalThis.addEventListener(
+    'unhandledrejection',
+    (event: PromiseRejectionEvent) => {
+      console.error('Unhandled rejection:', event.reason);
+      Analytics.fireErrorEvent(event.reason);
+    }
+  );
 
   chrome.runtime.onInstalled.addListener(() => {
     Analytics.fireEvent('install');

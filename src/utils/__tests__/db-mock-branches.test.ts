@@ -1,6 +1,6 @@
 // Mock the idb module before any imports
 jest.mock('idb', () => ({
-  openDB: jest.fn()
+  openDB: jest.fn(),
 }));
 
 describe('Database Branch Coverage with Mocks', () => {
@@ -12,7 +12,7 @@ describe('Database Branch Coverage with Mocks', () => {
   describe('Database upgrade path coverage', () => {
     it('should handle upgrade when object store already exists and indexes are missing', () => {
       const mockTransaction = {
-        objectStore: jest.fn()
+        objectStore: jest.fn(),
       };
 
       const mockObjectStore = {
@@ -21,8 +21,8 @@ describe('Database Branch Coverage with Mocks', () => {
           contains: jest.fn((name: string) => {
             // Simulate missing indexes
             return false;
-          })
-        }
+          }),
+        },
       };
 
       mockTransaction.objectStore.mockReturnValue(mockObjectStore);
@@ -32,57 +32,65 @@ describe('Database Branch Coverage with Mocks', () => {
           contains: jest.fn((name: string) => {
             // Object store already exists
             return name === 'downloadRecords';
-          })
+          }),
         },
-        createObjectStore: jest.fn()
+        createObjectStore: jest.fn(),
       };
 
       // Import the db module
       const db = require('../db');
-      
+
       // Get the upgrade function from the openDB call
       const { openDB } = require('idb');
       expect(openDB).toHaveBeenCalled();
-      
+
       const upgradeCallback = openDB.mock.calls[0][2].upgrade;
-      
+
       // Call the upgrade function with our mocks
       upgradeCallback(mockDb, 1, 2, mockTransaction);
 
       // Verify the else branch was taken (object store exists)
       expect(mockDb.createObjectStore).not.toHaveBeenCalled();
-      expect(mockTransaction.objectStore).toHaveBeenCalledWith('downloadRecords');
-      
+      expect(mockTransaction.objectStore).toHaveBeenCalledWith(
+        'downloadRecords'
+      );
+
       // Verify both indexes were created
-      expect(mockObjectStore.createIndex).toHaveBeenCalledWith('by-tweet-id', 'tweetId');
-      expect(mockObjectStore.createIndex).toHaveBeenCalledWith('by-download-date', 'downloadDate');
+      expect(mockObjectStore.createIndex).toHaveBeenCalledWith(
+        'by-tweet-id',
+        'tweetId'
+      );
+      expect(mockObjectStore.createIndex).toHaveBeenCalledWith(
+        'by-download-date',
+        'downloadDate'
+      );
     });
 
     it('should handle upgrade with existing indexes', () => {
       const mockTransaction = {
-        objectStore: jest.fn()
+        objectStore: jest.fn(),
       };
 
       const mockObjectStore = {
         createIndex: jest.fn(),
         indexNames: {
-          contains: jest.fn(() => true) // All indexes exist
-        }
+          contains: jest.fn(() => true), // All indexes exist
+        },
       };
 
       mockTransaction.objectStore.mockReturnValue(mockObjectStore);
 
       const mockDb = {
         objectStoreNames: {
-          contains: jest.fn(() => true) // Object store exists
+          contains: jest.fn(() => true), // Object store exists
         },
-        createObjectStore: jest.fn()
+        createObjectStore: jest.fn(),
       };
 
       const db = require('../db');
       const { openDB } = require('idb');
       const upgradeCallback = openDB.mock.calls[0][2].upgrade;
-      
+
       upgradeCallback(mockDb, 1, 2, mockTransaction);
 
       // Verify no indexes were created since they already exist
@@ -91,14 +99,14 @@ describe('Database Branch Coverage with Mocks', () => {
 
     it('should create object store when it does not exist', () => {
       const mockObjectStore = {
-        createIndex: jest.fn()
+        createIndex: jest.fn(),
       };
 
       const mockDb = {
         objectStoreNames: {
-          contains: jest.fn(() => false) // No object store exists
+          contains: jest.fn(() => false), // No object store exists
         },
-        createObjectStore: jest.fn().mockReturnValue(mockObjectStore)
+        createObjectStore: jest.fn().mockReturnValue(mockObjectStore),
       };
 
       const mockTransaction = {};
@@ -106,18 +114,24 @@ describe('Database Branch Coverage with Mocks', () => {
       const db = require('../db');
       const { openDB } = require('idb');
       const upgradeCallback = openDB.mock.calls[0][2].upgrade;
-      
+
       upgradeCallback(mockDb, 0, 2, mockTransaction);
 
       // Verify object store was created
       expect(mockDb.createObjectStore).toHaveBeenCalledWith('downloadRecords', {
         keyPath: 'id',
-        autoIncrement: true
+        autoIncrement: true,
       });
-      
+
       // Verify indexes were created
-      expect(mockObjectStore.createIndex).toHaveBeenCalledWith('by-tweet-id', 'tweetId');
-      expect(mockObjectStore.createIndex).toHaveBeenCalledWith('by-download-date', 'downloadDate');
+      expect(mockObjectStore.createIndex).toHaveBeenCalledWith(
+        'by-tweet-id',
+        'tweetId'
+      );
+      expect(mockObjectStore.createIndex).toHaveBeenCalledWith(
+        'by-download-date',
+        'downloadDate'
+      );
     });
   });
 
@@ -125,23 +139,23 @@ describe('Database Branch Coverage with Mocks', () => {
     it('should use getAllFromStore when index is missing', async () => {
       const mockRecords = [
         { id: 1, tweetId: 'test1' },
-        { id: 2, tweetId: 'test2' }
+        { id: 2, tweetId: 'test2' },
       ];
 
       const mockObjectStore = {
         indexNames: {
-          contains: jest.fn(() => false) // Index missing
+          contains: jest.fn(() => false), // Index missing
         },
         getAll: jest.fn().mockResolvedValue(mockRecords),
-        index: jest.fn()
+        index: jest.fn(),
       };
 
       const mockTransaction = {
-        objectStore: jest.fn().mockReturnValue(mockObjectStore)
+        objectStore: jest.fn().mockReturnValue(mockObjectStore),
       };
 
       const mockDb = {
-        transaction: jest.fn().mockReturnValue(mockTransaction)
+        transaction: jest.fn().mockReturnValue(mockTransaction),
       };
 
       const { openDB } = require('idb');
@@ -167,23 +181,23 @@ describe('Database Branch Coverage with Mocks', () => {
       const mockRecords = [
         { id: 1, tweetId: 'test1' },
         { id: 2, tweetId: 'test2' },
-        { id: 3, tweetId: 'test3' }
+        { id: 3, tweetId: 'test3' },
       ];
 
       const mockObjectStore = {
         indexNames: {
-          contains: jest.fn(() => false) // Index missing
+          contains: jest.fn(() => false), // Index missing
         },
         getAll: jest.fn().mockResolvedValue(mockRecords),
-        index: jest.fn()
+        index: jest.fn(),
       };
 
       const mockTransaction = {
-        objectStore: jest.fn().mockReturnValue(mockObjectStore)
+        objectStore: jest.fn().mockReturnValue(mockObjectStore),
       };
 
       const mockDb = {
-        transaction: jest.fn().mockReturnValue(mockTransaction)
+        transaction: jest.fn().mockReturnValue(mockTransaction),
       };
 
       const { openDB } = require('idb');

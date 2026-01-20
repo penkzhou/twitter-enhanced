@@ -121,7 +121,7 @@ describe('Analytics', () => {
       expect(mockChromeStorage.session.set).toHaveBeenCalledWith({
         sessionData: {
           session_id: mockCurrentTime.toString(),
-          timestamp: mockCurrentTime.toString(),
+          timestamp: mockCurrentTime,
         },
       });
     });
@@ -164,7 +164,7 @@ describe('Analytics', () => {
       expect(mockChromeStorage.session.set).toHaveBeenCalledWith({
         sessionData: {
           session_id: mockCurrentTime.toString(),
-          timestamp: mockCurrentTime.toString(),
+          timestamp: mockCurrentTime,
         },
       });
     });

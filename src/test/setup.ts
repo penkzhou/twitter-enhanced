@@ -65,6 +65,9 @@ if (!global.structuredClone) {
   global.structuredClone = (obj: any) => JSON.parse(JSON.stringify(obj));
 }
 
+// Note: window.location is now configured via testEnvironmentOptions.url in jest.config.js
+// This avoids issues with jsdom's non-configurable location property in Jest v30
+
 // Mock DOM methods that might not be available in jsdom
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -98,9 +101,19 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 const originalError = console.error;
 beforeAll(() => {
   console.error = (...args) => {
+    // Suppress known warnings that don't affect test results
+    if (typeof args[0] === 'string') {
+      if (
+        args[0].includes('Warning: ReactDOM.render is no longer supported') ||
+        args[0].includes('Error: Not implemented: navigation')
+      ) {
+        return;
+      }
+    }
+    // Also handle Error objects
     if (
-      typeof args[0] === 'string' &&
-      args[0].includes('Warning: ReactDOM.render is no longer supported')
+      args[0] instanceof Error &&
+      args[0].message.includes('Not implemented: navigation')
     ) {
       return;
     }

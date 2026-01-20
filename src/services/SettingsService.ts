@@ -36,10 +36,10 @@ export class SettingsService implements ISettingsService {
         (result) => {
           const settings: TwitterEnhancerSettings = {
             remarkFeatureEnabled:
-              result.remarkFeatureEnabled ??
+              (result.remarkFeatureEnabled as boolean | undefined) ??
               SettingsService.DEFAULT_SETTINGS.remarkFeatureEnabled,
             videoDownloadFeatureEnabled:
-              result.videoDownloadFeatureEnabled ??
+              (result.videoDownloadFeatureEnabled as boolean | undefined) ??
               SettingsService.DEFAULT_SETTINGS.videoDownloadFeatureEnabled,
           };
 

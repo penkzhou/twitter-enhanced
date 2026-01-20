@@ -29,6 +29,5 @@
 secrets.*.js
 
 # Claude Code related files
-.claude/
 .cursor/
 .cursorrules
