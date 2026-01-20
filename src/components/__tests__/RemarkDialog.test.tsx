@@ -31,6 +31,11 @@ jest.mock('react-dom', () => ({
   createPortal: (node: React.ReactNode) => node,
 }));
 
+// Helper to find the remark input field
+const getRemarkInput = () => {
+  return screen.getByRole('textbox');
+};
+
 describe('RemarkDialog', () => {
   const defaultProps: RemarkDialogProps = {
     onSave: jest.fn(),
@@ -47,18 +52,20 @@ describe('RemarkDialog', () => {
     it('should render when isOpen is true', () => {
       render(<RemarkDialog {...defaultProps} />);
 
-      expect(screen.getByText('Add Remark')).toBeInTheDocument();
-      expect(
-        screen.getByPlaceholderText('Enter remark for this user')
-      ).toBeInTheDocument();
-      expect(screen.getByText('Cancel')).toBeInTheDocument();
+      // Title appears in header (h2)
+      expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+        'Add Remark'
+      );
+      expect(getRemarkInput()).toBeInTheDocument();
       expect(screen.getByText('Save')).toBeInTheDocument();
     });
 
     it('should not render when isOpen is false', () => {
       render(<RemarkDialog {...defaultProps} isOpen={false} />);
 
-      expect(screen.queryByText('Add Remark')).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('heading', { level: 2 })
+      ).not.toBeInTheDocument();
     });
 
     it('should show "Edit Remark" title when existingRemark is provided', () => {
@@ -66,13 +73,23 @@ describe('RemarkDialog', () => {
         <RemarkDialog {...defaultProps} existingRemark="Existing remark" />
       );
 
-      expect(screen.getByText('Edit Remark')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+        'Edit Remark'
+      );
     });
 
     it('should show "Add Remark" title when no existingRemark is provided', () => {
       render(<RemarkDialog {...defaultProps} />);
 
-      expect(screen.getByText('Add Remark')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+        'Add Remark'
+      );
+    });
+
+    it('should display username with @ prefix', () => {
+      render(<RemarkDialog {...defaultProps} />);
+
+      expect(screen.getByText('@testuser')).toBeInTheDocument();
     });
   });
 
@@ -90,7 +107,7 @@ describe('RemarkDialog', () => {
     it('should have empty input when no existing remark', () => {
       render(<RemarkDialog {...defaultProps} />);
 
-      const input = screen.getByPlaceholderText('Enter remark for this user');
+      const input = getRemarkInput();
       expect(input).toHaveValue('');
     });
 
@@ -98,7 +115,7 @@ describe('RemarkDialog', () => {
       const user = userEvent.setup();
       render(<RemarkDialog {...defaultProps} />);
 
-      const input = screen.getByPlaceholderText('Enter remark for this user');
+      const input = getRemarkInput();
       await user.type(input, 'New remark');
 
       expect(input).toHaveValue('New remark');
@@ -107,18 +124,20 @@ describe('RemarkDialog', () => {
     it('should focus input automatically', () => {
       render(<RemarkDialog {...defaultProps} />);
 
-      const input = screen.getByPlaceholderText('Enter remark for this user');
+      const input = getRemarkInput();
       expect(input).toHaveFocus();
     });
   });
 
   describe('Button Interactions', () => {
-    it('should call onCancel when Cancel button is clicked', () => {
+    it('should call onCancel when close button is clicked', () => {
       const onCancel = jest.fn();
       render(<RemarkDialog {...defaultProps} onCancel={onCancel} />);
 
-      const cancelButton = screen.getByText('Cancel');
-      fireEvent.click(cancelButton);
+      // The close button (X icon) in the header
+      const closeButtons = document.querySelectorAll('button');
+      const closeButton = closeButtons[0]; // First button is the close button
+      fireEvent.click(closeButton);
 
       expect(onCancel).toHaveBeenCalledTimes(1);
     });
@@ -128,7 +147,7 @@ describe('RemarkDialog', () => {
       const user = userEvent.setup();
       render(<RemarkDialog {...defaultProps} onSave={onSave} />);
 
-      const input = screen.getByPlaceholderText('Enter remark for this user');
+      const input = getRemarkInput();
       await user.type(input, 'Test remark');
 
       const saveButton = screen.getByText('Save');
@@ -142,7 +161,7 @@ describe('RemarkDialog', () => {
       const user = userEvent.setup();
       render(<RemarkDialog {...defaultProps} onSave={onSave} />);
 
-      const input = screen.getByPlaceholderText('Enter remark for this user');
+      const input = getRemarkInput();
       await user.type(input, '  Test remark with spaces  ');
 
       const saveButton = screen.getByText('Save');
@@ -161,7 +180,7 @@ describe('RemarkDialog', () => {
       const user = userEvent.setup();
       render(<RemarkDialog {...defaultProps} onSave={onSave} />);
 
-      const input = screen.getByPlaceholderText('Enter remark for this user');
+      const input = getRemarkInput();
       await user.type(input, 'Test remark');
       await user.keyboard('{Enter}');
 
@@ -173,7 +192,7 @@ describe('RemarkDialog', () => {
       const user = userEvent.setup();
       render(<RemarkDialog {...defaultProps} onCancel={onCancel} />);
 
-      const input = screen.getByPlaceholderText('Enter remark for this user');
+      const input = getRemarkInput();
       input.focus();
       await user.keyboard('{Escape}');
 
@@ -186,10 +205,8 @@ describe('RemarkDialog', () => {
       const onCancel = jest.fn();
       render(<RemarkDialog {...defaultProps} onCancel={onCancel} />);
 
-      // Find the overlay by its className
-      const overlay = document.querySelector(
-        '.fixed.inset-0.bg-black.bg-opacity-50'
-      );
+      // Find the overlay (the outer fixed div)
+      const overlay = document.querySelector('[style*="position: fixed"]');
       fireEvent.click(overlay!);
 
       expect(onCancel).toHaveBeenCalledTimes(1);
@@ -199,9 +216,9 @@ describe('RemarkDialog', () => {
       const onCancel = jest.fn();
       render(<RemarkDialog {...defaultProps} onCancel={onCancel} />);
 
-      // Click on the dialog content (the white/gray background div)
+      // Click on the dialog content (the card)
       const dialogContent = document.querySelector(
-        '.bg-white.dark\\:bg-gray-800'
+        '[style*="border-radius: 16px"]'
       );
       fireEvent.click(dialogContent!);
 
@@ -245,7 +262,6 @@ describe('RemarkDialog', () => {
 
       expect(mockChromeI18n.getMessage).toHaveBeenCalledWith('editRemark');
       expect(mockChromeI18n.getMessage).toHaveBeenCalledWith('enterRemark');
-      expect(mockChromeI18n.getMessage).toHaveBeenCalledWith('cancel');
       expect(mockChromeI18n.getMessage).toHaveBeenCalledWith('save');
     });
 
@@ -282,7 +298,7 @@ describe('RemarkDialog', () => {
       const user = userEvent.setup();
       render(<RemarkDialog {...defaultProps} onSave={onSave} />);
 
-      const input = screen.getByPlaceholderText('Enter remark for this user');
+      const input = getRemarkInput();
       await user.type(input, '   ');
 
       const saveButton = screen.getByText('Save');
