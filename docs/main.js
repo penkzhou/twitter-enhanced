@@ -116,4 +116,9 @@
   } else {
     onDOMReady();
   }
+
+  // Remove preload class after page loads to enable transitions
+  window.addEventListener('load', function () {
+    document.documentElement.classList.remove('preload');
+  });
 })();

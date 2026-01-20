@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="preload">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,242 +25,129 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            'twitter-blue': '#1DA1F2',
-            'twitter-blue-hover': '#1a8cd8',
-            'twitter-gold': '#FFD700',
-            'twitter-dark-bg': '#000000',
-            'twitter-dark-card': '#16181c',
-            'twitter-dark-border': '#2f3336',
-            'twitter-dark-text': '#e7e9ea',
-            'twitter-dark-secondary': '#71767b',
-            'twitter-light-bg': '#f7f9f9',
-            'twitter-light-card': '#ffffff',
-            'twitter-light-border': '#eff3f4',
-            'twitter-light-text': '#0f1419',
-            'twitter-light-secondary': '#536471',
-          },
-          fontFamily: {
-            'twitter': ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-          },
-          animation: {
-            'float': 'float 3s ease-in-out infinite',
-            'fade-in': 'fadeIn 0.5s ease-out',
-            'slide-up': 'slideUp 0.5s ease-out',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            },
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
-            },
-            slideUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-          },
-        },
-      },
-    }
-  </script>
-
-  <style>
-    /* Custom styles */
-    .hero-gradient {
-      background: linear-gradient(135deg, rgba(29, 161, 242, 0.1) 0%, transparent 50%);
-    }
-
-    .dark .hero-gradient {
-      background: linear-gradient(135deg, rgba(29, 161, 242, 0.15) 0%, transparent 50%);
-    }
-
-    .card-hover {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card-hover:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    .dark .card-hover:hover {
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-    }
-
-    /* Timeline styles */
-    .timeline-line {
-      background: linear-gradient(180deg, #1DA1F2 0%, #FFD700 100%);
-    }
-
-    /* Smooth transitions for theme switching */
-    * {
-      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-    }
-
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #536471;
-      border-radius: 4px;
-    }
-
-    .dark ::-webkit-scrollbar-thumb {
-      background: #71767b;
-    }
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="font-twitter bg-twitter-light-bg text-twitter-light-text dark:bg-twitter-dark-bg dark:text-twitter-dark-text min-h-screen">
+<body>
 
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-twitter-light-card/80 dark:bg-twitter-dark-card/80 backdrop-blur-md border-b border-twitter-light-border dark:border-twitter-dark-border">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <div class="flex items-center gap-3">
-          <img src="assets/img/logo.svg" alt="Twitter Enhanced Logo" class="w-8 h-8">
-          <span class="font-bold text-lg">Twitter Enhanced</span>
-        </div>
-        <div class="flex items-center gap-4">
-          <a href="https://github.com/penkzhou/twitter-enhanced" target="_blank" rel="noopener noreferrer"
-             class="text-twitter-light-secondary dark:text-twitter-dark-secondary hover:text-twitter-blue transition-colors"
-             aria-label="View source on GitHub">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
-            </svg>
-          </a>
-          <button id="theme-toggle"
-                  class="p-2 rounded-full hover:bg-twitter-light-border dark:hover:bg-twitter-dark-border transition-colors"
-                  aria-label="Toggle dark mode">
-            <!-- Sun icon (shown in dark mode) -->
-            <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
-            </svg>
-            <!-- Moon icon (shown in light mode) -->
-            <svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
-            </svg>
-          </button>
-        </div>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-brand">
+        <img src="assets/img/logo.svg" alt="Twitter Enhanced Logo">
+        <span>Twitter Enhanced</span>
+      </a>
+      <div class="nav-actions">
+        <a href="https://github.com/penkzhou/twitter-enhanced" target="_blank" rel="noopener noreferrer"
+           class="nav-link" aria-label="View source on GitHub">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+          </svg>
+        </a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+          </svg>
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+          </svg>
+        </button>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="pt-24 pb-16 sm:pt-32 sm:pb-24 hero-gradient">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="animate-fade-in">
-        <img src="assets/img/logo.svg" alt="Twitter Enhanced" class="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-6 animate-float">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-          Twitter <span class="text-twitter-blue">Enhanced</span>
-        </h1>
-        <p class="text-xl sm:text-2xl text-twitter-light-secondary dark:text-twitter-dark-secondary mb-6">
-          Elevate Your Twitter Experience
-        </p>
+  <section class="hero">
+    <div class="container hero-content">
+      <img src="assets/img/logo.svg" alt="Twitter Enhanced" class="hero-logo">
+      <h1 class="hero-title">
+        Twitter <span class="highlight">Enhanced</span>
+      </h1>
+      <p class="hero-subtitle">Elevate Your Twitter Experience</p>
 
-        <!-- Version Badge -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border mb-8">
-          <span class="text-sm text-twitter-light-secondary dark:text-twitter-dark-secondary">Latest Version</span>
-          <span id="version-badge" class="px-2 py-0.5 text-sm font-semibold rounded-full bg-twitter-blue/10 text-twitter-blue">
-            Loading...
-          </span>
-        </div>
+      <!-- Version Badge -->
+      <div class="version-badge">
+        <span class="label">Latest Version</span>
+        <span id="version-badge" class="version">Loading...</span>
+      </div>
 
-        <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="https://chrome.google.com/webstore/detail/cdcjmkiabmominbckhhcbjleidhddjfc"
-             target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-twitter-blue hover:bg-twitter-blue-hover text-white font-bold text-lg transition-colors">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29L1.931 5.47zm13.386 2.166l-3.953 6.848a5.454 5.454 0 0 1 4.965 10.586A11.946 11.946 0 0 0 24 12c0-1.592-.31-3.114-.873-4.506L15.317 7.636z"/>
-            </svg>
-            Add to Chrome
-          </a>
-          <a href="https://github.com/penkzhou/twitter-enhanced"
-             target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full border-2 border-twitter-light-border dark:border-twitter-dark-border hover:border-twitter-blue hover:text-twitter-blue font-bold text-lg transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
-            </svg>
-            View Source
-          </a>
-        </div>
+      <!-- CTA Buttons -->
+      <div class="cta-buttons">
+        <a href="https://chrome.google.com/webstore/detail/cdcjmkiabmominbckhhcbjleidhddjfc"
+           target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29L1.931 5.47zm13.386 2.166l-3.953 6.848a5.454 5.454 0 0 1 4.965 10.586A11.946 11.946 0 0 0 24 12c0-1.592-.31-3.114-.873-4.506L15.317 7.636z"/>
+          </svg>
+          Add to Chrome
+        </a>
+        <a href="https://github.com/penkzhou/twitter-enhanced"
+           target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+          </svg>
+          View Source
+        </a>
       </div>
     </div>
   </section>
 
   <!-- Features Section -->
-  <section class="py-16 sm:py-24">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Powerful Features</h2>
-      <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary text-center mb-12 max-w-2xl mx-auto">
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Powerful Features</h2>
+      <p class="section-subtitle">
         Everything you need to enhance your Twitter experience, all in one extension.
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="features-grid">
         <!-- Feature 1: User Remarks -->
-        <div class="card-hover p-6 rounded-2xl bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border">
-          <div class="w-12 h-12 rounded-full bg-twitter-blue/10 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-twitter-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="feature-card">
+          <div class="feature-icon blue">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-2">User Remarks</h3>
-          <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary">
+          <h3 class="feature-title">User Remarks</h3>
+          <p class="feature-desc">
             Add personal notes to any Twitter user. Never forget why you followed someone or what they're known for.
           </p>
         </div>
 
         <!-- Feature 2: Video Downloads -->
-        <div class="card-hover p-6 rounded-2xl bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border">
-          <div class="w-12 h-12 rounded-full bg-twitter-gold/20 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-twitter-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="feature-card">
+          <div class="feature-icon gold">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-2">Video Downloads</h3>
-          <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary">
+          <h3 class="feature-title">Video Downloads</h3>
+          <p class="feature-desc">
             Download Twitter videos with a single click. Save your favorite content for offline viewing or sharing.
           </p>
         </div>
 
         <!-- Feature 3: Batch Selection -->
-        <div class="card-hover p-6 rounded-2xl bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border">
-          <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="feature-card">
+          <div class="feature-icon green">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-2">Batch Selection</h3>
-          <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary">
+          <h3 class="feature-title">Batch Selection</h3>
+          <p class="feature-desc">
             When a tweet has multiple videos, select and download them all at once. No more clicking one by one.
           </p>
         </div>
 
         <!-- Feature 4: Download Management -->
-        <div class="card-hover p-6 rounded-2xl bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border">
-          <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="feature-card">
+          <div class="feature-icon purple">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-2">Download Management</h3>
-          <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary">
+          <h3 class="feature-title">Download Management</h3>
+          <p class="feature-desc">
             Keep track of all downloads with search, filter, and locate features. Find any video instantly.
           </p>
         </div>
@@ -269,98 +156,81 @@
   </section>
 
   <!-- How It Works Section -->
-  <section class="py-16 sm:py-24 bg-twitter-light-card dark:bg-twitter-dark-card">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Get Started in 3 Steps</h2>
-      <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary text-center mb-12 max-w-2xl mx-auto">
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Get Started in 3 Steps</h2>
+      <p class="section-subtitle">
         Start enhancing your Twitter experience in less than a minute.
       </p>
 
-      <div class="relative">
-        <!-- Timeline Line -->
-        <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 timeline-line transform -translate-x-1/2 rounded-full"></div>
+      <div class="steps-grid">
+        <!-- Step 1 -->
+        <div class="step animate-slide-up">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Install Extension</h3>
+          <p class="step-desc">
+            Add Twitter Enhanced from the Chrome Web Store with one click.
+          </p>
+        </div>
 
-        <div class="space-y-12 md:space-y-0 md:grid md:grid-cols-3 md:gap-8">
-          <!-- Step 1 -->
-          <div class="relative animate-slide-up" style="animation-delay: 0.1s">
-            <div class="md:text-center">
-              <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-twitter-blue text-white font-bold text-xl mb-4 md:mx-auto">
-                1
-              </div>
-              <h3 class="text-xl font-bold mb-2">Install Extension</h3>
-              <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary">
-                Add Twitter Enhanced from the Chrome Web Store with one click.
-              </p>
-            </div>
-          </div>
+        <!-- Step 2 -->
+        <div class="step animate-slide-up">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Visit Twitter/X</h3>
+          <p class="step-desc">
+            Navigate to twitter.com or x.com as you normally would.
+          </p>
+        </div>
 
-          <!-- Step 2 -->
-          <div class="relative animate-slide-up" style="animation-delay: 0.2s">
-            <div class="md:text-center">
-              <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-twitter-blue text-white font-bold text-xl mb-4 md:mx-auto">
-                2
-              </div>
-              <h3 class="text-xl font-bold mb-2">Visit Twitter/X</h3>
-              <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary">
-                Navigate to twitter.com or x.com as you normally would.
-              </p>
-            </div>
-          </div>
-
-          <!-- Step 3 -->
-          <div class="relative animate-slide-up" style="animation-delay: 0.3s">
-            <div class="md:text-center">
-              <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-twitter-gold text-white font-bold text-xl mb-4 md:mx-auto">
-                3
-              </div>
-              <h3 class="text-xl font-bold mb-2">Enjoy Enhanced Features</h3>
-              <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary">
-                Download videos, add remarks, and manage your content effortlessly.
-              </p>
-            </div>
-          </div>
+        <!-- Step 3 -->
+        <div class="step animate-slide-up">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Enjoy Enhanced Features</h3>
+          <p class="step-desc">
+            Download videos, add remarks, and manage your content effortlessly.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Languages Section -->
-  <section class="py-16 sm:py-24">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl sm:text-4xl font-bold mb-4">Available in 12 Languages</h2>
-      <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary mb-8 max-w-2xl mx-auto">
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Available in 12 Languages</h2>
+      <p class="section-subtitle">
         Twitter Enhanced speaks your language. Full localization support for users worldwide.
       </p>
 
-      <div class="flex flex-wrap justify-center gap-3">
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">English</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">Español</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">Français</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">Deutsch</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">日本語</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">中文</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">Русский</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">Português</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">한국어</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">Italiano</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">العربية</span>
-        <span class="px-4 py-2 rounded-full bg-twitter-light-card dark:bg-twitter-dark-card border border-twitter-light-border dark:border-twitter-dark-border text-sm">हिन्दी</span>
+      <div class="languages">
+        <span class="language-tag">English</span>
+        <span class="language-tag">Español</span>
+        <span class="language-tag">Français</span>
+        <span class="language-tag">Deutsch</span>
+        <span class="language-tag">日本語</span>
+        <span class="language-tag">中文</span>
+        <span class="language-tag">Русский</span>
+        <span class="language-tag">Português</span>
+        <span class="language-tag">한국어</span>
+        <span class="language-tag">Italiano</span>
+        <span class="language-tag">العربية</span>
+        <span class="language-tag">हिन्दी</span>
       </div>
     </div>
   </section>
 
   <!-- Privacy Banner -->
-  <section class="py-12 bg-twitter-blue/5 dark:bg-twitter-blue/10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-center md:text-left">
-        <div class="w-12 h-12 rounded-full bg-twitter-blue/10 flex items-center justify-center flex-shrink-0">
-          <svg class="w-6 h-6 text-twitter-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <section class="privacy-banner">
+    <div class="container">
+      <div class="privacy-content">
+        <div class="privacy-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
           </svg>
         </div>
         <div>
-          <h3 class="font-bold text-lg">Your Privacy Matters</h3>
-          <p class="text-twitter-light-secondary dark:text-twitter-dark-secondary">
+          <h3 class="privacy-title">Your Privacy Matters</h3>
+          <p class="privacy-desc">
             All data is stored locally in your browser. No external servers, no tracking, no data collection.
           </p>
         </div>
@@ -369,36 +239,26 @@
   </section>
 
   <!-- Footer -->
-  <footer class="py-12 border-t border-twitter-light-border dark:border-twitter-dark-border">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-3">
-          <img src="assets/img/logo.svg" alt="Twitter Enhanced" class="w-8 h-8">
-          <span class="font-bold">Twitter Enhanced</span>
-        </div>
-
-        <div class="flex items-center gap-6">
-          <a href="https://github.com/penkzhou/twitter-enhanced"
-             target="_blank" rel="noopener noreferrer"
-             class="text-twitter-light-secondary dark:text-twitter-dark-secondary hover:text-twitter-blue transition-colors">
-            GitHub
-          </a>
-          <a href="https://chrome.google.com/webstore/detail/cdcjmkiabmominbckhhcbjleidhddjfc"
-             target="_blank" rel="noopener noreferrer"
-             class="text-twitter-light-secondary dark:text-twitter-dark-secondary hover:text-twitter-blue transition-colors">
-            Chrome Web Store
-          </a>
-          <a href="https://github.com/penkzhou/twitter-enhanced/issues"
-             target="_blank" rel="noopener noreferrer"
-             class="text-twitter-light-secondary dark:text-twitter-dark-secondary hover:text-twitter-blue transition-colors">
-            Report Issue
-          </a>
-        </div>
-
-        <p class="text-sm text-twitter-light-secondary dark:text-twitter-dark-secondary">
-          MIT License
-        </p>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="assets/img/logo.svg" alt="Twitter Enhanced">
+        <span>Twitter Enhanced</span>
       </div>
+
+      <div class="footer-links">
+        <a href="https://github.com/penkzhou/twitter-enhanced" target="_blank" rel="noopener noreferrer" class="footer-link">
+          GitHub
+        </a>
+        <a href="https://chrome.google.com/webstore/detail/cdcjmkiabmominbckhhcbjleidhddjfc" target="_blank" rel="noopener noreferrer" class="footer-link">
+          Chrome Web Store
+        </a>
+        <a href="https://github.com/penkzhou/twitter-enhanced/issues" target="_blank" rel="noopener noreferrer" class="footer-link">
+          Report Issue
+        </a>
+      </div>
+
+      <p class="footer-license">MIT License</p>
     </div>
   </footer>
 
