@@ -57,6 +57,7 @@ const ScreenshotDialog: React.FC<ScreenshotDialogProps> = ({
   }, [theme, isDarkMode]);
 
   // Generate preview when options change
+  // Use the same scale as download to ensure preview matches final output
   useEffect(() => {
     if (!isOpen) return;
 
@@ -66,7 +67,7 @@ const ScreenshotDialog: React.FC<ScreenshotDialogProps> = ({
           theme: getResolvedTheme(),
           showWatermark,
           watermarkText: showWatermark ? watermarkText : undefined,
-          scale: 2, // Use decent scale for preview clarity
+          scale: DEFAULT_SCREENSHOT_OPTIONS.scale, // Same scale as download
         };
         const dataUrl = await generateScreenshot(tweetData, options);
         setPreviewDataUrl(dataUrl);
