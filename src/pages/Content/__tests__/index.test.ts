@@ -177,7 +177,12 @@ describe('TwitterEnhancer', () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
 
       expect(mockChromeStorage.sync.get).toHaveBeenCalledWith(
-        ['userRemarks', 'remarkFeatureEnabled', 'videoDownloadFeatureEnabled'],
+        [
+          'userRemarks',
+          'remarkFeatureEnabled',
+          'videoDownloadFeatureEnabled',
+          'screenshotFeatureEnabled',
+        ],
         expect.any(Function)
       );
     });

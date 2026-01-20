@@ -175,6 +175,7 @@ describe('TwitterEnhancer Module', () => {
             'userRemarks',
             'remarkFeatureEnabled',
             'videoDownloadFeatureEnabled',
+            'screenshotFeatureEnabled',
           ],
           expect.any(Function)
         );
