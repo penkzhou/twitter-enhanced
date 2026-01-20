@@ -13,6 +13,7 @@
     "start": "node utils/webserver.js",
     "lint": "eslint --ignore-pattern '!.eslint-plugin-local.js' -- 'src/**/*.ts' 'src/**/*.tsx'",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
