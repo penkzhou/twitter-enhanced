@@ -1,3 +1,10 @@
+import { TweetData } from '../types/tweet';
+
+export interface TimestampInfo {
+  displayText: string | null;
+  datetime: string | null;
+}
+
 export interface ITweetParser {
   // Tweet identification
   getTweetId(tweetElement: Element): string | null;
@@ -18,10 +25,19 @@ export interface ITweetParser {
   // Button state checking
   hasRemarkButton(tweetHeader: Element): boolean;
   hasVideoDownloadButton(actionBar: Element): boolean;
+  hasScreenshotButton(actionBar: Element): boolean;
 
   // Element validation
   isValidTweetElement(element: Element): boolean;
   isValidUserHeader(element: Element): boolean;
+
+  // Screenshot-related methods
+  getAvatarUrl(tweetElement: Element): string | null;
+  isVerified(tweetElement: Element): boolean;
+  getImageUrls(tweetElement: Element): string[];
+  getTweetUrl(tweetElement: Element): string | null;
+  getTimestampInfo(tweetElement: Element): TimestampInfo;
+  getFullTweetData(tweetElement: Element): TweetData | null;
 }
 
 export class TweetParser implements ITweetParser {
@@ -201,5 +217,154 @@ export class TweetParser implements ITweetParser {
     });
 
     return elements;
+  }
+
+  // ============ Screenshot-related methods ============
+
+  /**
+   * Gets the avatar URL from a tweet element
+   */
+  getAvatarUrl(tweetElement: Element): string | null {
+    const avatarContainer = tweetElement.querySelector(
+      '[data-testid="Tweet-User-Avatar"]'
+    );
+    if (avatarContainer) {
+      const img = avatarContainer.querySelector('img');
+      if (img) {
+        return img.getAttribute('src');
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Checks if the tweet author is verified
+   */
+  isVerified(tweetElement: Element): boolean {
+    const userNameContainer = tweetElement.querySelector(
+      '[data-testid="User-Name"]'
+    );
+    if (!userNameContainer) {
+      return false;
+    }
+
+    // Check for verification badge (blue checkmark)
+    const verifiedIcon = userNameContainer.querySelector(
+      '[data-testid="icon-verified"], [data-testid="verificationBadge"]'
+    );
+    return !!verifiedIcon;
+  }
+
+  /**
+   * Gets all image URLs from tweet content (excluding avatar)
+   */
+  getImageUrls(tweetElement: Element): string[] {
+    const imageUrls: string[] = [];
+
+    // Get images from tweetPhoto containers only (excludes avatar)
+    const photoContainers = tweetElement.querySelectorAll(
+      '[data-testid="tweetPhoto"]'
+    );
+    photoContainers.forEach((container) => {
+      const img = container.querySelector('img');
+      if (img) {
+        const src = img.getAttribute('src');
+        if (src) {
+          imageUrls.push(src);
+        }
+      }
+    });
+
+    return imageUrls;
+  }
+
+  /**
+   * Gets the full tweet URL
+   */
+  getTweetUrl(tweetElement: Element): string | null {
+    const tweetLink = tweetElement.querySelector('a[href*="/status/"]');
+    if (tweetLink) {
+      const href = tweetLink.getAttribute('href');
+      if (href) {
+        return `https://twitter.com${href}`;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets timestamp information from a tweet
+   */
+  getTimestampInfo(tweetElement: Element): TimestampInfo {
+    const timeElement = tweetElement.querySelector('time');
+    if (timeElement) {
+      return {
+        displayText: timeElement.textContent?.trim() || null,
+        datetime: timeElement.getAttribute('datetime'),
+      };
+    }
+    return {
+      displayText: null,
+      datetime: null,
+    };
+  }
+
+  /**
+   * Checks if action bar has screenshot button
+   */
+  hasScreenshotButton(actionBar: Element): boolean {
+    return !!actionBar.querySelector('.screenshot-btn');
+  }
+
+  /**
+   * Gets complete tweet data for screenshot generation
+   */
+  getFullTweetData(tweetElement: Element): TweetData | null {
+    // Extract tweet ID
+    const tweetId = this.getTweetId(tweetElement);
+    if (!tweetId) {
+      return null;
+    }
+
+    // Extract user header info
+    const userHeader = tweetElement.querySelector('[data-testid="User-Name"]');
+    if (!userHeader) {
+      return null;
+    }
+
+    const username = this.extractUsername(userHeader);
+    const displayName = this.getDisplayName(userHeader);
+    const avatarUrl = this.getAvatarUrl(tweetElement);
+
+    // Validate required fields
+    if (!username || !displayName || !avatarUrl) {
+      return null;
+    }
+
+    // Get tweet content
+    const content = this.getTweetText(tweetElement);
+
+    // Get timestamp info
+    const timestampInfo = this.getTimestampInfo(tweetElement);
+
+    // Get tweet URL
+    const tweetUrl = this.getTweetUrl(tweetElement);
+    if (!tweetUrl) {
+      return null;
+    }
+
+    return {
+      tweetId,
+      displayName,
+      username,
+      avatarUrl,
+      content,
+      timestamp: timestampInfo.displayText || '',
+      datetime: timestampInfo.datetime || undefined,
+      isVerified: this.isVerified(tweetElement),
+      imageUrls: this.getImageUrls(tweetElement),
+      isRetweet: this.isRetweet(tweetElement),
+      tweetUrl,
+    };
   }
 }

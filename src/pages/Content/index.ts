@@ -1,10 +1,15 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, Root } from 'react-dom/client';
 
 import './../../globals.css';
 import RemarkDialog, { RemarkDialogProps } from '../../components/RemarkDialog';
+import ScreenshotDialog, {
+  ScreenshotDialogProps,
+} from '../../components/ScreenshotDialog';
 import { Logger } from '../../utils/logger';
 import { VideoInfo } from '../../lib/types';
+import { TweetData } from '../../types/tweet';
+import { TweetParser } from '../../dom/TweetParser';
 import VideoSelectionDialog, {
   VideoSelectionDialogProps,
 } from '../../components/VideoSelectionDialog';
@@ -18,6 +23,7 @@ interface TwitterEnhancerSettings {
   userRemarks: UserRemark[];
   remarkFeatureEnabled: boolean;
   videoDownloadFeatureEnabled: boolean;
+  screenshotFeatureEnabled: boolean;
 }
 
 class TwitterEnhancer {
@@ -26,17 +32,34 @@ class TwitterEnhancer {
   private observer: MutationObserver;
   private remarkFeatureEnabled: boolean = true;
   private videoDownloadFeatureEnabled: boolean = true;
+  private screenshotFeatureEnabled: boolean = true;
   private remarkDialogRoot: HTMLElement;
   private remarkDialogOpen: boolean = false;
   private currentUsername: string = '';
   private currentRemark: string | undefined;
-  private remarkDialogReactRoot: any;
+  private remarkDialogReactRoot: Root;
+
+  // Screenshot dialog state
+  private screenshotDialogRoot: HTMLElement;
+  private screenshotDialogReactRoot: Root;
+  private screenshotDialogOpen: boolean = false;
+  private currentTweetData: TweetData | null = null;
+
+  // Tweet parser instance
+  private tweetParser: TweetParser;
 
   private constructor() {
     this.observer = new MutationObserver(this.handleMutations.bind(this));
+    this.tweetParser = new TweetParser();
+
     this.remarkDialogRoot = document.createElement('div');
     document.body.appendChild(this.remarkDialogRoot);
     this.remarkDialogReactRoot = createRoot(this.remarkDialogRoot);
+
+    this.screenshotDialogRoot = document.createElement('div');
+    document.body.appendChild(this.screenshotDialogRoot);
+    this.screenshotDialogReactRoot = createRoot(this.screenshotDialogRoot);
+
     this.init();
   }
 
@@ -53,6 +76,7 @@ class TwitterEnhancer {
       this.updateUsernames();
       this.addRemarkButton();
       this.addVideoDownloadButtons();
+      this.addScreenshotButtons();
       this.setupObserver();
       this.setupEventListeners();
       this.injectStyles();
@@ -64,13 +88,20 @@ class TwitterEnhancer {
   private async loadSettings(): Promise<void> {
     return new Promise((resolve) => {
       chrome.storage.sync.get(
-        ['userRemarks', 'remarkFeatureEnabled', 'videoDownloadFeatureEnabled'],
+        [
+          'userRemarks',
+          'remarkFeatureEnabled',
+          'videoDownloadFeatureEnabled',
+          'screenshotFeatureEnabled',
+        ],
         (result: { [key: string]: any }) => {
           const settings = result as TwitterEnhancerSettings;
           this.userRemarks = settings.userRemarks || [];
           this.remarkFeatureEnabled = settings.remarkFeatureEnabled ?? true;
           this.videoDownloadFeatureEnabled =
             settings.videoDownloadFeatureEnabled ?? true;
+          this.screenshotFeatureEnabled =
+            settings.screenshotFeatureEnabled ?? true;
           resolve();
         }
       );
@@ -106,6 +137,7 @@ class TwitterEnhancer {
     if (request.action === 'updateSettings') {
       this.remarkFeatureEnabled = request.remarkFeatureEnabled;
       this.videoDownloadFeatureEnabled = request.videoDownloadFeatureEnabled;
+      this.screenshotFeatureEnabled = request.screenshotFeatureEnabled ?? true;
       if (this.remarkFeatureEnabled) {
         this.updateUsernames();
         this.addRemarkButton();
@@ -116,6 +148,11 @@ class TwitterEnhancer {
         this.addVideoDownloadButtons();
       } else {
         this.removeAllVideoDownloadButtons();
+      }
+      if (this.screenshotFeatureEnabled) {
+        this.addScreenshotButtons();
+      } else {
+        this.removeAllScreenshotButtons();
       }
     }
   }
@@ -318,6 +355,7 @@ class TwitterEnhancer {
             this.updateUsernames(node);
             this.addRemarkButton();
             this.addVideoDownloadButtons();
+            this.addScreenshotButtons();
           }
         });
       } else if (
@@ -328,6 +366,9 @@ class TwitterEnhancer {
         if (tweet && !tweet.classList.contains('video-download-added')) {
           this.addVideoDownloadButtons();
         }
+        if (tweet && !tweet.classList.contains('screenshot-added')) {
+          this.addScreenshotButtons();
+        }
       }
     });
   }
@@ -337,6 +378,7 @@ class TwitterEnhancer {
       this.updateUsernames();
       this.addRemarkButton();
       this.addVideoDownloadButtons();
+      this.addScreenshotButtons();
     }, 1000);
   }
 
@@ -681,6 +723,103 @@ class TwitterEnhancer {
     substitutions?: string | string[]
   ): string {
     return chrome.i18n.getMessage(messageName, substitutions);
+  }
+
+  // ============ Screenshot Feature Methods ============
+
+  private addScreenshotButtons(): void {
+    if (!this.screenshotFeatureEnabled) return;
+
+    const tweets = document.querySelectorAll(
+      'article[data-testid="tweet"]:not(.screenshot-added)'
+    );
+
+    tweets.forEach((tweet) => {
+      const actionBar = this.tweetParser.getActionBar(tweet);
+      if (actionBar && !this.tweetParser.hasScreenshotButton(actionBar)) {
+        const screenshotButton = document.createElement('div');
+        screenshotButton.className = 'screenshot-btn';
+        screenshotButton.setAttribute(
+          'aria-label',
+          this.getI18nMessage('screenshotTweet') || 'Screenshot Tweet'
+        );
+        screenshotButton.innerHTML = `
+          <div role="button" tabindex="0">
+            <div class="screenshot-icon">
+              ${this.generateScreenshotIconSVG()}
+            </div>
+          </div>
+        `;
+        screenshotButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.handleScreenshot(tweet);
+        });
+        actionBar.appendChild(screenshotButton);
+      }
+      tweet.classList.add('screenshot-added');
+    });
+  }
+
+  private handleScreenshot(tweetElement: Element): void {
+    const tweetData = this.tweetParser.getFullTweetData(tweetElement);
+    if (!tweetData) {
+      console.error('Could not extract tweet data for screenshot');
+      this.showAlert(
+        this.getI18nMessage('screenshotError') || 'Failed to capture tweet data'
+      );
+      return;
+    }
+
+    Logger.logEvent('screenshot_button_click', {
+      tweet_id: tweetData.tweetId,
+      domain: window.location.hostname,
+    });
+
+    this.currentTweetData = tweetData;
+    this.screenshotDialogOpen = true;
+    this.renderScreenshotDialog();
+  }
+
+  private closeScreenshotDialog(): void {
+    this.screenshotDialogOpen = false;
+    this.currentTweetData = null;
+    this.renderScreenshotDialog();
+  }
+
+  private renderScreenshotDialog(): void {
+    if (!this.currentTweetData) {
+      this.screenshotDialogReactRoot.render(null);
+      return;
+    }
+
+    this.screenshotDialogReactRoot.render(
+      React.createElement<ScreenshotDialogProps>(ScreenshotDialog, {
+        tweetData: this.currentTweetData,
+        isOpen: this.screenshotDialogOpen,
+        onClose: this.closeScreenshotDialog.bind(this),
+      })
+    );
+  }
+
+  private removeAllScreenshotButtons(): void {
+    document
+      .querySelectorAll('.screenshot-btn')
+      .forEach((button) => button.remove());
+    document
+      .querySelectorAll('.screenshot-added')
+      .forEach((element) => element.classList.remove('screenshot-added'));
+  }
+
+  private generateScreenshotIconSVG(): string {
+    return `
+      <svg viewBox="0 0 24 24" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-lrvibr r-m6rgpd r-1xvli5t r-1hdv0qi" style="width: 18.75px; height: 18.75px;">
+        <g>
+          <path d="M3 5.5C3 4.119 4.12 3 5.5 3h13C19.88 3 21 4.119 21 5.5v13c0 1.381-1.12 2.5-2.5 2.5h-13C4.12 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v13c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-13c0-.276-.224-.5-.5-.5h-13z"></path>
+          <path d="M9.018 11.768l-2.5 3.5c-.203.284-.183.668.05.928.233.26.615.32.916.146l3.577-2.069 2.55 2.044c.2.16.473.198.71.098.236-.1.4-.317.424-.567l.3-3.098 2.907-1.57c.262-.142.42-.412.413-.705-.008-.293-.178-.556-.446-.687L14 8l-1.024-2.928c-.1-.286-.358-.49-.66-.523-.302-.032-.594.113-.749.373l-2.01 3.376-3.211.708c-.287.063-.517.277-.6.558-.083.28-.002.583.212.79l2.06 1.994z"></path>
+        </g>
+      </svg>
+    `;
   }
 }
 
