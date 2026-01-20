@@ -47,7 +47,8 @@ const ScreenshotDialog: React.FC<ScreenshotDialogProps> = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [previewDataUrl, setPreviewDataUrl] = useState<string | null>(null);
 
-  const isDarkMode = detectTwitterDarkMode();
+  // Detect dark mode only once when dialog opens to prevent re-renders
+  const [isDarkMode] = useState(() => detectTwitterDarkMode());
 
   const getResolvedTheme = useCallback((): 'light' | 'dark' => {
     if (theme === 'auto') {
