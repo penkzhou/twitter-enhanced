@@ -5,19 +5,15 @@ import {
 } from '../screenshot';
 import { TweetData, ScreenshotOptions } from '../../types/tweet';
 
-// Mock html2canvas with proper canvas object
-jest.mock('html2canvas', () => {
-  return jest.fn().mockImplementation(() => {
-    // Return a mock canvas-like object with toDataURL
-    return Promise.resolve({
-      width: 600,
-      height: 400,
-      toDataURL: jest
-        .fn()
-        .mockReturnValue('data:image/png;base64,mockImageData'),
-    });
-  });
-});
+// Mock dom-to-image-more
+jest.mock('dom-to-image-more', () => ({
+  toPng: jest.fn().mockResolvedValue('data:image/png;base64,mockImageData'),
+  toJpeg: jest.fn().mockResolvedValue('data:image/jpeg;base64,mockImageData'),
+  toBlob: jest
+    .fn()
+    .mockResolvedValue(new Blob(['mock'], { type: 'image/png' })),
+  toSvg: jest.fn().mockResolvedValue('<svg></svg>'),
+}));
 
 // Mock ClipboardItem globally
 class MockClipboardItem {
@@ -128,14 +124,18 @@ describe('Screenshot Utility', () => {
     });
 
     it('should respect scale option', async () => {
-      const html2canvas = require('html2canvas');
+      const domtoimage = require('dom-to-image-more');
       const options = { ...defaultOptions, scale: 3 };
 
       await generateScreenshot(mockTweetData, options);
 
-      expect(html2canvas).toHaveBeenCalledWith(
+      expect(domtoimage.toPng).toHaveBeenCalledWith(
         expect.any(HTMLElement),
-        expect.objectContaining({ scale: 3 })
+        expect.objectContaining({
+          style: expect.objectContaining({
+            transform: expect.stringContaining('scale'),
+          }),
+        })
       );
     });
 
@@ -148,12 +148,14 @@ describe('Screenshot Utility', () => {
     });
 
     it('should handle generation errors gracefully', async () => {
-      const html2canvas = require('html2canvas');
-      html2canvas.mockRejectedValueOnce(new Error('Canvas generation failed'));
+      const domtoimage = require('dom-to-image-more');
+      domtoimage.toPng.mockRejectedValueOnce(
+        new Error('Image generation failed')
+      );
 
       await expect(
         generateScreenshot(mockTweetData, defaultOptions)
-      ).rejects.toThrow('Canvas generation failed');
+      ).rejects.toThrow('Image generation failed');
     });
   });
 

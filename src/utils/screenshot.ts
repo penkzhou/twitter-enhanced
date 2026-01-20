@@ -1,4 +1,4 @@
-import html2canvas from 'html2canvas';
+import domtoimage from 'dom-to-image-more';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import TweetCard from '../components/TweetCard';
@@ -140,24 +140,25 @@ export async function generateScreenshot(
       )
     );
 
-    // Make container visible for html2canvas (but still off-screen)
+    // Make container visible for rendering (but still off-screen)
     container.style.visibility = 'visible';
 
     // Calculate optimal scale
     const scale = getOptimalScale(options.scale);
 
-    // Generate canvas using html2canvas
-    const canvas = await html2canvas(container.firstChild as HTMLElement, {
-      scale,
-      backgroundColor: null,
-      logging: false,
-      useCORS: true,
-      allowTaint: true,
-      imageTimeout: 15000, // Wait longer for images
-    });
+    // Get the element to capture
+    const element = container.firstChild as HTMLElement;
 
-    // Convert canvas to data URL with high quality
-    const dataUrl = canvas.toDataURL('image/png', 1.0);
+    // Generate image using dom-to-image-more
+    // This uses SVG foreignObject which leverages the browser's native rendering
+    const dataUrl = await domtoimage.toPng(element, {
+      width: element.offsetWidth * scale,
+      height: element.offsetHeight * scale,
+      style: {
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+      },
+    });
 
     // Cleanup
     root.unmount();
