@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import TweetCard from './TweetCard';
 import {
   TweetData,
   ScreenshotOptions,
@@ -246,6 +245,11 @@ const ScreenshotDialog: React.FC<ScreenshotDialogProps> = ({
                 borderRadius: '16px',
                 border: `1px solid ${colors.border}`,
                 overflow: 'hidden',
+                minHeight: '120px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: colors.background,
               }}
             >
               {previewDataUrl ? (
@@ -258,12 +262,16 @@ const ScreenshotDialog: React.FC<ScreenshotDialogProps> = ({
                   }}
                 />
               ) : (
-                <TweetCard
-                  tweetData={tweetData}
-                  theme={getResolvedTheme()}
-                  showWatermark={showWatermark}
-                  watermarkText={watermarkText}
-                />
+                <div
+                  style={{
+                    padding: '40px 20px',
+                    color: colors.secondaryText,
+                    fontSize: '14px',
+                  }}
+                >
+                  {chrome.i18n.getMessage('generatingPreview') ||
+                    'Generating preview...'}
+                </div>
               )}
             </div>
           </div>
