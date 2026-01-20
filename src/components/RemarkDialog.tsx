@@ -81,9 +81,7 @@ const RemarkDialog: React.FC<RemarkDialogProps> = ({
   // Theme-aware styles matching Twitter's design system
   const theme = {
     // Backdrop
-    backdrop: isDarkMode
-      ? 'rgba(91, 112, 131, 0.4)'
-      : 'rgba(0, 0, 0, 0.4)',
+    backdrop: isDarkMode ? 'rgba(91, 112, 131, 0.4)' : 'rgba(0, 0, 0, 0.4)',
     // Card
     cardBg: isDarkMode ? '#16181C' : '#FFFFFF',
     cardBorder: isDarkMode ? '#2F3336' : '#EFF3F4',
@@ -100,7 +98,9 @@ const RemarkDialog: React.FC<RemarkDialogProps> = ({
     cancelBg: 'transparent',
     cancelBorder: isDarkMode ? '#536471' : '#CFD9DE',
     cancelText: isDarkMode ? '#EFF3F4' : '#0F1419',
-    cancelHover: isDarkMode ? 'rgba(239, 243, 244, 0.1)' : 'rgba(15, 20, 25, 0.1)',
+    cancelHover: isDarkMode
+      ? 'rgba(239, 243, 244, 0.1)'
+      : 'rgba(15, 20, 25, 0.1)',
     saveBg: TWITTER_BLUE,
     saveText: '#FFFFFF',
     saveHover: '#1A8CD8',
@@ -311,8 +311,7 @@ const RemarkDialog: React.FC<RemarkDialogProps> = ({
                   position: 'absolute',
                   left: '8px',
                   top: isFocused || remark ? '4px' : '50%',
-                  transform:
-                    isFocused || remark ? 'none' : 'translateY(-50%)',
+                  transform: isFocused || remark ? 'none' : 'translateY(-50%)',
                   fontSize: isFocused || remark ? '12px' : '15px',
                   color: isFocused
                     ? theme.inputBorderFocus
@@ -362,9 +361,7 @@ const RemarkDialog: React.FC<RemarkDialogProps> = ({
                 '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
             }}
           >
-            {remark.length > 0 && (
-              <span>{remark.length}</span>
-            )}
+            {remark.length > 0 && <span>{remark.length}</span>}
           </div>
         </div>
       </div>
