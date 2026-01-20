@@ -2,14 +2,14 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import DownloadRecords from './DownloadRecords';
-import './../../globals.css';
 
 const container = document.getElementById('app-container');
 
 if (container) {
-  // Update styling to align content to the top
-  container.className =
-    'flex justify-center items-start min-h-screen bg-gray-100 dark:bg-gray-900 p-4';
+  // Remove any existing classes - the component handles its own styling
+  container.className = '';
+  container.style.margin = '0';
+  container.style.padding = '0';
 
   const root = createRoot(container);
   root.render(<DownloadRecords />);

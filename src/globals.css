@@ -33,6 +33,20 @@
   --chart-3: hsl(197 37% 24%);
   --chart-4: hsl(43 74% 66%);
   --chart-5: hsl(27 87% 67%);
+
+  /* Twitter Theme Colors */
+  --twitter-blue: hsl(203 89% 53%);
+  --twitter-blue-hover: hsl(203 82% 47%);
+  --twitter-bg: hsl(200 14% 97%);
+  --twitter-card: hsl(0 0% 100%);
+  --twitter-card-border: hsl(200 14% 93%);
+  --twitter-text: hsl(213 26% 9%);
+  --twitter-text-secondary: hsl(212 12% 42%);
+  --twitter-input-border: hsl(200 18% 84%);
+  --twitter-item-bg: hsl(200 14% 97%);
+  --twitter-item-hover: hsla(0 0% 0% / 0.03);
+  --twitter-success: hsl(161 70% 36%);
+  --twitter-success-hover: hsl(161 70% 32%);
 }
 
 .dark {
@@ -60,6 +74,20 @@
   --chart-3: hsl(30 80% 55%);
   --chart-4: hsl(280 65% 60%);
   --chart-5: hsl(340 75% 55%);
+
+  /* Twitter Theme Colors - Dark Mode */
+  --twitter-blue: hsl(203 89% 53%);
+  --twitter-blue-hover: hsl(203 82% 47%);
+  --twitter-bg: hsl(0 0% 0%);
+  --twitter-card: hsl(218 14% 10%);
+  --twitter-card-border: hsl(210 10% 20%);
+  --twitter-text: hsl(195 14% 92%);
+  --twitter-text-secondary: hsl(210 8% 48%);
+  --twitter-input-border: hsl(210 10% 22%);
+  --twitter-item-bg: hsl(218 12% 12%);
+  --twitter-item-hover: hsla(195 14% 92% / 0.03);
+  --twitter-success: hsl(161 70% 36%);
+  --twitter-success-hover: hsl(161 70% 32%);
 }
 
 @theme inline {
@@ -88,6 +116,20 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* Twitter Theme Colors */
+  --color-twitter-blue: var(--twitter-blue);
+  --color-twitter-blue-hover: var(--twitter-blue-hover);
+  --color-twitter-bg: var(--twitter-bg);
+  --color-twitter-card: var(--twitter-card);
+  --color-twitter-card-border: var(--twitter-card-border);
+  --color-twitter-text: var(--twitter-text);
+  --color-twitter-text-secondary: var(--twitter-text-secondary);
+  --color-twitter-input-border: var(--twitter-input-border);
+  --color-twitter-item-bg: var(--twitter-item-bg);
+  --color-twitter-item-hover: var(--twitter-item-hover);
+  --color-twitter-success: var(--twitter-success);
+  --color-twitter-success-hover: var(--twitter-success-hover);
 
   /* Border radius */
   --radius-sm: calc(var(--radius) - 4px);

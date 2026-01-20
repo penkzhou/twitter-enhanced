@@ -1,13 +1,16 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
+import '../../globals.css';
 import Options from './Options';
-import './index.css';
-import './../../globals.css';
 
 const container = document.getElementById('app-container');
 
 if (container) {
-  const root = createRoot(container); // createRoot(container!) if you use TypeScript
-  root.render(<Options title={'Settings'} />);
+  // Remove any existing classes - the component handles its own styling
+  container.className = '';
+  container.style.margin = '0';
+  container.style.padding = '0';
+
+  const root = createRoot(container);
+  root.render(<Options />);
 }

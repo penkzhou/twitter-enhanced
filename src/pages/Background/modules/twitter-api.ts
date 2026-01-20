@@ -1,7 +1,7 @@
 export class TwitterAPI {
   private static instance: TwitterAPI;
 
-  private constructor() { }
+  private constructor() {}
 
   private bearerToken: string =
     'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
@@ -62,11 +62,11 @@ export class TwitterAPI {
     isTwitter: boolean
   ): Promise<
     | {
-      videoUrl: string;
-      thumbnailUrl: string;
-      tweetUrl: string;
-      tweetText: string;
-    }[]
+        videoUrl: string;
+        thumbnailUrl: string;
+        tweetUrl: string;
+        tweetText: string;
+      }[]
     | null
   > {
     try {
@@ -102,7 +102,7 @@ export class TwitterAPI {
       let tweetText = tweet.legacy?.full_text ?? '';
       let tweetUserScreenName =
         tweet.core?.user_results?.result &&
-          'legacy' in tweet.core?.user_results?.result
+        'legacy' in tweet.core?.user_results?.result
           ? tweet.core?.user_results?.result.legacy.screen_name
           : '';
 
@@ -140,7 +140,7 @@ export class TwitterAPI {
           tweetText = quotedStatus.legacy?.full_text ?? '';
           tweetUserScreenName =
             quotedStatus.core?.user_results?.result &&
-              'legacy' in quotedStatus.core?.user_results?.result
+            'legacy' in quotedStatus.core?.user_results?.result
               ? quotedStatus.core?.user_results?.result.legacy.screen_name
               : '';
           finalTweetId = quotedStatus?.rest_id ?? tweetId;
@@ -156,11 +156,13 @@ export class TwitterAPI {
           tweetText,
         }));
       }
+      // No video found in tweet - return empty array instead of null
+      return [];
     } catch (error) {
       console.error('Error fetching video info:', error);
+      // Return null only on actual errors to distinguish from "no video"
+      return null;
     }
-
-    return null;
   }
 
   makeLatestEndpoint = (domain: string, tweetId: string): string => {

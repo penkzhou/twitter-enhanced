@@ -1,0 +1,8 @@
+# Run lint-staged (prettier + eslint on staged files)
+npx lint-staged
+
+# Type check
+npm run typecheck
+
+# Run tests
+npm test
