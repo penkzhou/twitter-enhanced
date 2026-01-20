@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import 'fake-indexeddb/auto';
 
 // Mock Chrome extension APIs
-global.chrome = {
+(global as any).chrome = {
   runtime: {
     id: 'test-extension-id',
     onMessage: {
@@ -84,14 +84,14 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock IntersectionObserver
-global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+(global as any).IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
 
 // Mock ResizeObserver
-global.ResizeObserver = jest.fn().mockImplementation(() => ({
+(global as any).ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
