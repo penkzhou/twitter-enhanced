@@ -12,10 +12,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
+
     - uses: actions/setup-node@v4
       with:
         node-version: 22
-
+        cache: 'pnpm'
 
     - name: Configure .env file
       id: generate_env_file
@@ -27,13 +33,11 @@ jobs:
         mv .env.example .env
         sed -i "s/GA_MEASUREMENT_ID=/GA_MEASUREMENT_ID=$GA_MEASUREMENT_ID/" .env
         sed -i "s/GA_API_SECRET=/GA_API_SECRET=$GA_API_SECRET/" .env
-                 
-
 
     - name: Build
       run: |
-        npm ci
-        npm run build
+        pnpm install --frozen-lockfile
+        pnpm run build
         
     - name: Read package.json
       uses: zvonimirsun/read-package-version-actions@v2

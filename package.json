@@ -13,14 +13,15 @@
     "start": "node utils/webserver.js",
     "lint": "eslint --ignore-pattern '!.eslint-plugin-local.js' -- 'src/**/*.ts' 'src/**/*.tsx'",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
     "analyze": "webpack-bundle-analyzer build/stats.json",
-    "clean": "rm -rf build node_modules package-lock.json && npm install",
-    "security:check": "npm audit",
-    "security:fix": "npm audit fix"
+    "clean": "rm -rf build node_modules pnpm-lock.yaml && pnpm install",
+    "security:check": "pnpm audit",
+    "security:fix": "pnpm audit --fix"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -47,6 +48,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/chrome": "^0.1.0",
     "@types/jest": "^30.0.0",
+    "@types/node": "^25.0.9",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.20",
