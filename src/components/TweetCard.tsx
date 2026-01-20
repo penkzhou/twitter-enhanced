@@ -38,6 +38,9 @@ const VerifiedBadge: React.FC = () => (
     style={{
       width: '18px',
       height: '18px',
+      minWidth: '18px',
+      minHeight: '18px',
+      flexShrink: 0,
       fill: 'rgb(29, 155, 240)',
       marginLeft: '4px',
     }}
