@@ -1,5 +1,4 @@
 import { TweetParser } from '../TweetParser';
-import { TweetData } from '../../types/tweet';
 
 describe('TweetParser - Screenshot Features', () => {
   let tweetParser: TweetParser;
