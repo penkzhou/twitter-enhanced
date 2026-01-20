@@ -69,15 +69,6 @@ export function upgradeTweetImages(tweetData: TweetData): TweetData {
 }
 
 /**
- * Gets the optimal scale factor based on device and quality requirements
- */
-function getOptimalScale(requestedScale: number): number {
-  const devicePixelRatio = window.devicePixelRatio || 1;
-  // Use at least 2x scale, or devicePixelRatio * requested scale for retina displays
-  return Math.max(requestedScale, devicePixelRatio * 2);
-}
-
-/**
  * Generates a screenshot of a tweet as a data URL
  */
 export async function generateScreenshot(
@@ -91,15 +82,16 @@ export async function generateScreenshot(
   const hdTweetData = upgradeTweetImages(tweetData);
 
   // Create a temporary container for rendering
+  // Use position: absolute instead of fixed to avoid layout issues
   const container = document.createElement('div');
   container.id = 'tweet-screenshot-container';
   container.style.cssText = `
-    position: fixed;
-    left: -9999px;
+    position: absolute;
+    left: 0;
     top: 0;
     width: 598px;
-    z-index: -1;
-    visibility: hidden;
+    z-index: -9999;
+    pointer-events: none;
   `;
   document.body.appendChild(container);
 
@@ -116,10 +108,12 @@ export async function generateScreenshot(
           watermarkText: options.watermarkText,
         })
       );
-      // Wait for next frame to ensure render is complete
+      // Wait for multiple frames to ensure render and layout are complete
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          resolve();
+          requestAnimationFrame(() => {
+            resolve();
+          });
         });
       });
     });
@@ -140,20 +134,40 @@ export async function generateScreenshot(
       )
     );
 
-    // Make container visible for html2canvas (but still off-screen)
-    container.style.visibility = 'visible';
+    // Wait a bit more for layout to stabilize
+    await new Promise((resolve) => setTimeout(resolve, 50));
 
-    // Calculate optimal scale
-    const scale = getOptimalScale(options.scale);
+    const element = container.firstChild as HTMLElement;
+    const elementWidth = element.offsetWidth;
+    const elementHeight = element.offsetHeight;
 
-    // Generate canvas using html2canvas
-    const canvas = await html2canvas(container.firstChild as HTMLElement, {
-      scale,
+    // Generate canvas using html2canvas with optimized settings
+    const canvas = await html2canvas(element, {
+      // Use requested scale directly without devicePixelRatio multiplication
+      // This provides more predictable results
+      scale: options.scale,
+
+      // Explicitly set window dimensions to match element
+      windowWidth: elementWidth,
+      windowHeight: elementHeight,
+
+      // Transparent background (TweetCard has its own background)
       backgroundColor: null,
+
+      // Disable logging
       logging: false,
+
+      // Image handling
       useCORS: true,
       allowTaint: true,
-      imageTimeout: 15000, // Wait longer for images
+      imageTimeout: 15000,
+
+      // Use onclone to ensure the cloned element has stable layout
+      onclone: (clonedDoc, clonedElement) => {
+        // Force the cloned element to have explicit dimensions
+        clonedElement.style.width = `${elementWidth}px`;
+        clonedElement.style.height = `${elementHeight}px`;
+      },
     });
 
     // Convert canvas to data URL with high quality
