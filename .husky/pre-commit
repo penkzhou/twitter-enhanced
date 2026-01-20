@@ -1,5 +1,5 @@
 # Run lint-staged (prettier + eslint on staged files)
-npx lint-staged
+node_modules/.bin/lint-staged
 
 # Type check
 npm run typecheck
