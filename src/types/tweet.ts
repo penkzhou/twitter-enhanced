@@ -46,5 +46,5 @@ export interface ScreenshotOptions {
 export const DEFAULT_SCREENSHOT_OPTIONS: ScreenshotOptions = {
   theme: 'auto',
   showWatermark: false,
-  scale: 3, // Higher scale for better quality on retina displays
+  scale: 2, // Scale 2 provides good quality without rendering artifacts
 };
