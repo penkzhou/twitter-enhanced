@@ -66,7 +66,7 @@ const ScreenshotDialog: React.FC<ScreenshotDialogProps> = ({
           theme: getResolvedTheme(),
           showWatermark,
           watermarkText: showWatermark ? watermarkText : undefined,
-          scale: 1, // Lower scale for preview
+          scale: 2, // Use decent scale for preview clarity
         };
         const dataUrl = await generateScreenshot(tweetData, options);
         setPreviewDataUrl(dataUrl);

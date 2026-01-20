@@ -28,6 +28,56 @@ function detectTheme(): 'light' | 'dark' {
 }
 
 /**
+ * Upgrades Twitter image URLs to higher resolution versions
+ * Twitter image URL patterns:
+ * - Avatar: https://pbs.twimg.com/profile_images/.../name_normal.jpg -> name_400x400.jpg
+ * - Media: https://pbs.twimg.com/media/...?format=jpg&name=small -> name=large or name=4096x4096
+ */
+export function upgradeImageUrl(url: string): string {
+  if (!url) return url;
+
+  // Upgrade avatar images from _normal to _400x400
+  if (url.includes('profile_images') && url.includes('_normal')) {
+    return url.replace('_normal', '_400x400');
+  }
+
+  // Upgrade media images to large/4096x4096
+  if (url.includes('pbs.twimg.com/media')) {
+    // Replace name parameter with larger size
+    if (url.includes('name=')) {
+      return url.replace(/name=\w+/, 'name=large');
+    }
+    // Add name parameter if not present
+    if (url.includes('?')) {
+      return url + '&name=large';
+    }
+    return url + '?name=large';
+  }
+
+  return url;
+}
+
+/**
+ * Upgrades all image URLs in tweet data to high resolution
+ */
+export function upgradeTweetImages(tweetData: TweetData): TweetData {
+  return {
+    ...tweetData,
+    avatarUrl: upgradeImageUrl(tweetData.avatarUrl),
+    imageUrls: tweetData.imageUrls.map(upgradeImageUrl),
+  };
+}
+
+/**
+ * Gets the optimal scale factor based on device and quality requirements
+ */
+function getOptimalScale(requestedScale: number): number {
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Use at least 2x scale, or devicePixelRatio * requested scale for retina displays
+  return Math.max(requestedScale, devicePixelRatio * 2);
+}
+
+/**
  * Generates a screenshot of a tweet as a data URL
  */
 export async function generateScreenshot(
@@ -36,6 +86,9 @@ export async function generateScreenshot(
 ): Promise<string> {
   // Determine theme
   const theme = options.theme === 'auto' ? detectTheme() : options.theme;
+
+  // Upgrade images to high resolution
+  const hdTweetData = upgradeTweetImages(tweetData);
 
   // Create a temporary container for rendering
   const container = document.createElement('div');
@@ -57,7 +110,7 @@ export async function generateScreenshot(
     await new Promise<void>((resolve) => {
       root.render(
         React.createElement(TweetCard, {
-          tweetData,
+          tweetData: hdTweetData,
           theme,
           showWatermark: options.showWatermark,
           watermarkText: options.watermarkText,
@@ -71,20 +124,40 @@ export async function generateScreenshot(
       });
     });
 
+    // Wait for images to load
+    const images = container.querySelectorAll('img');
+    await Promise.all(
+      Array.from(images).map(
+        (img) =>
+          new Promise<void>((resolve) => {
+            if (img.complete) {
+              resolve();
+            } else {
+              img.onload = () => resolve();
+              img.onerror = () => resolve(); // Continue even if image fails
+            }
+          })
+      )
+    );
+
     // Make container visible for html2canvas (but still off-screen)
     container.style.visibility = 'visible';
 
+    // Calculate optimal scale
+    const scale = getOptimalScale(options.scale);
+
     // Generate canvas using html2canvas
     const canvas = await html2canvas(container.firstChild as HTMLElement, {
-      scale: options.scale,
+      scale,
       backgroundColor: null,
       logging: false,
       useCORS: true,
       allowTaint: true,
+      imageTimeout: 15000, // Wait longer for images
     });
 
-    // Convert canvas to data URL
-    const dataUrl = canvas.toDataURL('image/png');
+    // Convert canvas to data URL with high quality
+    const dataUrl = canvas.toDataURL('image/png', 1.0);
 
     // Cleanup
     root.unmount();

@@ -83,6 +83,14 @@ describe('Screenshot Utility', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     document.body.innerHTML = '';
+
+    // Mock HTMLImageElement to always be complete
+    Object.defineProperty(HTMLImageElement.prototype, 'complete', {
+      get() {
+        return true;
+      },
+      configurable: true,
+    });
   });
 
   describe('generateScreenshot', () => {
