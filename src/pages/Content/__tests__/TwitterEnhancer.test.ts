@@ -21,7 +21,8 @@ jest.mock('react-dom/client', () => ({
   })),
 }));
 
-// Mock DOM globals
+// Mock DOM globals - use spyOn instead of defineProperty for document/window
+// In Jest v30 with jsdom, document is not configurable
 const mockElement = {
   className: '',
   innerHTML: '',
@@ -41,32 +42,13 @@ const mockElement = {
   closest: jest.fn(),
 };
 
-Object.defineProperty(global, 'document', {
-  value: {
-    body: {
-      appendChild: jest.fn(),
-      removeChild: jest.fn(),
-      querySelectorAll: jest.fn(() => []),
-    },
-    createElement: jest.fn(() => mockElement),
-    querySelectorAll: jest.fn(() => []),
-    head: {
-      appendChild: jest.fn(),
-    },
-    addEventListener: jest.fn(),
-  },
-  writable: true,
-});
+// Spy on document methods instead of redefining document
+jest.spyOn(document, 'createElement').mockImplementation(() => mockElement as unknown as HTMLElement);
+jest.spyOn(document, 'querySelectorAll').mockImplementation(() => [] as unknown as NodeListOf<Element>);
+jest.spyOn(document.body, 'appendChild').mockImplementation(jest.fn());
+jest.spyOn(document, 'addEventListener').mockImplementation(jest.fn());
 
-Object.defineProperty(global, 'window', {
-  value: {
-    location: {
-      hostname: 'twitter.com',
-    },
-    addEventListener: jest.fn(),
-  },
-  writable: true,
-});
+// window.location is mocked globally in test/setup.ts
 
 // Mock Chrome extension APIs
 const mockChromeStorage = {
@@ -153,11 +135,16 @@ describe('TwitterEnhancer Module', () => {
 
       // Fresh import
       jest.resetModules();
+
+      // Re-spy after resetModules since spies are cleared
+      const createElementSpy = jest.spyOn(document, 'createElement');
+      const appendChildSpy = jest.spyOn(document.body, 'appendChild');
+
       require('../index.ts');
 
       // Verify DOM manipulation
-      expect(document.createElement).toHaveBeenCalled();
-      expect(document.body.appendChild).toHaveBeenCalled();
+      expect(createElementSpy).toHaveBeenCalled();
+      expect(appendChildSpy).toHaveBeenCalled();
     });
 
     it('should set up MutationObserver', () => {

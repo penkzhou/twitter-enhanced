@@ -77,7 +77,7 @@ export class RemarkService implements IRemarkService {
   private async loadRemarks(): Promise<void> {
     return new Promise((resolve) => {
       chrome.storage.sync.get(['userRemarks'], (result) => {
-        this.userRemarks = result.userRemarks || [];
+        this.userRemarks = (result.userRemarks as UserRemark[] | undefined) || [];
         resolve();
       });
     });

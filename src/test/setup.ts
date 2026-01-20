@@ -65,6 +65,25 @@ if (!global.structuredClone) {
   global.structuredClone = (obj: any) => JSON.parse(JSON.stringify(obj));
 }
 
+// Mock window.location for tests that need it
+// Note: In Jest v30 with jsdom, assigning to window.location produces a warning
+// but the tests still pass. This is the recommended approach for mocking location.
+// @ts-ignore - deleting for mock setup
+delete (window as any).location;
+window.location = {
+  hostname: 'twitter.com',
+  href: 'https://twitter.com',
+  origin: 'https://twitter.com',
+  protocol: 'https:',
+  host: 'twitter.com',
+  pathname: '/',
+  search: '',
+  hash: '',
+  reload: jest.fn(),
+  replace: jest.fn(),
+  assign: jest.fn(),
+} as unknown as Location;
+
 // Mock DOM methods that might not be available in jsdom
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -98,10 +117,17 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 const originalError = console.error;
 beforeAll(() => {
   console.error = (...args) => {
-    if (
-      typeof args[0] === 'string' &&
-      args[0].includes('Warning: ReactDOM.render is no longer supported')
-    ) {
+    // Suppress known warnings that don't affect test results
+    if (typeof args[0] === 'string') {
+      if (
+        args[0].includes('Warning: ReactDOM.render is no longer supported') ||
+        args[0].includes('Error: Not implemented: navigation')
+      ) {
+        return;
+      }
+    }
+    // Also handle Error objects
+    if (args[0] instanceof Error && args[0].message.includes('Not implemented: navigation')) {
       return;
     }
     originalError.call(console, ...args);

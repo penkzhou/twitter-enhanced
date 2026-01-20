@@ -54,7 +54,7 @@ const Options: React.FC<OptionsProps> = ({ title }) => {
 
   const loadRemarks = () => {
     chrome.storage.sync.get(['userRemarks'], (result) => {
-      setUserRemarks(result.userRemarks || []);
+      setUserRemarks((result.userRemarks as UserRemark[] | undefined) || []);
     });
   };
 
