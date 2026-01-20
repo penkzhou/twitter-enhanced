@@ -21,7 +21,15 @@
     "analyze": "webpack-bundle-analyzer build/stats.json",
     "clean": "rm -rf build node_modules pnpm-lock.yaml && pnpm install",
     "security:check": "pnpm audit",
-    "security:fix": "pnpm audit --fix"
+    "security:fix": "pnpm audit --fix",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write",
+    "*.{ts,tsx}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -44,6 +52,7 @@
     "@babel/preset-react": "^7.28.5",
     "@eslint/js": "^9.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
+    "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -52,7 +61,6 @@
     "@types/node": "^25.0.9",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@tailwindcss/postcss": "^4.1.18",
     "babel-loader": "^10.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^13.0.0",
@@ -65,10 +73,12 @@
     "globals": "^17.0.0",
     "html-loader": "^5.0.0",
     "html-webpack-plugin": "^5.6.6",
+    "husky": "^9.1.7",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.0.0",
     "jest-environment-jsdom": "^30.0.0",
     "jest-webextension-mock": "^4.0.0",
+    "lint-staged": "^16.2.7",
     "postcss": "^8.4.41",
     "prettier": "^3.0.0",
     "react-refresh": "^0.18.0",
