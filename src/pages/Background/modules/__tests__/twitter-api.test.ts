@@ -477,7 +477,7 @@ describe('TwitterAPI', () => {
       const instance = await TwitterAPI.getInstance();
       const result = await instance.getVideoInfo('1234567890', true);
 
-      expect(result).toBeNull(); // No media = null according to API logic
+      expect(result).toEqual([]); // No media = empty array (not an error)
     });
   });
 

@@ -12,5 +12,5 @@ if (container) {
   container.style.padding = '0';
 
   const root = createRoot(container);
-  root.render(<Options title={'Settings'} />);
+  root.render(<Options />);
 }

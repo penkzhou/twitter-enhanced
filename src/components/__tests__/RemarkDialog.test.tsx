@@ -307,4 +307,269 @@ describe('RemarkDialog', () => {
       expect(onSave).toHaveBeenCalledWith('testuser', '');
     });
   });
+
+  describe('Dark Mode Detection', () => {
+    const originalGetComputedStyle = window.getComputedStyle;
+    const originalMatchMedia = window.matchMedia;
+
+    beforeEach(() => {
+      // Ensure we start with original implementations
+      window.getComputedStyle = originalGetComputedStyle;
+      window.matchMedia = originalMatchMedia;
+    });
+
+    afterEach(() => {
+      // Restore original implementations
+      window.getComputedStyle = originalGetComputedStyle;
+      window.matchMedia = originalMatchMedia;
+    });
+
+    it('should detect dark mode from dark background color', () => {
+      // Mock getComputedStyle to return dark background for detectTwitterDarkMode
+      const mockGetComputedStyle = jest.fn().mockReturnValue({
+        backgroundColor: 'rgb(0, 0, 0)',
+        getPropertyValue: jest.fn().mockReturnValue(''),
+      });
+      window.getComputedStyle = mockGetComputedStyle;
+
+      render(<RemarkDialog {...defaultProps} />);
+
+      // Verify getComputedStyle was called with document.body
+      expect(mockGetComputedStyle).toHaveBeenCalledWith(document.body);
+
+      // When dark mode is detected, backdrop should have the dark mode color
+      const overlay = document.querySelector(
+        '[style*="position: fixed"]'
+      ) as HTMLElement;
+      expect(overlay?.style.backgroundColor).toBe('rgba(91, 112, 131, 0.4)');
+    });
+
+    it('should detect light mode from light background color', () => {
+      // Mock getComputedStyle to return light background
+      const mockGetComputedStyle = jest.fn().mockReturnValue({
+        backgroundColor: 'rgb(255, 255, 255)',
+        getPropertyValue: jest.fn().mockReturnValue(''),
+      });
+      window.getComputedStyle = mockGetComputedStyle;
+
+      render(<RemarkDialog {...defaultProps} />);
+
+      // When light mode is detected, backdrop should have the light mode color
+      const overlay = document.querySelector(
+        '[style*="position: fixed"]'
+      ) as HTMLElement;
+      expect(overlay?.style.backgroundColor).toBe('rgba(0, 0, 0, 0.4)');
+    });
+
+    it('should fallback to system preference when background parsing fails', () => {
+      // Mock getComputedStyle to return invalid background
+      const mockGetComputedStyle = jest.fn().mockReturnValue({
+        backgroundColor: 'invalid-color',
+        getPropertyValue: jest.fn().mockReturnValue(''),
+      });
+      window.getComputedStyle = mockGetComputedStyle;
+
+      // Mock matchMedia to return dark preference
+      window.matchMedia = jest.fn().mockReturnValue({
+        matches: true,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      });
+
+      render(<RemarkDialog {...defaultProps} />);
+
+      const overlay = document.querySelector(
+        '[style*="position: fixed"]'
+      ) as HTMLElement;
+      expect(overlay?.style.backgroundColor).toBe('rgba(91, 112, 131, 0.4)');
+    });
+
+    it('should fallback to system preference when getComputedStyle throws', () => {
+      // Track calls to know when to throw vs return normally
+      let callCount = 0;
+      const mockGetComputedStyle = jest
+        .fn()
+        .mockImplementation((element: Element) => {
+          callCount++;
+          // First call is from detectTwitterDarkMode, throw error
+          if (callCount === 1 && element === document.body) {
+            throw new Error('getComputedStyle error');
+          }
+          // Subsequent calls for style assertions should work
+          return {
+            backgroundColor: '',
+            getPropertyValue: jest.fn().mockReturnValue(''),
+          };
+        });
+      window.getComputedStyle = mockGetComputedStyle;
+
+      // Mock matchMedia to return light preference
+      window.matchMedia = jest.fn().mockReturnValue({
+        matches: false,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      });
+
+      render(<RemarkDialog {...defaultProps} />);
+
+      const overlay = document.querySelector(
+        '[style*="position: fixed"]'
+      ) as HTMLElement;
+      expect(overlay?.style.backgroundColor).toBe('rgba(0, 0, 0, 0.4)');
+    });
+
+    it('should handle rgba background colors', () => {
+      // Mock getComputedStyle to return rgba dark background
+      const mockGetComputedStyle = jest.fn().mockReturnValue({
+        backgroundColor: 'rgba(20, 20, 20, 1)',
+        getPropertyValue: jest.fn().mockReturnValue(''),
+      });
+      window.getComputedStyle = mockGetComputedStyle;
+
+      render(<RemarkDialog {...defaultProps} />);
+
+      const overlay = document.querySelector(
+        '[style*="position: fixed"]'
+      ) as HTMLElement;
+      expect(overlay?.style.backgroundColor).toBe('rgba(91, 112, 131, 0.4)');
+    });
+  });
+
+  describe('Character Count Display', () => {
+    it('should not display character count when input is empty', () => {
+      render(<RemarkDialog {...defaultProps} />);
+
+      // Look for any element containing just a number (character count)
+      const characterCountElements = screen.queryAllByText(/^\d+$/);
+      expect(characterCountElements.length).toBe(0);
+    });
+
+    it('should display character count when input has content', async () => {
+      const user = userEvent.setup();
+      render(<RemarkDialog {...defaultProps} />);
+
+      const input = getRemarkInput();
+      await user.type(input, 'Hello');
+
+      // Character count should show "5"
+      expect(screen.getByText('5')).toBeInTheDocument();
+    });
+
+    it('should update character count as user types', async () => {
+      const user = userEvent.setup();
+      render(<RemarkDialog {...defaultProps} />);
+
+      const input = getRemarkInput();
+      await user.type(input, 'Hi');
+
+      expect(screen.getByText('2')).toBeInTheDocument();
+
+      await user.type(input, ' there');
+
+      expect(screen.getByText('8')).toBeInTheDocument();
+    });
+
+    it('should hide character count when input is cleared', async () => {
+      const user = userEvent.setup();
+      render(<RemarkDialog {...defaultProps} existingRemark="Test" />);
+
+      // Initially should show character count
+      expect(screen.getByText('4')).toBeInTheDocument();
+
+      const input = getRemarkInput();
+      await user.clear(input);
+
+      // Character count should be hidden
+      const characterCountElements = screen.queryAllByText(/^\d+$/);
+      expect(characterCountElements.length).toBe(0);
+    });
+  });
+
+  describe('Focus/Blur State (Floating Label)', () => {
+    it('should update label style when input is focused', () => {
+      render(<RemarkDialog {...defaultProps} />);
+
+      const input = getRemarkInput();
+      const label = screen.getByText('Enter remark for this user');
+
+      // Focus the input
+      fireEvent.focus(input);
+
+      // When focused, label should have the focus color (Twitter blue)
+      expect(label).toHaveStyle({
+        color: '#1D9BF0',
+      });
+    });
+
+    it('should update label style when input is blurred with no value', () => {
+      render(<RemarkDialog {...defaultProps} />);
+
+      const input = getRemarkInput();
+      const label = screen.getByText('Enter remark for this user');
+
+      // Focus then blur without typing
+      fireEvent.focus(input);
+      fireEvent.blur(input);
+
+      // When blurred with no value, label should return to placeholder color
+      // In light mode this is #71767B or #536471
+      expect(label).not.toHaveStyle({
+        color: '#1D9BF0',
+      });
+    });
+
+    it('should keep label in floated position when input has value', async () => {
+      const user = userEvent.setup();
+      render(<RemarkDialog {...defaultProps} />);
+
+      const input = getRemarkInput();
+      const label = screen.getByText('Enter remark for this user');
+
+      // Type something and blur
+      await user.type(input, 'Test');
+      fireEvent.blur(input);
+
+      // Label should remain in floated position (smaller font size)
+      expect(label).toHaveStyle({
+        fontSize: '12px',
+      });
+    });
+
+    it('should show input border focus state', () => {
+      render(<RemarkDialog {...defaultProps} />);
+
+      const input = getRemarkInput();
+
+      // Find the input container (parent div with border)
+      const inputContainer = input.parentElement;
+
+      // Focus the input
+      fireEvent.focus(input);
+
+      // Container should have the focus border color
+      expect(inputContainer).toHaveStyle({
+        borderColor: '#1D9BF0',
+      });
+    });
+
+    it('should remove input border focus state on blur', async () => {
+      const user = userEvent.setup();
+      render(<RemarkDialog {...defaultProps} />);
+
+      const input = getRemarkInput();
+      const inputContainer = input.parentElement;
+
+      // Focus then blur
+      fireEvent.focus(input);
+      fireEvent.blur(input);
+
+      // Give time for state to update
+      await user.click(document.body);
+
+      // Container should not have the focus border color
+      expect(inputContainer).not.toHaveStyle({
+        borderColor: '#1D9BF0',
+      });
+    });
+  });
 });

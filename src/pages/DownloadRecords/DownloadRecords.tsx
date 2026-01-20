@@ -94,14 +94,20 @@ const DownloadRecords: React.FC = () => {
     });
 
     const initializeRecords = async () => {
-      const allRecords = await db.getAll();
-      setRecords(allRecords);
+      try {
+        const allRecords = await db.getAll();
+        setRecords(allRecords);
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const recordId = urlParams.get('recordId');
-      if (recordId) {
-        const id = parseInt(recordId, 10);
-        findAndNavigateToRecord(allRecords, id);
+        const urlParams = new URLSearchParams(window.location.search);
+        const recordId = urlParams.get('recordId');
+        if (recordId) {
+          const id = parseInt(recordId, 10);
+          findAndNavigateToRecord(allRecords, id);
+        }
+      } catch (error) {
+        console.error('Failed to initialize download records:', error);
+        setRecords([]);
+        // Could show an error message to user here
       }
     };
 
@@ -192,16 +198,22 @@ const DownloadRecords: React.FC = () => {
 
   const confirmDelete = async () => {
     if (recordToDelete !== null) {
-      Logger.logEvent('confirmDelete', { record_id: recordToDelete });
-      await db.remove(recordToDelete);
-      const updatedRecords = await loadRecords();
-      closeDeleteDialog();
+      try {
+        Logger.logEvent('confirmDelete', { record_id: recordToDelete });
+        await db.remove(recordToDelete);
+        const updatedRecords = await loadRecords();
+        closeDeleteDialog();
 
-      if (
-        updatedRecords.length <= (currentPage - 1) * recordsPerPage &&
-        currentPage > 1
-      ) {
-        setCurrentPage((prevPage) => prevPage - 1);
+        if (
+          updatedRecords.length <= (currentPage - 1) * recordsPerPage &&
+          currentPage > 1
+        ) {
+          setCurrentPage((prevPage) => prevPage - 1);
+        }
+      } catch (error) {
+        console.error('Failed to delete record:', error);
+        closeDeleteDialog();
+        // Could show an error message to user here
       }
     }
   };
@@ -216,11 +228,17 @@ const DownloadRecords: React.FC = () => {
   };
 
   const confirmClearAll = async () => {
-    Logger.logEvent('clearAllRecords', {});
-    await db.clear();
-    await loadRecords();
-    closeClearAllDialog();
-    setCurrentPage(1);
+    try {
+      Logger.logEvent('clearAllRecords', {});
+      await db.clear();
+      await loadRecords();
+      closeClearAllDialog();
+      setCurrentPage(1);
+    } catch (error) {
+      console.error('Failed to clear all records:', error);
+      closeClearAllDialog();
+      // Could show an error message to user here
+    }
   };
 
   const totalPages = Math.max(
@@ -356,6 +374,7 @@ const DownloadRecords: React.FC = () => {
           >
             <button
               onClick={onClose}
+              aria-label={chrome.i18n.getMessage('cancel')}
               style={{
                 width: '34px',
                 height: '34px',
@@ -748,9 +767,8 @@ const DownloadRecords: React.FC = () => {
                             transition: 'background-color 0.15s',
                           }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = isDarkMode
-                              ? 'rgba(29, 155, 240, 0.1)'
-                              : 'rgba(29, 155, 240, 0.1)';
+                            e.currentTarget.style.backgroundColor =
+                              'rgba(29, 155, 240, 0.1)';
                           }}
                           onMouseLeave={(e) => {
                             e.currentTarget.style.backgroundColor =
@@ -830,6 +848,7 @@ const DownloadRecords: React.FC = () => {
                           </button>
                           <button
                             onClick={() => openDeleteDialog(record.id)}
+                            aria-label={chrome.i18n.getMessage('delete')}
                             style={{
                               display: 'inline-flex',
                               alignItems: 'center',

@@ -24,10 +24,6 @@ interface UserRemark {
   remark: string;
 }
 
-interface OptionsProps {
-  title: string;
-}
-
 /**
  * Detect system dark mode preference
  */
@@ -106,7 +102,7 @@ const UserIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const Options: React.FC<OptionsProps> = ({ title: _title }) => {
+const Options: React.FC = () => {
   const [userRemarks, setUserRemarks] = useState<UserRemark[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -144,6 +140,11 @@ const Options: React.FC<OptionsProps> = ({ title: _title }) => {
 
   const loadRemarks = () => {
     chrome.storage.sync.get(['userRemarks'], (result) => {
+      if (chrome.runtime.lastError) {
+        console.error('Failed to load remarks:', chrome.runtime.lastError);
+        setUserRemarks([]);
+        return;
+      }
       setUserRemarks((result.userRemarks as UserRemark[] | undefined) || []);
     });
   };
@@ -151,6 +152,10 @@ const Options: React.FC<OptionsProps> = ({ title: _title }) => {
   const saveRemarks = (remarks: UserRemark[]) => {
     Logger.logEvent('save_remarks_on_options', { remarks: remarks });
     chrome.storage.sync.set({ userRemarks: remarks }, () => {
+      if (chrome.runtime.lastError) {
+        console.error('Failed to save remarks:', chrome.runtime.lastError);
+        return;
+      }
       console.log('Remarks saved');
     });
   };
@@ -251,6 +256,10 @@ const Options: React.FC<OptionsProps> = ({ title: _title }) => {
         } catch {
           alert(chrome.i18n.getMessage('importError'));
         }
+      };
+      reader.onerror = () => {
+        console.error('Failed to read file:', reader.error);
+        alert(chrome.i18n.getMessage('importError'));
       };
       reader.readAsText(file);
     }

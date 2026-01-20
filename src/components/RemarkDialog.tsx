@@ -10,8 +10,9 @@ export interface RemarkDialogProps {
 }
 
 /**
- * Detect if Twitter/X is currently in dark mode by checking background color
- * Twitter uses: white for light, rgb(21, 32, 43) for dim, black for dark
+ * Detect if Twitter/X is currently in dark mode by checking background luminance.
+ * Uses perceived luminance formula (0.299*R + 0.587*G + 0.114*B) to determine
+ * if the background is dark (luminance < 0.5). Falls back to system preference.
  */
 const detectTwitterDarkMode = (): boolean => {
   try {
@@ -157,6 +158,7 @@ const RemarkDialog: React.FC<RemarkDialogProps> = ({
           {/* Close Button */}
           <button
             onClick={onCancel}
+            aria-label={chrome.i18n.getMessage('cancel')}
             style={{
               width: '34px',
               height: '34px',

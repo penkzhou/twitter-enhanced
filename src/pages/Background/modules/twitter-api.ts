@@ -156,11 +156,13 @@ export class TwitterAPI {
           tweetText,
         }));
       }
+      // No video found in tweet - return empty array instead of null
+      return [];
     } catch (error) {
       console.error('Error fetching video info:', error);
+      // Return null only on actual errors to distinguish from "no video"
+      return null;
     }
-
-    return null;
   }
 
   makeLatestEndpoint = (domain: string, tweetId: string): string => {

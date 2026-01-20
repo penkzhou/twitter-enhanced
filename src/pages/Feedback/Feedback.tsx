@@ -37,9 +37,7 @@ const getTheme = (isDark: boolean) => ({
   primaryBg: TWITTER_BLUE,
   primaryText: '#FFFFFF',
   primaryHover: '#1A8CD8',
-  primaryDisabled: isDark
-    ? 'rgba(29, 155, 240, 0.5)'
-    : 'rgba(29, 155, 240, 0.5)',
+  primaryDisabled: 'rgba(29, 155, 240, 0.5)',
 });
 
 const fontFamily =
@@ -126,9 +124,7 @@ const Feedback: React.FC = () => {
                 width: '64px',
                 height: '64px',
                 borderRadius: '50%',
-                backgroundColor: isDarkMode
-                  ? 'rgba(29, 155, 240, 0.1)'
-                  : 'rgba(29, 155, 240, 0.1)',
+                backgroundColor: 'rgba(29, 155, 240, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

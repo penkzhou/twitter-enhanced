@@ -156,6 +156,11 @@ const Popup: React.FC = () => {
         'downloadDirectory',
       ],
       (result) => {
+        if (chrome.runtime.lastError) {
+          console.error('Failed to load settings:', chrome.runtime.lastError);
+          // Use default values on error
+          return;
+        }
         setRemarkFeatureEnabled(
           (result.remarkFeatureEnabled as boolean | undefined) ?? true
         );
@@ -177,6 +182,15 @@ const Popup: React.FC = () => {
         downloadDirectory,
       },
       () => {
+        if (chrome.runtime.lastError) {
+          console.error('Failed to save settings:', chrome.runtime.lastError);
+          setSaveMessage(
+            chrome.i18n.getMessage('settingsSaveError') ||
+              'Failed to save settings'
+          );
+          setTimeout(() => setSaveMessage(''), 3000);
+          return;
+        }
         console.log('Settings saved');
         updateContentScript();
         setSaveMessage(chrome.i18n.getMessage('settingsSaved'));
