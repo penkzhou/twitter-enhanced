@@ -1,7 +1,7 @@
 export class TwitterAPI {
   private static instance: TwitterAPI;
 
-  private constructor() {}
+  private constructor() { }
 
   private bearerToken: string =
     'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
@@ -62,11 +62,11 @@ export class TwitterAPI {
     isTwitter: boolean
   ): Promise<
     | {
-        videoUrl: string;
-        thumbnailUrl: string;
-        tweetUrl: string;
-        tweetText: string;
-      }[]
+      videoUrl: string;
+      thumbnailUrl: string;
+      tweetUrl: string;
+      tweetText: string;
+    }[]
     | null
   > {
     try {
@@ -92,7 +92,7 @@ export class TwitterAPI {
       const data = await resp.json();
       console.log('data', data);
       const tweet =
-        data?.data?.threaded_conversation_with_injections_v2?.instructions[0]
+        data?.data?.threaded_conversation_with_injections_v2?.instructions[1]
           ?.entries[0]?.content?.itemContent?.tweet_results?.result ?? null;
       if (!tweet) {
         throw new Error('Tweet not found with id: ' + tweetId);
@@ -102,7 +102,7 @@ export class TwitterAPI {
       let tweetText = tweet.legacy?.full_text ?? '';
       let tweetUserScreenName =
         tweet.core?.user_results?.result &&
-        'legacy' in tweet.core?.user_results?.result
+          'legacy' in tweet.core?.user_results?.result
           ? tweet.core?.user_results?.result.legacy.screen_name
           : '';
 
@@ -140,7 +140,7 @@ export class TwitterAPI {
           tweetText = quotedStatus.legacy?.full_text ?? '';
           tweetUserScreenName =
             quotedStatus.core?.user_results?.result &&
-            'legacy' in quotedStatus.core?.user_results?.result
+              'legacy' in quotedStatus.core?.user_results?.result
               ? quotedStatus.core?.user_results?.result.legacy.screen_name
               : '';
           finalTweetId = quotedStatus?.rest_id ?? tweetId;

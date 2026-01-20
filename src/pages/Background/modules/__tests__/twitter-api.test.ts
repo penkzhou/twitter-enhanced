@@ -174,6 +174,7 @@ describe('TwitterAPI', () => {
         data: {
           threaded_conversation_with_injections_v2: {
             instructions: [
+              {}, // index 0 - other instruction type
               {
                 entries: [
                   {
@@ -254,6 +255,7 @@ describe('TwitterAPI', () => {
         data: {
           threaded_conversation_with_injections_v2: {
             instructions: [
+              {}, // index 0 - other instruction type
               {
                 entries: [
                   {
@@ -301,6 +303,7 @@ describe('TwitterAPI', () => {
         data: {
           threaded_conversation_with_injections_v2: {
             instructions: [
+              {}, // index 0 - other instruction type
               {
                 entries: [
                   {
@@ -371,6 +374,7 @@ describe('TwitterAPI', () => {
         data: {
           threaded_conversation_with_injections_v2: {
             instructions: [
+              {}, // index 0 - other instruction type
               {
                 entries: [
                   {
@@ -435,6 +439,7 @@ describe('TwitterAPI', () => {
         data: {
           threaded_conversation_with_injections_v2: {
             instructions: [
+              {}, // index 0 - other instruction type
               {
                 entries: [
                   {
@@ -486,7 +491,7 @@ describe('TwitterAPI', () => {
         json: async () => ({
           data: {
             threaded_conversation_with_injections_v2: {
-              instructions: [{ entries: [] }],
+              instructions: [{}, { entries: [] }],
             },
           },
         }),
@@ -513,7 +518,7 @@ describe('TwitterAPI', () => {
         json: async () => ({
           data: {
             threaded_conversation_with_injections_v2: {
-              instructions: [{ entries: [] }],
+              instructions: [{}, { entries: [] }],
             },
           },
         }),
