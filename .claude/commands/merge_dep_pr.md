@@ -33,11 +33,13 @@ git checkout -b chore/merge-dependencies-$(date +%Y%m%d)
 ### 4. 直接修改依赖文件（核心步骤）
 
 **前端依赖更新**（如果有）：
+
 1. 直接编辑 `frontend/package.json`
 2. 更新所有需要升级的依赖版本号
 3. 运行 `cd frontend && pnpm install` 重新生成 lock 文件
 
 **后端依赖更新**（如果有）：
+
 1. 直接编辑 `backend/pyproject.toml`
 2. 更新所有需要升级的依赖版本号
 3. 运行 `cd backend && uv lock --no-cache` 重新生成 lock 文件
@@ -53,6 +55,7 @@ make test            # 运行测试
 ### 6. 提交和推送
 
 1. 将所有变更添加到一个提交：
+
    ```bash
    git add .
    git commit -m "chore(deps): 合并依赖更新 ($(date +%Y-%m-%d))"
@@ -66,6 +69,7 @@ make test            # 运行测试
 ### 7. 创建 PR
 
 使用 `gh pr create` 创建 PR，包含：
+
 - **标题**：`chore(deps): 合并依赖更新 (YYYY-MM-DD)`
 - **描述**：
   - 列出所有合并的 PR 编号和依赖变更
@@ -79,4 +83,4 @@ make test            # 运行测试
 2. **分前后端处理**：前后端依赖分开更新，互不干扰
 3. **单次提交**：所有依赖更新放在一个提交中，保持历史清晰
 4. **完整测试**：确保 `make qa && make test` 都通过后再提交 PR
-5. **记录失败**：如有测试失败，在 PR 描述中明确说明原因和后续计划 
+5. **记录失败**：如有测试失败，在 PR 描述中明确说明原因和后续计划

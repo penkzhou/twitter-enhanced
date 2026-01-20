@@ -65,24 +65,8 @@ if (!global.structuredClone) {
   global.structuredClone = (obj: any) => JSON.parse(JSON.stringify(obj));
 }
 
-// Mock window.location for tests that need it
-// Note: In Jest v30 with jsdom, assigning to window.location produces a warning
-// but the tests still pass. This is the recommended approach for mocking location.
-// @ts-ignore - deleting for mock setup
-delete (window as any).location;
-window.location = {
-  hostname: 'twitter.com',
-  href: 'https://twitter.com',
-  origin: 'https://twitter.com',
-  protocol: 'https:',
-  host: 'twitter.com',
-  pathname: '/',
-  search: '',
-  hash: '',
-  reload: jest.fn(),
-  replace: jest.fn(),
-  assign: jest.fn(),
-} as unknown as Location;
+// Note: window.location is now configured via testEnvironmentOptions.url in jest.config.js
+// This avoids issues with jsdom's non-configurable location property in Jest v30
 
 // Mock DOM methods that might not be available in jsdom
 Object.defineProperty(window, 'matchMedia', {
@@ -127,7 +111,10 @@ beforeAll(() => {
       }
     }
     // Also handle Error objects
-    if (args[0] instanceof Error && args[0].message.includes('Not implemented: navigation')) {
+    if (
+      args[0] instanceof Error &&
+      args[0].message.includes('Not implemented: navigation')
+    ) {
       return;
     }
     originalError.call(console, ...args);

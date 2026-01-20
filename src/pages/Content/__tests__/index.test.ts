@@ -330,7 +330,7 @@ describe('TwitterEnhancer', () => {
         {
           action: 'getVideoInfo',
           tweetId: '123456789',
-          currentDomain: 'localhost',
+          currentDomain: 'twitter.com',
         },
         expect.any(Function)
       );
@@ -626,7 +626,7 @@ describe('TwitterEnhancer', () => {
 
       expect(Logger.logEvent).toHaveBeenCalledWith('video_download_click', {
         tweet_id: '123456789',
-        domain: 'localhost',
+        domain: 'twitter.com',
       });
     });
 

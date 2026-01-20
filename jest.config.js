@@ -3,6 +3,11 @@ module.exports = {
   // Test environment
   testEnvironment: 'jsdom',
 
+  // Test environment options - set URL for jsdom to avoid window.location mocking issues
+  testEnvironmentOptions: {
+    url: 'https://twitter.com/',
+  },
+
   // Setup files
   setupFilesAfterEnv: ['<rootDir>/src/test/setup.ts'],
 

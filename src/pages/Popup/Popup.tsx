@@ -22,11 +22,15 @@ const Popup = () => {
         'downloadDirectory',
       ],
       (result) => {
-        setRemarkFeatureEnabled((result.remarkFeatureEnabled as boolean | undefined) ?? true);
+        setRemarkFeatureEnabled(
+          (result.remarkFeatureEnabled as boolean | undefined) ?? true
+        );
         setVideoDownloadFeatureEnabled(
           (result.videoDownloadFeatureEnabled as boolean | undefined) ?? true
         );
-        setDownloadDirectory((result.downloadDirectory as string | undefined) || 'TwitterVideos');
+        setDownloadDirectory(
+          (result.downloadDirectory as string | undefined) || 'TwitterVideos'
+        );
       }
     );
   };

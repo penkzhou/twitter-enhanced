@@ -43,8 +43,12 @@ const mockElement = {
 };
 
 // Spy on document methods instead of redefining document
-jest.spyOn(document, 'createElement').mockImplementation(() => mockElement as unknown as HTMLElement);
-jest.spyOn(document, 'querySelectorAll').mockImplementation(() => [] as unknown as NodeListOf<Element>);
+jest
+  .spyOn(document, 'createElement')
+  .mockImplementation(() => mockElement as unknown as HTMLElement);
+jest
+  .spyOn(document, 'querySelectorAll')
+  .mockImplementation(() => [] as unknown as NodeListOf<Element>);
 jest.spyOn(document.body, 'appendChild').mockImplementation(jest.fn());
 jest.spyOn(document, 'addEventListener').mockImplementation(jest.fn());
 
