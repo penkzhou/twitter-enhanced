@@ -239,24 +239,33 @@ const ScreenshotDialog: React.FC<ScreenshotDialogProps> = ({
               justifyContent: 'center',
             }}
           >
-            {previewDataUrl ? (
-              <img
-                src={previewDataUrl}
-                alt="Preview"
-                style={{
-                  maxWidth: '100%',
-                  borderRadius: '16px',
-                  border: `1px solid ${colors.border}`,
-                }}
-              />
-            ) : (
-              <TweetCard
-                tweetData={tweetData}
-                theme={getResolvedTheme()}
-                showWatermark={showWatermark}
-                watermarkText={watermarkText}
-              />
-            )}
+            <div
+              style={{
+                maxWidth: '598px',
+                width: '100%',
+                borderRadius: '16px',
+                border: `1px solid ${colors.border}`,
+                overflow: 'hidden',
+              }}
+            >
+              {previewDataUrl ? (
+                <img
+                  src={previewDataUrl}
+                  alt="Preview"
+                  style={{
+                    width: '100%',
+                    display: 'block',
+                  }}
+                />
+              ) : (
+                <TweetCard
+                  tweetData={tweetData}
+                  theme={getResolvedTheme()}
+                  showWatermark={showWatermark}
+                  watermarkText={watermarkText}
+                />
+              )}
+            </div>
           </div>
 
           {/* Options */}
