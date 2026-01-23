@@ -39,7 +39,7 @@
     "date-fns": "^4.0.0",
     "dotenv-webpack": "^8.1.0",
     "idb": "^8.0.0",
-    "lucide-react": "^0.562.0",
+    "lucide-react": "^0.563.0",
     "postcss-loader": "^8.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
